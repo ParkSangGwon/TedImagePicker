@@ -48,7 +48,7 @@ dependencies {
     implementation 'gun0912.ted:tedpermission-rx2:2.2.2'
     implementation 'gun0912.ted:tedonactivityresult-rx2:1.0.6'
 
-    implementation 'com.github.chrisbanes:PhotoView:2.3.0'
+    implementation 'com.alexvasilkov:gesture-views:2.5.2'
 }
 
 apply from: rootProject.file('publish.gradle')

@@ -7,7 +7,7 @@
         android:background="@color/black"
         android:orientation="vertical">
 
-        <com.github.chrisbanes.photoview.PhotoView
+        <com.alexvasilkov.gestures.views.GestureImageView
             android:id="@+id/iv_media"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
