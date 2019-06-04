@@ -1,7 +1,6 @@
  
 # TedImagePicker
-TedImagePicker is simple image picker
-TedImagePicker is beautiful and smart image picker
+`TedImagePicker` is **simple/beautiful/smart** image picker
 - Support Image/Video
 - Support Single/Multi select
 - Support more configuration option
