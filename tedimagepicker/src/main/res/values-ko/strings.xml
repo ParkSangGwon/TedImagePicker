@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">tedimagepicker</string>
+
+    <string name="ted_image_picker_album_all">전체보기</string>
+    <string name="ted_image_picker_empty">비어있음</string>
+    <string name="ted_image_picker_title">이미지 선택</string>
+    <string name="ted_image_picker_done">완료</string>
+    <string name="ted_image_picker_max_count">더이상 추가할 수 없어요..</string>
+    <string name="ted_image_picker_min_count">이미지를 더 선택해주세요..</string>
+</resources>

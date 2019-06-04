@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">tedimagepicker</string>
+
+    <string name="ted_image_picker_album_all">All</string>
+    <string name="ted_image_picker_empty">Empty</string>
+    <string name="ted_image_picker_title">Select Image</string>
+    <string name="ted_image_picker_done">Done</string>
+    <string name="ted_image_picker_max_count">You can not add more</string>
+    <string name="ted_image_picker_min_count">You have to choice images</string>
+</resources>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.net.Uri" />
+
+        <import type="gun0912.tedimagepicker.builder.type.SelectType" />
+
+        <variable
+            name="selectType"
+            type="SelectType" />
+
+        <variable
+            name="items"
+            type="java.util.List&lt;Uri&gt;" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/view_selected_media"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ted_image_picker_selected_view_height"
+            android:background="@color/ted_image_picker_toolbar_background">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_selected_media"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="@{selectType == SelectType.MULTI}"
+                app:diffCallback="@{true}"
+                app:replaceAll="@{items}" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_media"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollMode="never"
+                tools:listitem="@layout/item_gallery_media" />
+
+            <gun0912.tedimagepicker.base.FastScroller
+                android:id="@+id/fast_scroller"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="end" />
+        </FrameLayout>
+    </LinearLayout>
+</layout>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="white">#ffffff</color>
+
+    <color name="black">#000000</color>
+    <color name="black_87">#de000000</color>
+    <color name="black_54">#8a000000</color>
+    <color name="black_30">#1d000000</color>
+    <color name="black_20">#14000000</color>
+
+    <color name="txt_white_gray">#D5D5D5</color>
+    <color name="txt_medium_gray">#909090</color>
+    <color name="txt_dark_gray">#606060</color>
+
+    <color name="ted_image_picker_camera_background">#606060</color>
+    <color name="ted_image_picker_selected_foreground">@color/black_54</color>
+    <color name="ted_image_picker_primary">#1976d2</color>
+    <color name="ted_image_picker_primary_pressed">#0956b2</color>
+    <color name="ted_image_picker_empty_selected_background">#dedede</color>
+    <color name="ted_image_picker_toolbar_background">@color/white</color>
+    <color name="ted_image_picker_selected_media_clear_background">#d0909090</color>
+    <color name="ted_image_picker_scroller">@color/ted_image_picker_primary</color>
+    <color name="ted_image_picker_scroller_background">#fafafa</color>
+
+    <color name="ted_image_picker_zoom_background">#defafafa</color>
+
+
+</resources>

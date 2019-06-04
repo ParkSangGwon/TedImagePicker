@@ -1,0 +1,12 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="TedImagePickerTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:textColorPrimary">@color/black87_disable</item>
+    </style>
+
+    <style name="TedImagePickerTheme.Zoom">
+
+    </style>
+
+</resources>

@@ -1,0 +1,54 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion versions.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion versions.minSdkVersion
+        targetSdkVersion versions.targetSdkVersion
+
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+
+    dataBinding {
+        enabled = true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    androidExtensions {
+        experimental = true
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
+    kapt "com.android.databinding:compiler:${versions.gradle}"
+
+    implementation deps.androidx.appcompat
+    implementation deps.rx.rxJava
+    implementation deps.rx.rxAndroid
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'com.google.android.material:material:1.1.0-alpha07'
+
+    implementation deps.glide.glide
+    annotationProcessor deps.glide.annotation
+
+    implementation 'gun0912.ted:tedpermission-rx2:2.2.2'
+    implementation 'gun0912.ted:tedonactivityresult-rx2:1.0.6'
+
+    implementation 'com.github.chrisbanes:PhotoView:2.3.0'
+}
+
+apply from: rootProject.file('publish.gradle')

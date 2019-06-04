@@ -1,0 +1,7 @@
+<resources>
+
+    <style name="TedImagePickerTheme.Zoom">
+        <item name="android:windowContentTransitions">true</item>
+    </style>
+
+</resources>

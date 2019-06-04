@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="default_padding">16dp</dimen>
+    <dimen name="default_padding_small">8dp</dimen>
+    <dimen name="default_padding_xsmall">4dp</dimen>
+    <dimen name="default_padding_large">24dp</dimen>
+    <dimen name="default_padding_xlarge">40dp</dimen>
+
+    <dimen name="status_bar_height">24dp</dimen>
+    <dimen name="tool_bar_height">56dp</dimen>
+    <dimen name="default_elevation">8dp</dimen>
+    <dimen name="toolbar_elevation">0dp</dimen>
+    <dimen name="default_radius">3dp</dimen>
+
+
+    <dimen name="list_item_container_padding">16dp</dimen>
+    <dimen name="list_item_container_padding_small">8dp</dimen>
+
+    <dimen name="list_item_avatar_size_small">24dp</dimen>
+    <dimen name="list_item_avatar_size">40dp</dimen>
+    <dimen name="list_item_avatar_size_large">56dp</dimen>
+    <dimen name="list_item_avatar_size_xlarge">72dp</dimen>
+    <dimen name="list_item_text_margin">3dp</dimen>
+
+
+    <dimen name="ted_image_picker_menu_width">250dp</dimen>
+    <dimen name="ted_image_picker_album_width">200dp</dimen>
+    <dimen name="ted_image_picker_album_text_max_width">120dp</dimen>
+    <dimen name="ted_image_picker_selected_image_size">64dp</dimen>
+    <dimen name="ted_image_picker_selected_view_height">78dp</dimen>
+    <dimen name="ted_image_picker_selected_image_clear_size">20dp</dimen>
+    <dimen name="ted_image_picker_selected_image_margin">4dp</dimen>
+    <dimen name="ted_image_picker_done_button_vertical_padding">8dp</dimen>
+    <dimen name="ted_image_picker_done_button_horizontal_padding">12dp</dimen>
+    <dimen name="ted_image_picker_zoom_size">20dp</dimen>
+
+</resources>

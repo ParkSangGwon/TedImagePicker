@@ -1,0 +1,65 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:background="#000">
+
+
+        <FrameLayout
+            android:id="@+id/view_scroller"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="4dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible">
+
+
+            <ImageView
+                android:id="@+id/iv_scroller_bg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/bg_scroller_handler" />
+
+            <ImageView
+                android:id="@+id/iv_scroller_indicator"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="5dp"
+                android:src="@drawable/ic_scroller" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/view_bubble"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginEnd="@dimen/default_padding"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/view_scroller"
+            app:layout_constraintEnd_toStartOf="@id/view_scroller"
+            app:layout_constraintTop_toTopOf="@id/view_scroller">
+
+            <TextView
+                android:id="@+id/tv_bubble"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_scroller_bubble"
+                android:elevation="4dp"
+                android:paddingStart="8dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="8dp"
+                android:paddingBottom="4dp"
+                tools:text="2019.09" />
+        </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

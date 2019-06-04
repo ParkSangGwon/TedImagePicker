@@ -1,0 +1,2 @@
+include ':app', ':tedimagepicker'
+rootProject.name='TedImagePicker'

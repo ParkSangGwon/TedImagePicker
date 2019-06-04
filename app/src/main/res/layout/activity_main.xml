@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin">
+
+        <Button
+            android:id="@+id/btn_normal_single"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Normal - Single" />
+
+
+        <Button
+            android:id="@+id/btn_normal_multi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Normal - Multi" />
+
+
+        <Button
+            android:id="@+id/btn_rx_single"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rx - Single" />
+
+
+        <Button
+            android:id="@+id/btn_rx_multi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rx - Multi" />
+
+        <ImageView
+            android:id="@+id/iv_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin" />
+
+
+        <HorizontalScrollView
+            android:id="@+id/hsv_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/container_selected_photos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:animateLayoutChanges="true"
+                android:gravity="start"
+                android:orientation="horizontal"
+                android:visibility="visible" />
+        </HorizontalScrollView>
+    </LinearLayout>
+
+</layout>
