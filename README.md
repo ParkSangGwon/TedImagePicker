@@ -11,9 +11,14 @@ TedImagePicker is beautiful and smart image picker
 |:------------------------------:|:---------------------------------:|:--------------------------------:|
 |![](art/multi_select.png) |![](art/album.png) |![](art/scroll_handler.png)|
 
+
+</br></br>
 ## Demo
 ![](art/full.gif)
 
+| Image Select                    | Select Album                     | Scroller                         |
+|:------------------------------:|:---------------------------------:|:--------------------------------:|
+|![](art/multi_select.gif) |![](art/album.gif) |![](art/scroll_handler.gif)|
 
 </br></br>
 ## Setup
