@@ -121,12 +121,7 @@ TedRxImagePicker.with(this)
 
 ### - java.lang.NoClassDefFoundError: Failed resolution of: Landroidx/databinding/DataBinderMapperImpl;
 - You have to enable databinding
-- Set enable databinding in your `build.gradle`
-```
-dataBinding {
-    enabled = true
-}
-```
+- Read [this](https://github.com/ParkSangGwon/TedImagePicker/blob/master/README.md#1enable-databinding)
 
 
 
