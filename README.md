@@ -42,7 +42,7 @@ If you think this library is useful, please press star button at upside. </br>
 
 ### 1.Enable databinding
 - TedImagePicker use databinding
-- Set enable databinding in your `build.gradle`
+- Set enable databinding in your app `build.gradle`
 ```
 dataBinding {
     enabled = true
