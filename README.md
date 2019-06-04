@@ -28,7 +28,7 @@ TedImagePicker is **simple/beautiful/smart** image picker
 ```gradle
 dependencies {
     implementation 'gun0912.ted:tedimagepicker:x.y.z'
-    //implementation 'gun0912.ted:tedimagepicker:1.0.0-alpha2'
+    //implementation 'gun0912.ted:tedimagepicker:1.0.0'
 }
 
 ```
