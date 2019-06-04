@@ -39,9 +39,18 @@ If you think this library is useful, please press star button at upside. </br>
 
 </br></br>
 ## How to use
-- TedImagePicker support `Listener` and `RxJava`style
 
-### Listener
+### 1.Enable databinding
+- TedImagePicker use databinding
+- Set enable databinding in your `build.gradle`
+```
+dataBinding {
+    enabled = true
+}
+```
+### 2.Start TedImagePicker/TedRxImagePicker
+- TedImagePicker support `Listener` and `RxJava`style
+#### Listener
 - Single image
 ```kotlin
 TedImagePicker.with(this)
@@ -62,7 +71,7 @@ TedImagePicker.with(this)
 ```
 <br/>
 
-### RxJava
+#### RxJava
 - Single image
 ```kotlin
 TedRxImagePicker.with(this)
@@ -77,13 +86,6 @@ TedRxImagePicker.with(this)
     .subscribe({ uriList ->
     }, Throwable::printStackTrace)
 ```
-
-</br></br>
-## FAQ
-### Do not need to check permissions?
-- Yes, `TedImagePicker` automatically check permission.
-: `TedImagePicker` use [TedPermission](https://github.com/ParkSangGwon/TedPermission)
-- But If you need You can check permission before start `TedImagePicker`.
 
 </br></br>
 ## Customize
@@ -108,6 +110,25 @@ TedRxImagePicker.with(this)
 * `buttonText(String or R.string.xxx) (default: 'Done','완료')`
 * `max(Int, String or R.string.xxx)`
 * `min(Int, String or R.string.xxx)`
+</br></br>
+
+
+## FAQ
+### - Do not need to check permissions?
+- Yes, `TedImagePicker` automatically check permission.
+: `TedImagePicker` use [TedPermission](https://github.com/ParkSangGwon/TedPermission)
+- But If you need You can check permission before start `TedImagePicker`.
+
+### - java.lang.NoClassDefFoundError: Failed resolution of: Landroidx/databinding/DataBinderMapperImpl;
+- You have to enable databinding
+- Set enable databinding in your `build.gradle`
+```
+dataBinding {
+    enabled = true
+}
+```
+
+
 
 
 </br></br>
