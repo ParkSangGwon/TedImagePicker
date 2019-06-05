@@ -53,35 +53,58 @@ dataBinding {
 ### 2.Start TedImagePicker/TedRxImagePicker
 - TedImagePicker support `Listener` and `RxJava`style
 #### Listener
-- Single image
+##### Single image
+- Kotlin
 ```kotlin
 TedImagePicker.with(this)
-    .start(object : OnSelectedListener {
-        override fun onSelected(uri: Uri) {
-        }
-    })
-
+    .start { uri -> showSingleImage(uri) }
+```
+- Java
+```java
+TedImagePicker.with(this)
+        .start(new OnSelectedListener() {
+            @Override
+            public void onSelected(@NotNull Uri uri) {
+                showSingleImage(uri);
+            }
+        });
+TedImagePicker.with(this)
+        .start(uri -> {
+            showSingleImage(uri);
+        });        
 ```
 
-- Multi image
+##### Multi image
+- Kotlin
 ```kotlin
 TedImagePicker.with(this)
-    .start(object : OnMultiSelectedListener {
-        override fun onSelected(uriList: List<Uri>) {
-        }
-    })
+    .startMultiImage { uriList -> showMultiImage(uriList) }
+```
+- Java
+```java
+TedImagePicker.with(this)
+        .startMultiImage(new OnMultiSelectedListener() {
+            @Override
+            public void onSelected(@NotNull List<? extends Uri> uriList) {
+                showMultiImage(uriList);
+            }
+        });
+TedImagePicker.with(this)
+        .startMultiImage(uriList -> {
+            showMultiImage(uriList);
+        });
 ```
 <br/>
 
 #### RxJava
-- Single image
+##### Single image
 ```kotlin
 TedRxImagePicker.with(this)
     .start()
     .subscribe({ uri ->
     }, Throwable::printStackTrace)
 ```
-- Multi image
+##### Multi image
 ```kotlin
 TedRxImagePicker.with(this)
     .startMultiImage()
