@@ -13,9 +13,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import gun0912.tedimagepicker.builder.TedImagePicker
 import gun0912.tedimagepicker.builder.TedRxImagePicker
-import gun0912.tedimagepicker.builder.listener.OnErrorListener
-import gun0912.tedimagepicker.builder.listener.OnMultiSelectedListener
-import gun0912.tedimagepicker.builder.listener.OnSelectedListener
 import gun0912.tedimagepicker.sample.databinding.ActivityMainBinding
 import gun0912.tedimagepicker.sample.databinding.ItemImageBinding
 
@@ -38,11 +35,7 @@ class MainActivity : AppCompatActivity() {
     private fun setNormalSingleButton() {
         binding.btnNormalSingle.setOnClickListener {
             TedImagePicker.with(this)
-                .start(object : OnSelectedListener {
-                    override fun onSelected(uri: Uri) {
-                        showSingleImage(uri)
-                    }
-                })
+                .start { uri -> showSingleImage(uri) }
         }
     }
 
@@ -52,17 +45,9 @@ class MainActivity : AppCompatActivity() {
                 //.mediaType(MediaType.IMAGE)
                 //.scrollIndicatorDateFormat("YYYYMMDD")
                 //.buttonGravity(ButtonGravity.BOTTOM)
-                .errorListener(object : OnErrorListener {
-                    override fun onError(message: String) {
-                        Log.d("ted", "message: $message")
-                    }
-                })
+                .errorListener { message -> Log.d("ted", "message: $message") }
                 .selectedUri(selectedUriList)
-                .start(object : OnMultiSelectedListener {
-                    override fun onSelected(uriList: List<Uri>) {
-                        showMultiImage(uriList)
-                    }
-                })
+                .startMultiImage { list: List<Uri> -> showMultiImage(list) }
         }
     }
 
