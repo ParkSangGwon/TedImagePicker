@@ -1,5 +1,7 @@
  
-# TedImagePicker
+# TedImagePicker [![Android Arsenal]( https://img.shields.io/badge/Android%20Arsenal-TedImagePicker-green.svg?style=flat )]( https://android-arsenal.com/details/1/7697 )
+
+
 TedImagePicker is **simple/beautiful/smart** image picker
 - Support Image/Video
 - Support Single/Multi select
