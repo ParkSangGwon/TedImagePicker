@@ -61,7 +61,7 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
     @IgnoredOnParcel
     protected var onMultiSelectedListener: OnMultiSelectedListener? = null
     @IgnoredOnParcel
-    protected var onErrorListener: OnErrorListener? = null
+    internal var onErrorListener: OnErrorListener? = null
 
 
     @SuppressLint("CheckResult")
@@ -88,6 +88,8 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
                 subscribe({ activityResult ->
                     if (activityResult.resultCode == Activity.RESULT_OK) {
                         onComplete(activityResult.data)
+                    }else {
+                        onErrorListener?.onError("Back Pressed")
                     }
                 }, { throwable -> onErrorListener?.onError(throwable.localizedMessage) })
             }
