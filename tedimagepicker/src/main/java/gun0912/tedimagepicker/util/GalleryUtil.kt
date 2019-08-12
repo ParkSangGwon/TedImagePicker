@@ -88,8 +88,8 @@ internal class GalleryUtil {
                 val folderName = getString(getColumnIndex(albumName))
                 val mediaPath = getString(getColumnIndex(INDEX_MEDIA_URI))
                 val mediaUri: Uri = Uri.fromFile(File(mediaPath))
-                val dateTimeMills = getString(getColumnIndex(dateTaken)).toLong()
-                Media(folderName, mediaUri, dateTimeMills)
+                val dateTimeMills = getString(getColumnIndex(dateTaken)) ?: "0"
+                Media(folderName, mediaUri, dateTimeMills.toLong())
             }
         }
 
