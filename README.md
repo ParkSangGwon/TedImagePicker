@@ -127,6 +127,8 @@ TedRxImagePicker.with(this)
 * `title(String or R.string.xxx) (default: 'Select Image','사진 선택')`
 * `backButton(R.drawable.xxx)`
 * `zoomIndicator(Boolean) (default: true)`
+* `image()`
+* `video()`
 
 
 #### Multi Select
