@@ -15,8 +15,10 @@ internal class GalleryUtil {
     companion object {
 
         private const val INDEX_MEDIA_URI = MediaStore.MediaColumns.DATA
+        private const val INDEX_DATE_ADDED = MediaStore.MediaColumns.DATE_ADDED
+
         private lateinit var albumName: String
-        private lateinit var dateTaken: String
+
         internal fun getMedia(context: Context, mediaType: MediaType): Single<List<Album>> {
             return Single.create { emitter ->
                 try {
@@ -26,18 +28,16 @@ internal class GalleryUtil {
                     when (mediaType) {
                         MediaType.IMAGE -> {
                             uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-                            dateTaken = MediaStore.Images.Media.DATE_TAKEN
                             albumName = MediaStore.Images.Media.BUCKET_DISPLAY_NAME
                         }
                         MediaType.VIDEO -> {
                             uri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI
-                            dateTaken = MediaStore.Video.Media.DATE_TAKEN
                             albumName = MediaStore.Video.Media.BUCKET_DISPLAY_NAME
                         }
                     }
 
-                    val sortOrder = "$dateTaken DESC"
-                    val projection = arrayOf(INDEX_MEDIA_URI, albumName, dateTaken)
+                    val sortOrder = "$INDEX_DATE_ADDED DESC"
+                    val projection = arrayOf(INDEX_MEDIA_URI, albumName, INDEX_DATE_ADDED)
                     val cursor =
                         context.contentResolver.query(uri, projection, null, null, sortOrder)
                     val albumList: List<Album> = cursor?.let {
@@ -93,8 +93,8 @@ internal class GalleryUtil {
                     val folderName = getString(getColumnIndex(albumName))
                     val mediaPath = getString(getColumnIndex(INDEX_MEDIA_URI))
                     val mediaUri: Uri = Uri.fromFile(File(mediaPath))
-                    val dateTimeMills = getString(getColumnIndex(dateTaken)).toLong()
-                    Media(folderName, mediaUri, dateTimeMills)
+                    val datedAddedSecond = getLong(getColumnIndex(INDEX_DATE_ADDED))
+                    Media(folderName, mediaUri, datedAddedSecond)
                 }
             } catch (exception: Exception) {
                 exception.printStackTrace()
