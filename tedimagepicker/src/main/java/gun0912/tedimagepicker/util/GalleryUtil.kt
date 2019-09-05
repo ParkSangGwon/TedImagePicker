@@ -23,14 +23,17 @@ internal class GalleryUtil {
 
                     val uri: Uri
 
-                    if (mediaType === MediaType.IMAGE) {
-                        uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-                        dateTaken = MediaStore.Images.Media.DATE_TAKEN
-                        albumName = MediaStore.Images.Media.BUCKET_DISPLAY_NAME
-                    } else {
-                        uri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI
-                        dateTaken = MediaStore.Video.Media.DATE_TAKEN
-                        albumName = MediaStore.Video.Media.BUCKET_DISPLAY_NAME
+                    when (mediaType) {
+                        MediaType.IMAGE -> {
+                            uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                            dateTaken = MediaStore.Images.Media.DATE_TAKEN
+                            albumName = MediaStore.Images.Media.BUCKET_DISPLAY_NAME
+                        }
+                        MediaType.VIDEO -> {
+                            uri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI
+                            dateTaken = MediaStore.Video.Media.DATE_TAKEN
+                            albumName = MediaStore.Video.Media.BUCKET_DISPLAY_NAME
+                        }
                     }
 
                     val sortOrder = "$dateTaken DESC"
