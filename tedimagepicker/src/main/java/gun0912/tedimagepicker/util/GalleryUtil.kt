@@ -42,6 +42,7 @@ internal class GalleryUtil {
                         val totalImageList =
                             generateSequence { if (cursor.moveToNext()) cursor else null }
                                 .map { getImage(it) }
+                                .filterNotNull()
                                 .toList()
 
                         val albumList: List<Album> = totalImageList.asSequence()
@@ -83,16 +84,18 @@ internal class GalleryUtil {
         private fun getAlbum(entry: Map.Entry<String, List<Media>>) =
             Album(entry.key, entry.value[0].uri, entry.value)
 
-        private fun getImage(cursor: Cursor): Media {
-            return cursor.run {
-                val folderName = getString(getColumnIndex(albumName))
-                val mediaPath = getString(getColumnIndex(INDEX_MEDIA_URI))
-                val mediaUri: Uri = Uri.fromFile(File(mediaPath))
-                val dateTimeMills = getString(getColumnIndex(dateTaken)).toLong()
-                Media(folderName, mediaUri, dateTimeMills)
+        private fun getImage(cursor: Cursor): Media? =
+            try {
+                cursor.run {
+                    val folderName = getString(getColumnIndex(albumName))
+                    val mediaPath = getString(getColumnIndex(INDEX_MEDIA_URI))
+                    val mediaUri: Uri = Uri.fromFile(File(mediaPath))
+                    val dateTimeMills = getString(getColumnIndex(dateTaken)).toLong()
+                    Media(folderName, mediaUri, dateTimeMills)
+                }
+            } catch (exception: Exception) {
+                exception.printStackTrace()
+                null
             }
-        }
-
-
     }
 }
