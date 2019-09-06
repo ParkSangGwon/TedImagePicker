@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <color name="sample_yellow">#EFDC05</color>
+    <color name="sample_white">#ffffff</color>
 
 </resources>
