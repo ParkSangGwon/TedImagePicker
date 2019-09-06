@@ -39,6 +39,10 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
     internal var titleResId: Int = R.string.ted_image_picker_title,
     internal var buttonGravity: ButtonGravity = ButtonGravity.TOP,
     internal var buttonText: String? = null,
+    @DrawableRes
+    internal var buttonBackgroundResId: Int = R.drawable.btn_done_button,
+    @ColorRes
+    internal var buttonTextColorResId: Int = R.color.white,
     @StringRes
     internal var buttonTextResId: Int = R.string.ted_image_picker_done,
     internal var selectedUriList: List<Uri>? = null,
@@ -146,7 +150,6 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
         return this as B
     }
 
-
     fun buttonText(text: String): B {
         this.buttonText = text
         return this as B
@@ -154,6 +157,16 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
 
     fun buttonText(@StringRes textResId: Int): B {
         this.buttonTextResId = textResId
+        return this as B
+    }
+
+    fun buttonBackground(@DrawableRes buttonBackgroundResId: Int): B {
+        this.buttonBackgroundResId = buttonBackgroundResId
+        return this as B
+    }
+
+    fun buttonTextColor(@ColorRes buttonTextColorResId: Int): B {
+        this.buttonTextColorResId = buttonTextColorResId
         return this as B
     }
 
