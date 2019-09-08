@@ -42,6 +42,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 
 
@@ -216,7 +217,7 @@ internal class TedImagePickerActivity : AppCompatActivity() {
                         val dateString = SimpleDateFormat(
                             builder.scrollIndicatorDateFormat,
                             Locale.getDefault()
-                        ).format(Date(media.dateTimeMills))
+                        ).format(Date(TimeUnit.SECONDS.toMillis(media.dateAddedSecond)))
                         binding.layoutContent.fastScroller.setBubbleText(dateString)
                     }
                 }

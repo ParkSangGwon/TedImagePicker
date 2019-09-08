@@ -142,6 +142,17 @@ TedRxImagePicker.with(this)
 
 #### Common
 
+* `mediaType(MediaType)` : MediaType.IMAGE / MediaType.VIDEO
+* `cameraTileBackground(R.color.xxx)`
+* `cameraTileImage(R.drawable.xxx)`
+* `showCameraTile(Boolean) (default: true)`
+* `scrollIndicatorDateFormat(String)(default: YYYY.MM)`
+* `title(String or R.string.xxx) (default: 'Select Image','사진 선택')`
+* `backButton(R.drawable.xxx)`
+* `zoomIndicator(Boolean) (default: true)`
+* `image()`
+* `video()`
+
 - `mediaType(MediaType)` : MediaType.IMAGE / MediaType.VIDEO
 - `cameraTileBackground(R.color.xxx)`
 - `cameraTileImage(R.drawable.xxx)`

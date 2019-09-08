@@ -115,6 +115,10 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
         return this as B
     }
 
+    fun image(): B = mediaType(MediaType.IMAGE)
+    
+    fun video(): B = mediaType(MediaType.VIDEO)
+
     fun cameraTileBackground(@ColorRes cameraTileBackgroundResId: Int): B {
         this.cameraTileBackgroundResId = cameraTileBackgroundResId
         return this as B

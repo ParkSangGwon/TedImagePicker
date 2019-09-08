@@ -4,8 +4,7 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-enum class MediaType(private val value: String) : Parcelable {
-    IMAGE("IMAGE"), VIDEO("VIDEO");
-
-    override fun toString() = value
+enum class MediaType : Parcelable {
+    IMAGE,
+    VIDEO;
 }
