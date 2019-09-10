@@ -33,7 +33,7 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
     @DrawableRes
     internal var cameraTileImageResId: Int = R.drawable.ic_camera_48dp,
     internal var showCameraTile: Boolean = true,
-    internal var scrollIndicatorDateFormat: String = "YYYY.MM",
+    internal var scrollIndicatorDateFormat: String = "yyyy.MM",
     internal var title: String? = null,
     @StringRes
     internal var titleResId: Int = R.string.ted_image_picker_title,
