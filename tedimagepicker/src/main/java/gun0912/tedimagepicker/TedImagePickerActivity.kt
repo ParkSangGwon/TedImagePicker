@@ -14,6 +14,7 @@ import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -100,9 +101,14 @@ internal class TedImagePickerActivity : AppCompatActivity() {
     }
 
     private fun setupButton() {
+        with(binding) {
+            buttonGravity = builder.buttonGravity
+            buttonText = builder.buttonText ?: getString(builder.buttonTextResId)
+            buttonTextColor = ContextCompat.getColor(this@TedImagePickerActivity, builder.buttonTextColorResId)
+            buttonBackground =
+                ContextCompat.getDrawable(this@TedImagePickerActivity, builder.buttonBackgroundResId)
+        }
 
-        binding.buttonGravity = builder.buttonGravity
-        binding.buttonText = builder.buttonText ?: getString(builder.buttonTextResId)
         setupButtonVisibility()
     }
 
@@ -414,7 +420,6 @@ internal class TedImagePickerActivity : AppCompatActivity() {
         internal fun getSelectedUriList(data: Intent): List<Uri>? =
             data.getParcelableArrayListExtra(EXTRA_SELECTED_URI_LIST)
     }
-
 
 }
 

@@ -25,6 +25,14 @@
             name="buttonText"
             type="String" />
 
+        <variable
+            name="buttonBackground"
+            type="android.graphics.drawable.Drawable" />
+
+        <variable
+            name="buttonTextColor"
+            type="Integer" />
+
     </data>
 
     <LinearLayout
@@ -49,7 +57,10 @@
                 android:layout_gravity="end"
                 android:layout_marginEnd="@dimen/default_padding_small"
                 android:visibility="@{showButton &amp;&amp; buttonGravity == ButtonGravity.TOP ? View.VISIBLE : View.GONE}"
-                app:text="@{buttonText}" />
+                app:text="@{buttonText}"
+                app:textColor="@{buttonTextColor}"
+                android:background="@{buttonBackground}"
+                />
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -80,7 +91,10 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:text="@{buttonText}" />
+                    app:text="@{buttonText}"
+                    app:textColor="@{buttonTextColor}"
+                    android:background="@{buttonBackground}"
+                    />
 
 
                 <LinearLayout

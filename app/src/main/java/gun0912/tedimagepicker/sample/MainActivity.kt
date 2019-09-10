@@ -45,6 +45,8 @@ class MainActivity : AppCompatActivity() {
                 //.mediaType(MediaType.IMAGE)
                 //.scrollIndicatorDateFormat("YYYYMMDD")
                 //.buttonGravity(ButtonGravity.BOTTOM)
+                //.buttonBackground(R.drawable.btn_sample_done_button)
+                //.buttonTextColor(R.color.sample_yellow)
                 .errorListener { message -> Log.d("ted", "message: $message") }
                 .selectedUri(selectedUriList)
                 .startMultiImage { list: List<Uri> -> showMultiImage(list) }
