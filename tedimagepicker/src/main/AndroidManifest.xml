@@ -6,10 +6,12 @@
     <application>
         <activity
             android:name=".TedImagePickerActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/TedImagePickerTheme" />
 
         <activity
             android:name=".zoom.TedImageZoomActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/TedImagePickerTheme.Zoom" />
 
         <provider
