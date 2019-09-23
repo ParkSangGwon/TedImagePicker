@@ -84,7 +84,7 @@
 
 
                 <LinearLayout
-                    android:id="@+id/view_selected_album"
+                    android:id="@+id/action_bar_title"
                     android:layout_width="@dimen/ted_image_picker_album_width"
                     android:layout_height="wrap_content"
                     android:background="?android:attr/selectableItemBackground"

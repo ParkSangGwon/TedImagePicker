@@ -364,7 +364,7 @@ internal class TedImagePickerActivity : AppCompatActivity() {
     }
 
     private fun setupListener() {
-        binding.viewSelectedAlbum.setOnClickListener {
+        binding.actionBarTitle.setOnClickListener {
             binding.drawerLayout.toggle()
         }
 
