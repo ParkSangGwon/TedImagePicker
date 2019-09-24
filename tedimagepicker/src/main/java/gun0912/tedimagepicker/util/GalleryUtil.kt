@@ -2,6 +2,7 @@ package gun0912.tedimagepicker.util
 
 import android.content.Context
 import android.database.Cursor
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.provider.MediaStore
 import gun0912.tedimagepicker.R
@@ -10,6 +11,7 @@ import gun0912.tedimagepicker.model.Album
 import gun0912.tedimagepicker.model.Media
 import io.reactivex.Single
 import java.io.File
+
 
 internal class GalleryUtil {
     companion object {
@@ -41,6 +43,7 @@ internal class GalleryUtil {
 
                         val totalImageList =
                             generateSequence { if (cursor.moveToNext()) cursor else null }
+                                .filter { isImageFile(it.getString(it.getColumnIndex(INDEX_MEDIA_URI))) }
                                 .map { getImage(it) }
                                 .toList()
 
@@ -93,6 +96,12 @@ internal class GalleryUtil {
             }
         }
 
+        private fun isImageFile(path: String): Boolean {
+            val options = BitmapFactory.Options()
+            options.inJustDecodeBounds = true
+            BitmapFactory.decodeFile(path, options)
+            return options.outWidth != -1 && options.outHeight != -1
+        }
 
     }
 }
