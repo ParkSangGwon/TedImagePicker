@@ -25,5 +25,5 @@
 
     <color name="ted_image_picker_zoom_background">#defafafa</color>
 
-
+    <color name="ted_image_picker_duration_background">#78000000</color>
 </resources>

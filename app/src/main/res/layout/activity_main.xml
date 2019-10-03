@@ -37,6 +37,12 @@
             android:layout_height="wrap_content"
             android:text="Rx - Multi" />
 
+        <Button
+                android:id="@+id/btn_video"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Video" />
+
         <ImageView
             android:id="@+id/iv_image"
             android:layout_width="wrap_content"

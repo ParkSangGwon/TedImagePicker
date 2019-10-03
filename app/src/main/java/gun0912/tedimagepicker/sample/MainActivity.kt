@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import gun0912.tedimagepicker.builder.TedImagePicker
 import gun0912.tedimagepicker.builder.TedRxImagePicker
+import gun0912.tedimagepicker.builder.type.MediaType
 import gun0912.tedimagepicker.sample.databinding.ActivityMainBinding
 import gun0912.tedimagepicker.sample.databinding.ItemImageBinding
 
@@ -29,12 +30,20 @@ class MainActivity : AppCompatActivity() {
         setNormalMultiButton()
         setRxSingleButton()
         setRxMultiButton()
+        setRxVideoButton()
     }
-
 
     private fun setNormalSingleButton() {
         binding.btnNormalSingle.setOnClickListener {
             TedImagePicker.with(this)
+                .start { uri -> showSingleImage(uri) }
+        }
+    }
+
+    private fun setRxVideoButton() {
+        binding.btnVideo.setOnClickListener {
+            TedImagePicker.with(this)
+                .mediaType(MediaType.VIDEO)
                 .start { uri -> showSingleImage(uri) }
         }
     }

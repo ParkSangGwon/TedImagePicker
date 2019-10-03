@@ -1,7 +1,9 @@
 package gun0912.tedimagepicker.adapter
 
 import android.app.Activity
+import android.media.MediaMetadataRetriever
 import android.net.Uri
+import android.text.format.DateUtils
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityOptionsCompat
@@ -15,6 +17,8 @@ import gun0912.tedimagepicker.databinding.ItemGalleryCameraBinding
 import gun0912.tedimagepicker.databinding.ItemGalleryMediaBinding
 import gun0912.tedimagepicker.model.Media
 import gun0912.tedimagepicker.zoom.TedImageZoomActivity
+import kotlinx.android.synthetic.main.item_gallery_media.view.*
+import java.io.File
 
 internal class MediaAdapter(
     private val activity: Activity,
@@ -89,8 +93,17 @@ internal class MediaAdapter(
                     selectedNumber = selectedUriList.indexOf(data.uri) + 1
                 }
 
-                showZoom =
-                    !isSelected && (builder.mediaType == MediaType.IMAGE) && builder.showZoomIndicator
+                showDuration = builder.mediaType == MediaType.VIDEO
+
+                if (showDuration) {
+                    val retriever = MediaMetadataRetriever()
+                    retriever.setDataSource(context, data.uri)
+
+                    val length = (Integer.parseInt(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)) / 1000).toLong()
+                    itemView.video_duration_textview.text = "${DateUtils.formatElapsedTime(length)}"
+                }
+
+                showZoom = !isSelected && (builder.mediaType == MediaType.IMAGE) && builder.showZoomIndicator
             }
         }
 
