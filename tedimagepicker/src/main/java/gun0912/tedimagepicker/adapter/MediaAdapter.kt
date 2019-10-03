@@ -81,6 +81,7 @@ internal class MediaAdapter(
                     startZoomActivity(getItem(adapterPosition))
                 }
                 showZoom = false
+                showDuration = false
             }
 
         }

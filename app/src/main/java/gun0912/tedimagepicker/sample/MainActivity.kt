@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         binding.btnVideo.setOnClickListener {
             TedImagePicker.with(this)
                 .mediaType(MediaType.VIDEO)
-                .start { uri -> showSingleImage(uri) }
+                .startMultiImage { uri -> showSingleImage(uri.first()) }
         }
     }
 
