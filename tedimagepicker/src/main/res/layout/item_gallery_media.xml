@@ -28,6 +28,10 @@
             name="showZoom"
             type="boolean" />
 
+        <variable
+            name="showDuration"
+            type="boolean" />
+
     </data>
 
     <FrameLayout
@@ -98,6 +102,33 @@
                     android:adjustViewBounds="true"
                     android:background="@color/ted_image_picker_zoom_background"
                     android:src="@drawable/ic_zoom_out_24dp" />
+            </FrameLayout>
+
+            <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/ted_image_picker_zoom_size"
+                    android:id="@+id/view_video_duration"
+                    android:visibility="@{showDuration}"
+                    android:layout_marginBottom="@dimen/default_padding_small"
+                    android:layout_marginStart="@dimen/default_padding_xsmall"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/view_zoom_out"
+            >
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:id="@+id/video_duration_textview"
+                        android:background="@color/ted_image_picker_duration_background"
+                        android:text="0:00"
+                        android:layout_gravity="end"
+                        android:ellipsize="marquee"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:textColor="@color/white"
+                        android:paddingStart="@dimen/default_padding_small"
+                        android:paddingEnd="@dimen/default_padding_small"/>
+
             </FrameLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>

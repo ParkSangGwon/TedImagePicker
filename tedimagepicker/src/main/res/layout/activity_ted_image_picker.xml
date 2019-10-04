@@ -18,6 +18,18 @@
             type="ButtonGravity" />
 
         <variable
+            name="toolbarColor"
+            type="Integer"/>
+
+        <variable
+            name="backButtonColor"
+            type="Integer"/>
+
+        <variable
+                name="titleTextColor"
+                type="Integer"/>
+
+        <variable
             name="showButton"
             type="boolean" />
 
@@ -45,7 +57,8 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/ted_image_picker_toolbar_background"
+            app:titleTextColor="@{titleTextColor}"
+            android:background="@{toolbarColor}"
             app:contentInsetStartWithNavigation="0dp">
 
 

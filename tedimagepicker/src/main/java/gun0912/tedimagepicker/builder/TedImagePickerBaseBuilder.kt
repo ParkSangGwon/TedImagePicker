@@ -39,6 +39,10 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
     internal var titleResId: Int = R.string.ted_image_picker_title,
     internal var buttonGravity: ButtonGravity = ButtonGravity.TOP,
     internal var buttonText: String? = null,
+    @ColorRes
+    internal var toolbarColorBackgroundResId: Int = R.color.white,
+    @ColorRes
+    internal var toolbarTitleColorResId: Int = R.color.black,
     @DrawableRes
     internal var buttonBackgroundResId: Int = R.drawable.btn_done_button,
     @ColorRes
@@ -48,6 +52,8 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
     internal var selectedUriList: List<Uri>? = null,
     @DrawableRes
     internal var backButtonResId: Int = R.drawable.ic_arrow_back_black_24dp,
+    @ColorRes
+    internal var backButtonColorId: Int = R.color.black,
     internal var maxCount: Int = Int.MAX_VALUE,
     internal var maxCountMessage: String? = null,
     @StringRes
@@ -149,6 +155,16 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
         return this as B
     }
 
+    fun toolbarBackgroundColor(@ColorRes colorId: Int) : B {
+        this.toolbarColorBackgroundResId = colorId
+        return this as B
+    }
+
+    fun toolbarTitleColor(@ColorRes colorId: Int): B {
+        this.toolbarTitleColorResId = colorId
+        return this as B
+    }
+
     fun buttonGravity(buttonGravity: ButtonGravity): B {
         this.buttonGravity = buttonGravity
         return this as B
@@ -181,6 +197,11 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
 
     fun backButton(@DrawableRes backButtonResId: Int): B {
         this.backButtonResId = backButtonResId
+        return this as B
+    }
+
+    fun backButtonColor(@ColorRes backButtonColorResId: Int) : B {
+        backButtonColorId = backButtonColorResId
         return this as B
     }
 

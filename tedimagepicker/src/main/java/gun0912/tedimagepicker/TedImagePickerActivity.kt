@@ -6,7 +6,10 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.PorterDuff
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -29,10 +32,7 @@ import gun0912.tedimagepicker.base.BaseRecyclerViewAdapter
 import gun0912.tedimagepicker.builder.TedImagePickerBaseBuilder
 import gun0912.tedimagepicker.builder.type.SelectType
 import gun0912.tedimagepicker.databinding.ActivityTedImagePickerBinding
-import gun0912.tedimagepicker.extenstion.close
-import gun0912.tedimagepicker.extenstion.isOpen
-import gun0912.tedimagepicker.extenstion.setLock
-import gun0912.tedimagepicker.extenstion.toggle
+import gun0912.tedimagepicker.extenstion.*
 import gun0912.tedimagepicker.model.Album
 import gun0912.tedimagepicker.model.Media
 import gun0912.tedimagepicker.util.GalleryUtil
@@ -71,15 +71,24 @@ internal class TedImagePickerActivity : AppCompatActivity() {
         setupSelectedMediaView()
         setupButton()
         loadMedia()
-
     }
 
     private fun setupToolbar() {
         setSupportActionBar(binding.toolbar)
+        val toolbarColor = ContextCompat.getColor(this@TedImagePickerActivity, builder.toolbarColorBackgroundResId)
+        binding.toolbarColor = toolbarColor
+        binding.titleTextColor = ContextCompat.getColor(this@TedImagePickerActivity, builder.toolbarTitleColorResId)
+
+        if (Build.VERSION.SDK_INT >= 21) {
+            window.statusBarColor = toolbarColor.manipulate(factor = 0.95f)
+        }
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
         builder.backButtonResId.let {
-            binding.toolbar.setNavigationIcon(it)
+            val drawable = resources.getDrawable(it)
+            drawable.setColorFilter(ContextCompat.getColor(this@TedImagePickerActivity, builder.backButtonColorId), PorterDuff.Mode.SRC_IN)
+            binding.toolbar.navigationIcon = drawable
         }
 
     }
