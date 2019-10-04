@@ -44,6 +44,9 @@ class MainActivity : AppCompatActivity() {
         binding.btnVideo.setOnClickListener {
             TedImagePicker.with(this)
                 .mediaType(MediaType.VIDEO)
+                .toolbarBackgroundColor(R.color.error_color_material_dark)
+                .backButtonColor(R.color.white)
+                .toolbarTitleColor(R.color.white)
                 .startMultiImage { uri -> showSingleImage(uri.first()) }
         }
     }

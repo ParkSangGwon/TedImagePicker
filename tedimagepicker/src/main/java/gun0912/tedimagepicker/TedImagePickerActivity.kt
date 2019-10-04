@@ -6,6 +6,8 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.PorterDuff
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -71,15 +73,18 @@ internal class TedImagePickerActivity : AppCompatActivity() {
         setupSelectedMediaView()
         setupButton()
         loadMedia()
-
     }
 
     private fun setupToolbar() {
         setSupportActionBar(binding.toolbar)
+        binding.toolbarColor = ContextCompat.getColor(this@TedImagePickerActivity, builder.toolbarColorBackgroundResId)
+        binding.titleTextColor = ContextCompat.getColor(this@TedImagePickerActivity, builder.toolbarTitleColorResId)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
         builder.backButtonResId.let {
-            binding.toolbar.setNavigationIcon(it)
+            val drawable = resources.getDrawable(it)
+            drawable.setColorFilter(ContextCompat.getColor(this@TedImagePickerActivity, builder.backButtonColorId), PorterDuff.Mode.SRC_IN)
+            binding.toolbar.navigationIcon = drawable
         }
 
     }
