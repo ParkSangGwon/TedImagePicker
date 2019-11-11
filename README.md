@@ -147,6 +147,7 @@ TedRxImagePicker.with(this)
 * `cameraTileImage(R.drawable.xxx)`
 * `showCameraTile(Boolean) (default: true)`
 * `scrollIndicatorDateFormat(String)(default: YYYY.MM)`
+* `showTitle(Boolean)(default: true)`
 * `title(String or R.string.xxx) (default: 'Select Image','사진 선택')`
 * `backButton(R.drawable.xxx)`
 * `zoomIndicator(Boolean) (default: true)`
