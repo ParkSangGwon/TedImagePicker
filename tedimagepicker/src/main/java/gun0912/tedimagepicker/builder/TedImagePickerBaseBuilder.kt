@@ -17,6 +17,7 @@ import gun0912.tedimagepicker.TedImagePickerActivity
 import gun0912.tedimagepicker.builder.listener.OnErrorListener
 import gun0912.tedimagepicker.builder.listener.OnMultiSelectedListener
 import gun0912.tedimagepicker.builder.listener.OnSelectedListener
+import gun0912.tedimagepicker.builder.type.AlbumType
 import gun0912.tedimagepicker.builder.type.ButtonGravity
 import gun0912.tedimagepicker.builder.type.MediaType
 import gun0912.tedimagepicker.builder.type.SelectType
@@ -34,6 +35,7 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
     internal var cameraTileImageResId: Int = R.drawable.ic_camera_48dp,
     internal var showCameraTile: Boolean = true,
     internal var scrollIndicatorDateFormat: String = "yyyy.MM",
+    internal var showTitle: Boolean = true,
     internal var title: String? = null,
     @StringRes
     internal var titleResId: Int = R.string.ted_image_picker_title,
@@ -56,7 +58,9 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
     internal var minCountMessage: String? = null,
     @StringRes
     internal var minCountMessageResId: Int = R.string.ted_image_picker_min_count,
-    internal var showZoomIndicator: Boolean = true
+    internal var showZoomIndicator: Boolean = true,
+    internal var albumType: AlbumType = AlbumType.DRAWER,
+    internal var imageCountFormat: String = "%s"
 ) : Parcelable {
 
 
@@ -116,7 +120,7 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
     }
 
     fun image(): B = mediaType(MediaType.IMAGE)
-    
+
     fun video(): B = mediaType(MediaType.VIDEO)
 
     fun cameraTileBackground(@ColorRes cameraTileBackgroundResId: Int): B {
@@ -136,6 +140,11 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
 
     fun scrollIndicatorDateFormat(formatString: String): B {
         this.scrollIndicatorDateFormat = formatString
+        return this as B
+    }
+
+    fun showTitle(show: Boolean): B {
+        this.showTitle = show
         return this as B
     }
 
@@ -210,6 +219,27 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
 
     fun zoomIndicator(show: Boolean): B {
         this.showZoomIndicator = show
+        return this as B
+    }
+
+    fun albumType(albumType: AlbumType): B {
+        this.albumType = albumType
+        if (albumType == AlbumType.DROP_DOWN) {
+            showTitle(false)
+        }
+        return this as B
+    }
+
+    fun drawerAlbum(): B {
+        return albumType(AlbumType.DRAWER)
+    }
+
+    fun dropDownAlbum(): B {
+        return albumType(AlbumType.DROP_DOWN)
+    }
+
+    fun imageCountTextFormat(formatText: String): B {
+        this.imageCountFormat = formatText
         return this as B
     }
 

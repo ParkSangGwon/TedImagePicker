@@ -9,6 +9,8 @@
 
         <import type="gun0912.tedimagepicker.builder.type.ButtonGravity" />
 
+        <import type="gun0912.tedimagepicker.util.TextFormatUtil" />
+
         <variable
             name="selectedAlbum"
             type="gun0912.tedimagepicker.model.Album" />
@@ -33,6 +35,14 @@
             name="buttonTextColor"
             type="Integer" />
 
+        <variable
+            name="isAlbumOpened"
+            type="boolean" />
+
+        <variable
+            name="imageCountFormat"
+            type="String" />
+
     </data>
 
     <LinearLayout
@@ -49,6 +59,23 @@
             app:contentInsetStartWithNavigation="0dp">
 
 
+            <FrameLayout
+                android:id="@+id/view_selected_album_drop_down"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <include
+                    android:id="@+id/layout_selected_album_drop_down"
+                    layout="@layout/layout_selected_album_drop_down"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start"
+                    android:visibility="@{selectedAlbum != null? View.VISIBLE: View.GONE}"
+                    app:imageCountFormat="@{imageCountFormat}"
+                    app:isOpened="@{isAlbumOpened}"
+                    app:selectedAlbum="@{selectedAlbum}" />
+            </FrameLayout>
+
             <include
                 android:id="@+id/view_done_top"
                 layout="@layout/layout_done_button"
@@ -56,11 +83,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginEnd="@dimen/default_padding_small"
+                android:background="@{buttonBackground}"
                 android:visibility="@{showButton &amp;&amp; buttonGravity == ButtonGravity.TOP ? View.VISIBLE : View.GONE}"
                 app:text="@{buttonText}"
-                app:textColor="@{buttonTextColor}"
-                android:background="@{buttonBackground}"
-                />
+                app:textColor="@{buttonTextColor}" />
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -87,14 +113,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/default_padding_small"
+                    android:background="@{buttonBackground}"
                     android:visibility="@{showButton &amp;&amp; buttonGravity == ButtonGravity.BOTTOM ? View.VISIBLE : View.GONE}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:text="@{buttonText}"
-                    app:textColor="@{buttonTextColor}"
-                    android:background="@{buttonBackground}"
-                    />
+                    app:textColor="@{buttonTextColor}" />
 
 
                 <LinearLayout
@@ -132,7 +157,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/default_padding_small"
                         android:maxLines="1"
-                        android:text="@{selectedAlbum.mediaUris.size()+``}"
+                        android:text="@{TextFormatUtil.getMediaCountText(imageCountFormat,selectedAlbum.mediaUris.size())}"
                         android:textColor="@color/ted_image_picker_primary"
                         tools:text="40" />
 
@@ -167,6 +192,24 @@
                     tools:listitem="@layout/item_album" />
 
             </androidx.drawerlayout.widget.DrawerLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_album_drop_down"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@color/white"
+                android:elevation="4dp"
+                android:overScrollMode="never"
+                android:visibility="@{isAlbumOpened}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_max="wrap"
+                app:layout_constraintHeight_percent="0.7"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0"
+                tools:listitem="@layout/item_album" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

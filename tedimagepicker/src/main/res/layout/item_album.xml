@@ -11,13 +11,17 @@
             type="boolean" />
 
         <variable
+            name="mediaCountText"
+            type="String" />
+
+        <variable
             name="album"
             type="gun0912.tedimagepicker.model.Album" />
 
     </data>
 
     <FrameLayout
-        android:layout_width="@dimen/ted_image_picker_menu_width"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:foreground="?android:attr/selectableItemBackground">
 
@@ -74,7 +78,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:gravity="center_vertical"
-                android:text="@{Integer.toString(album.mediaCount)}"
+                android:text="@{mediaCountText}"
                 android:textColor="@color/txt_medium_gray"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

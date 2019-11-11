@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="gun0912.tedimagepicker.util.TextFormatUtil" />
+
+        <variable
+            name="selectedAlbum"
+            type="gun0912.tedimagepicker.model.Album" />
+
+        <variable
+            name="isOpened"
+            type="boolean" />
+
+        <variable
+            name="imageCountFormat"
+            type="String" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="@dimen/ted_image_picker_album_width"
+        android:layout_height="match_parent"
+        android:background="?android:attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="@{selectedAlbum != null}"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Subhead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_padding_small"
+            android:ellipsize="end"
+            android:maxWidth="@dimen/ted_image_picker_album_text_max_width"
+            android:maxLines="1"
+            android:text="@{selectedAlbum.name}"
+            tools:text="ALL" />
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Subhead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_padding_small"
+            android:maxLines="1"
+            android:text="@{TextFormatUtil.getMediaCountText(imageCountFormat,selectedAlbum.mediaUris.size())}"
+            android:textColor="@color/ted_image_picker_primary"
+            tools:text="40" />
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_padding_small"
+            android:src="@{isOpened? @drawable/ic_arrow_drop_up_black_24dp: @drawable/ic_arrow_drop_down_black_24dp}"
+            tools:src="@drawable/ic_arrow_drop_down_black_24dp" />
+    </LinearLayout>
+</layout>

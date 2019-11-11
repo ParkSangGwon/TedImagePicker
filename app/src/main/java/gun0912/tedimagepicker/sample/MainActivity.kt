@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         setNormalMultiButton()
         setRxSingleButton()
         setRxMultiButton()
+        setRxMultiDropDown()
     }
 
 
@@ -64,6 +65,16 @@ class MainActivity : AppCompatActivity() {
     private fun setRxMultiButton() {
         binding.btnRxMulti.setOnClickListener {
             TedRxImagePicker.with(this)
+                .startMultiImage()
+                .subscribe(this::showMultiImage, Throwable::printStackTrace)
+        }
+    }
+
+    private fun setRxMultiDropDown() {
+        binding.btnRxMultiDropDown.setOnClickListener {
+            TedRxImagePicker.with(this)
+                .dropDownAlbum()
+                .imageCountTextFormat("%s장")
                 .startMultiImage()
                 .subscribe(this::showMultiImage, Throwable::printStackTrace)
         }
