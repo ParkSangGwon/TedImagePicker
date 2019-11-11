@@ -35,6 +35,7 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
     internal var cameraTileImageResId: Int = R.drawable.ic_camera_48dp,
     internal var showCameraTile: Boolean = true,
     internal var scrollIndicatorDateFormat: String = "yyyy.MM",
+    internal var showTitle: Boolean = true,
     internal var title: String? = null,
     @StringRes
     internal var titleResId: Int = R.string.ted_image_picker_title,
@@ -141,6 +142,11 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
         return this as B
     }
 
+    fun showTitle(show: Boolean): B {
+        this.showTitle = show
+        return this as B
+    }
+
     fun title(text: String): B {
         this.title = text
         return this as B
@@ -217,6 +223,9 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
 
     fun albumType(albumType: AlbumType): B {
         this.albumType = albumType
+        if (albumType == AlbumType.DROP_DOWN) {
+            showTitle(false)
+        }
         return this as B
     }
 
