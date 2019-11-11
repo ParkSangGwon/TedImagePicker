@@ -27,6 +27,7 @@ import gun0912.tedimagepicker.adapter.MediaAdapter
 import gun0912.tedimagepicker.adapter.SelectedMediaAdapter
 import gun0912.tedimagepicker.base.BaseRecyclerViewAdapter
 import gun0912.tedimagepicker.builder.TedImagePickerBaseBuilder
+import gun0912.tedimagepicker.builder.type.AlbumType
 import gun0912.tedimagepicker.builder.type.SelectType
 import gun0912.tedimagepicker.databinding.ActivityTedImagePickerBinding
 import gun0912.tedimagepicker.extenstion.close
@@ -70,6 +71,7 @@ internal class TedImagePickerActivity : AppCompatActivity() {
         setupListener()
         setupSelectedMediaView()
         setupButton()
+        setupAlbumType()
         loadMedia()
 
     }
@@ -78,6 +80,7 @@ internal class TedImagePickerActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(builder.showTitle)
         builder.backButtonResId.let {
             binding.toolbar.setNavigationIcon(it)
         }
@@ -104,9 +107,13 @@ internal class TedImagePickerActivity : AppCompatActivity() {
         with(binding) {
             buttonGravity = builder.buttonGravity
             buttonText = builder.buttonText ?: getString(builder.buttonTextResId)
-            buttonTextColor = ContextCompat.getColor(this@TedImagePickerActivity, builder.buttonTextColorResId)
+            buttonTextColor =
+                ContextCompat.getColor(this@TedImagePickerActivity, builder.buttonTextColorResId)
             buttonBackground =
-                ContextCompat.getDrawable(this@TedImagePickerActivity, builder.buttonBackgroundResId)
+                ContextCompat.getDrawable(
+                    this@TedImagePickerActivity,
+                    builder.buttonBackgroundResId
+                )
         }
 
         setupButtonVisibility()
@@ -161,16 +168,17 @@ internal class TedImagePickerActivity : AppCompatActivity() {
 
     private fun setupAlbumRecyclerView() {
 
-        binding.rvAlbum.run {
-
-            adapter = albumAdapter.apply {
-                onItemClickListener = object : BaseRecyclerViewAdapter.OnItemClickListener<Album> {
-                    override fun onItemClick(data: Album, itemPosition: Int, layoutPosition: Int) {
-                        this@TedImagePickerActivity.setSelectedAlbum(itemPosition)
-                        binding.drawerLayout.close()
-                    }
+        val albumAdapter = albumAdapter.apply {
+            onItemClickListener = object : BaseRecyclerViewAdapter.OnItemClickListener<Album> {
+                override fun onItemClick(data: Album, itemPosition: Int, layoutPosition: Int) {
+                    this@TedImagePickerActivity.setSelectedAlbum(itemPosition)
+                    binding.drawerLayout.close()
+                    binding.isAlbumOpened = false
                 }
             }
+        }
+        binding.rvAlbum.run {
+            adapter = albumAdapter
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     binding.drawerLayout.setLock(newState == RecyclerView.SCROLL_STATE_DRAGGING)
@@ -178,6 +186,7 @@ internal class TedImagePickerActivity : AppCompatActivity() {
             })
         }
 
+        binding.rvAlbumDropDown.adapter = albumAdapter
 
     }
 
@@ -382,15 +391,44 @@ internal class TedImagePickerActivity : AppCompatActivity() {
             onMultiMediaDone()
         }
 
+        binding.viewSelectedAlbumDropDown.setOnClickListener {
+            binding.isAlbumOpened = !binding.isAlbumOpened
+        }
+
     }
 
+    private fun setupAlbumType() {
+        if (builder.albumType == AlbumType.DRAWER) {
+            binding.viewSelectedAlbumDropDown.visibility = View.GONE
+        } else {
+            binding.viewBottom.visibility = View.GONE
+            binding.drawerLayout.setLock(true)
+        }
+    }
+
+
     override fun onBackPressed() {
-        binding.drawerLayout.run {
-            if (isOpen()) {
-                close()
-            } else {
-                super.onBackPressed()
-            }
+        if (isAlbumOpened()) {
+            closeAlbum()
+        } else {
+            super.onBackPressed()
+        }
+
+    }
+
+    private fun isAlbumOpened(): Boolean =
+        if (builder.albumType == AlbumType.DRAWER) {
+            binding.drawerLayout.isOpen()
+        } else {
+            binding.isAlbumOpened
+        }
+
+    private fun closeAlbum() {
+
+        if (builder.albumType == AlbumType.DRAWER) {
+            binding.drawerLayout.close()
+        } else {
+            binding.isAlbumOpened = false
         }
     }
 
