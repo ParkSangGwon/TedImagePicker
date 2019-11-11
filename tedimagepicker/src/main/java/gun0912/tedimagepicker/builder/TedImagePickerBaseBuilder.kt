@@ -17,6 +17,7 @@ import gun0912.tedimagepicker.TedImagePickerActivity
 import gun0912.tedimagepicker.builder.listener.OnErrorListener
 import gun0912.tedimagepicker.builder.listener.OnMultiSelectedListener
 import gun0912.tedimagepicker.builder.listener.OnSelectedListener
+import gun0912.tedimagepicker.builder.type.AlbumType
 import gun0912.tedimagepicker.builder.type.ButtonGravity
 import gun0912.tedimagepicker.builder.type.MediaType
 import gun0912.tedimagepicker.builder.type.SelectType
@@ -56,7 +57,8 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
     internal var minCountMessage: String? = null,
     @StringRes
     internal var minCountMessageResId: Int = R.string.ted_image_picker_min_count,
-    internal var showZoomIndicator: Boolean = true
+    internal var showZoomIndicator: Boolean = true,
+    internal var albumType: AlbumType = AlbumType.DRAWER
 ) : Parcelable {
 
 
@@ -116,7 +118,7 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
     }
 
     fun image(): B = mediaType(MediaType.IMAGE)
-    
+
     fun video(): B = mediaType(MediaType.VIDEO)
 
     fun cameraTileBackground(@ColorRes cameraTileBackgroundResId: Int): B {
@@ -211,6 +213,19 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
     fun zoomIndicator(show: Boolean): B {
         this.showZoomIndicator = show
         return this as B
+    }
+
+    fun albumType(albumType: AlbumType): B {
+        this.albumType = albumType
+        return this as B
+    }
+
+    fun drawerAlbum(): B {
+        return albumType(AlbumType.DRAWER)
+    }
+
+    fun dropDownAlbum(): B {
+        return albumType(AlbumType.DROP_DOWN)
     }
 
 }
