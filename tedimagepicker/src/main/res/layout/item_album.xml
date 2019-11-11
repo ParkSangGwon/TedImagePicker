@@ -11,6 +11,10 @@
             type="boolean" />
 
         <variable
+            name="mediaCountText"
+            type="String" />
+
+        <variable
             name="album"
             type="gun0912.tedimagepicker.model.Album" />
 
@@ -74,7 +78,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:gravity="center_vertical"
-                android:text="@{Integer.toString(album.mediaCount)}"
+                android:text="@{mediaCountText}"
                 android:textColor="@color/txt_medium_gray"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

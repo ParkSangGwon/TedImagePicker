@@ -74,6 +74,7 @@ class MainActivity : AppCompatActivity() {
         binding.btnRxMultiDropDown.setOnClickListener {
             TedRxImagePicker.with(this)
                 .dropDownAlbum()
+                .imageCountTextFormat("%s장")
                 .startMultiImage()
                 .subscribe(this::showMultiImage, Throwable::printStackTrace)
         }

@@ -59,7 +59,8 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
     @StringRes
     internal var minCountMessageResId: Int = R.string.ted_image_picker_min_count,
     internal var showZoomIndicator: Boolean = true,
-    internal var albumType: AlbumType = AlbumType.DRAWER
+    internal var albumType: AlbumType = AlbumType.DRAWER,
+    internal var imageCountFormat: String = "%s"
 ) : Parcelable {
 
 
@@ -235,6 +236,11 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
 
     fun dropDownAlbum(): B {
         return albumType(AlbumType.DROP_DOWN)
+    }
+
+    fun imageCountTextFormat(formatText: String): B {
+        this.imageCountFormat = formatText
+        return this as B
     }
 
 }

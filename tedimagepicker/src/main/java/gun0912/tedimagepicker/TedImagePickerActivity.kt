@@ -50,7 +50,7 @@ import kotlin.collections.ArrayList
 internal class TedImagePickerActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityTedImagePickerBinding
-    private val albumAdapter = AlbumAdapter()
+    private val albumAdapter by lazy { AlbumAdapter(builder) }
     private lateinit var mediaAdapter: MediaAdapter
     private lateinit var selectedMediaAdapter: SelectedMediaAdapter
 
@@ -64,7 +64,7 @@ internal class TedImagePickerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setSavedInstanceState(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_ted_image_picker)
-
+        binding.imageCountFormat = builder.imageCountFormat
         setupToolbar()
         setupTitle()
         setupRecyclerView()

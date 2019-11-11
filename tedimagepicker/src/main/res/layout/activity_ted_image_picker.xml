@@ -9,6 +9,8 @@
 
         <import type="gun0912.tedimagepicker.builder.type.ButtonGravity" />
 
+        <import type="gun0912.tedimagepicker.util.TextFormatUtil" />
+
         <variable
             name="selectedAlbum"
             type="gun0912.tedimagepicker.model.Album" />
@@ -36,6 +38,10 @@
         <variable
             name="isAlbumOpened"
             type="boolean" />
+
+        <variable
+            name="imageCountFormat"
+            type="String" />
 
     </data>
 
@@ -65,6 +71,7 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="start"
                     android:visibility="@{selectedAlbum != null? View.VISIBLE: View.GONE}"
+                    app:imageCountFormat="@{imageCountFormat}"
                     app:isOpened="@{isAlbumOpened}"
                     app:selectedAlbum="@{selectedAlbum}" />
             </FrameLayout>
@@ -150,7 +157,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/default_padding_small"
                         android:maxLines="1"
-                        android:text="@{selectedAlbum.mediaUris.size()+``}"
+                        android:text="@{TextFormatUtil.getMediaCountText(imageCountFormat,selectedAlbum.mediaUris.size())}"
                         android:textColor="@color/ted_image_picker_primary"
                         tools:text="40" />
 
