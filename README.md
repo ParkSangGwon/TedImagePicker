@@ -161,6 +161,8 @@ TedRxImagePicker.with(this)
 - `title(String or R.string.xxx) (default: 'Select Image','사진 선택')`
 - `backButton(R.drawable.xxx)`
 - `zoomIndicator(Boolean) (default: true)`
+- `imageCountTextFormat(String) (default: %s)`: `%s장`,  `Count: %s`
+
 
 #### Multi Select
 
@@ -171,6 +173,7 @@ TedRxImagePicker.with(this)
 - `buttonTextColor(R.color.xxx) (default: white)`
 - `max(Int, String or R.string.xxx)`
 - `min(Int, String or R.string.xxx)`
+- `drawerAlbum() / dropDownAlbum() (default: Drawer)`: You can choice Drawer or DropDown album style
   </br></br>
 
 ## FAQ
