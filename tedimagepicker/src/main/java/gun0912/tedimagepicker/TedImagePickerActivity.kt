@@ -194,6 +194,7 @@ internal class TedImagePickerActivity : AppCompatActivity() {
         mediaAdapter = MediaAdapter(this, builder).apply {
             onItemClickListener = object : BaseRecyclerViewAdapter.OnItemClickListener<Media> {
                 override fun onItemClick(data: Media, itemPosition: Int, layoutPosition: Int) {
+                    binding.isAlbumOpened = false
                     this@TedImagePickerActivity.onMediaClick(data.uri)
                 }
 
