@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name">tedimagepicker</string>
-
     <string name="ted_image_picker_album_all">전체보기</string>
     <string name="ted_image_picker_empty">비어있음</string>
     <string name="ted_image_picker_title">이미지 선택</string>

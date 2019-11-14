@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name">tedimagepicker</string>
-
     <string name="ted_image_picker_album_all">All</string>
     <string name="ted_image_picker_empty">Empty</string>
     <string name="ted_image_picker_title">Select Image</string>
