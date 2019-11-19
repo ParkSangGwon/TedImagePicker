@@ -109,11 +109,7 @@ internal class TedImagePickerActivity : AppCompatActivity() {
             buttonText = builder.buttonText ?: getString(builder.buttonTextResId)
             buttonTextColor =
                 ContextCompat.getColor(this@TedImagePickerActivity, builder.buttonTextColorResId)
-            buttonBackground =
-                ContextCompat.getDrawable(
-                    this@TedImagePickerActivity,
-                    builder.buttonBackgroundResId
-                )
+            buttonBackground = builder.buttonBackgroundResId
             buttonDrawableOnly = builder.buttonDrawableOnly
         }
 

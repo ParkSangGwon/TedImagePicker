@@ -20,6 +20,12 @@ internal class DataBindingAdapter {
                 .into(imageView)
         }
 
+        @BindingAdapter("android:src")
+        @JvmStatic
+        fun setImageViewResource(imageView: ImageView, resourceId: Int) {
+            imageView.setImageResource(resourceId)
+        }
+
         @Suppress("UNCHECKED_CAST")
         @BindingAdapter("replaceAll")
         @JvmStatic

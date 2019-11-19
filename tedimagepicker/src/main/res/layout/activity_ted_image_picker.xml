@@ -29,7 +29,7 @@
 
         <variable
             name="buttonBackground"
-            type="android.graphics.drawable.Drawable" />
+            type="Integer" />
 
         <variable
             name="buttonTextColor"

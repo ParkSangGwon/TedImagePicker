@@ -10,7 +10,7 @@
 
         <variable
             name="background"
-            type="android.graphics.drawable.Drawable" />
+            type="Integer" />
 
         <variable
             name="textColor"
