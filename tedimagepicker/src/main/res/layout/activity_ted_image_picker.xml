@@ -36,6 +36,10 @@
             type="Integer" />
 
         <variable
+            name="buttonDrawableOnly"
+            type="boolean" />
+
+        <variable
             name="isAlbumOpened"
             type="boolean" />
 
@@ -83,8 +87,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginEnd="@dimen/default_padding_small"
-                android:background="@{buttonBackground}"
                 android:visibility="@{showButton &amp;&amp; buttonGravity == ButtonGravity.TOP ? View.VISIBLE : View.GONE}"
+                app:background="@{buttonBackground}"
+                app:buttonDrawableOnly="@{buttonDrawableOnly}"
                 app:text="@{buttonText}"
                 app:textColor="@{buttonTextColor}" />
 
@@ -113,8 +118,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/default_padding_small"
-                    android:background="@{buttonBackground}"
                     android:visibility="@{showButton &amp;&amp; buttonGravity == ButtonGravity.BOTTOM ? View.VISIBLE : View.GONE}"
+                    app:background="@{buttonBackground}"
+                    app:buttonDrawableOnly="@{buttonDrawableOnly}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"

@@ -114,6 +114,7 @@ internal class TedImagePickerActivity : AppCompatActivity() {
                     this@TedImagePickerActivity,
                     builder.buttonBackgroundResId
                 )
+            buttonDrawableOnly = builder.buttonDrawableOnly
         }
 
         setupButtonVisibility()

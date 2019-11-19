@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="text"
             type="String" />
@@ -14,21 +15,37 @@
         <variable
             name="textColor"
             type="Integer" />
+
+        <variable
+            name="buttonDrawableOnly"
+            type="boolean" />
+
     </data>
 
-    <TextView
-        style="@style/TextAppearance.AppCompat.Subhead"
+    <FrameLayout
         android:layout_width="wrap_content"
-        android:background="@{background}"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:paddingStart="@dimen/ted_image_picker_done_button_horizontal_padding"
-        android:paddingTop="@dimen/ted_image_picker_done_button_vertical_padding"
-        android:paddingEnd="@dimen/ted_image_picker_done_button_horizontal_padding"
-        android:paddingBottom="@dimen/ted_image_picker_done_button_vertical_padding"
-        android:text="@{text}"
-        android:textColor="@{textColor}"
-        tools:text="완료" />
+        android:layout_height="wrap_content">
 
+        <TextView
+            style="@style/TextAppearance.AppCompat.Subhead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@{background}"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/ted_image_picker_done_button_horizontal_padding"
+            android:paddingTop="@dimen/ted_image_picker_done_button_vertical_padding"
+            android:paddingEnd="@dimen/ted_image_picker_done_button_horizontal_padding"
+            android:paddingBottom="@dimen/ted_image_picker_done_button_vertical_padding"
+            android:text="@{text}"
+            android:textColor="@{textColor}"
+            android:visibility="@{!buttonDrawableOnly}"
+            tools:text="완료" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@{background}"
+            android:visibility="@{buttonDrawableOnly}" />
+    </FrameLayout>
 </layout>
