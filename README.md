@@ -31,7 +31,7 @@ TedImagePicker is **simple/beautiful/smart** image picker
 ```gradle
 dependencies {
     implementation 'gun0912.ted:tedimagepicker:x.y.z'
-    //implementation 'gun0912.ted:tedimagepicker:1.0.0'
+    //implementation 'gun0912.ted:tedimagepicker:1.0.8'
 }
 
 ```
@@ -172,6 +172,7 @@ TedRxImagePicker.with(this)
 - `buttonText(String or R.string.xxx) (default: 'Done','완료')`
 - `buttonBackground(R.drawable.xxx) (default: Blue Background)`
 - `buttonTextColor(R.color.xxx) (default: white)`
+- `buttonDrawableOnly(R.drawable.xxx) (default: false)`: If you want show drawable button without text, use this method
 - `max(Int, String or R.string.xxx)`
 - `min(Int, String or R.string.xxx)`
 - `drawerAlbum() / dropDownAlbum() (default: Drawer)`: You can choice Drawer or DropDown album style
