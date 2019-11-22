@@ -63,6 +63,7 @@ internal class TedImagePickerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSavedInstanceState(savedInstanceState)
+        startAnimation()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_ted_image_picker)
         binding.imageCountFormat = builder.imageCountFormat
         setupToolbar()
@@ -74,6 +75,12 @@ internal class TedImagePickerActivity : AppCompatActivity() {
         setupAlbumType()
         loadMedia()
 
+    }
+
+    private fun startAnimation() {
+        if (builder.startEnterAnim != null && builder.startExitAnim != null) {
+            overridePendingTransition(builder.startEnterAnim!!, builder.startExitAnim!!)
+        }
     }
 
     private fun setupToolbar() {
@@ -341,6 +348,17 @@ internal class TedImagePickerActivity : AppCompatActivity() {
         }
         setResult(Activity.RESULT_OK, data)
         finish()
+    }
+
+    override fun finish() {
+        super.finish()
+        finishAnimation()
+    }
+
+    private fun finishAnimation() {
+        if (builder.finishEnterAnim != null && builder.finishExitAnim != null) {
+            overridePendingTransition(builder.finishEnterAnim!!, builder.finishExitAnim!!)
+        }
     }
 
     private fun onMultiMediaDone() {

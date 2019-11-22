@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Parcelable
+import androidx.annotation.AnimRes
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -62,7 +63,15 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
     internal var minCountMessageResId: Int = R.string.ted_image_picker_min_count,
     internal var showZoomIndicator: Boolean = true,
     internal var albumType: AlbumType = AlbumType.DRAWER,
-    internal var imageCountFormat: String = "%s"
+    internal var imageCountFormat: String = "%s",
+    @AnimRes
+    internal var startEnterAnim: Int? = null,
+    @AnimRes
+    internal var startExitAnim: Int? = null,
+    @AnimRes
+    internal var finishEnterAnim: Int? = null,
+    @AnimRes
+    internal var finishExitAnim: Int? = null
 ) : Parcelable {
 
 
@@ -101,7 +110,6 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
                     }
                 }, { throwable -> onErrorListener?.onError(throwable.localizedMessage) })
             }
-
     }
 
     private fun onComplete(data: Intent) {
@@ -254,6 +262,18 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
 
     fun imageCountTextFormat(formatText: String): B {
         this.imageCountFormat = formatText
+        return this as B
+    }
+
+    fun startAnimation(@AnimRes enterAnim: Int, @AnimRes exitAnim: Int): B {
+        this.startEnterAnim = enterAnim
+        this.startExitAnim = exitAnim
+        return this as B
+    }
+
+    fun finishAnimation(@AnimRes enterAnim: Int, @AnimRes exitAnim: Int): B {
+        this.finishEnterAnim = enterAnim
+        this.finishExitAnim = exitAnim
         return this as B
     }
 
