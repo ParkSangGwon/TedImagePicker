@@ -259,7 +259,8 @@ internal class TedImagePickerActivity : AppCompatActivity() {
     private fun onCameraTileClick() {
         val (cameraIntent, uri) = MediaUtil.getMediaIntentUri(
             this@TedImagePickerActivity,
-            builder.mediaType
+            builder.mediaType,
+            builder.savedDirectoryName
         )
         TedRxOnActivityResult.with(this@TedImagePickerActivity)
             .startActivityForResult(cameraIntent)

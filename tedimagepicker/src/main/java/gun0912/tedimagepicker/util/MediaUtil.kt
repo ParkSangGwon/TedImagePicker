@@ -17,13 +17,17 @@ import java.util.*
 internal class MediaUtil {
     companion object {
 
-        internal fun getMediaIntentUri(context: Context, mediaType: MediaType): Pair<Intent, Uri> {
+        internal fun getMediaIntentUri(
+            context: Context,
+            mediaType: MediaType,
+            savedDirectoryName: String?
+        ): Pair<Intent, Uri> {
             val cameraIntent = when (mediaType) {
                 MediaType.IMAGE -> Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                 MediaType.VIDEO -> Intent(MediaStore.ACTION_VIDEO_CAPTURE)
             }
 
-            val mediaFile = getMediaFile(mediaType)
+            val mediaFile = getMediaFile(mediaType, savedDirectoryName)
 
             if (cameraIntent.resolveActivity(context.packageManager) == null) {
                 throw PackageManager.NameNotFoundException("Can not start Camera")
@@ -51,15 +55,15 @@ internal class MediaUtil {
             return Pair(cameraIntent, Uri.fromFile(mediaFile))
         }
 
-        private fun getMediaFile(mediaType: MediaType): File {
+        private fun getMediaFile(mediaType: MediaType, savedDirectoryName: String?): File {
             val timeStamp =
                 SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault()).format(Date())
             val fileName = "${mediaType}_$timeStamp"
-            val directoryType = when (mediaType) {
+            val directoryName = savedDirectoryName ?: when (mediaType) {
                 MediaType.IMAGE -> Environment.DIRECTORY_PICTURES
                 MediaType.VIDEO -> Environment.DIRECTORY_MOVIES
             }
-            val directory = Environment.getExternalStoragePublicDirectory(directoryType)
+            val directory = Environment.getExternalStoragePublicDirectory(directoryName)
 
             if (!directory.exists()) {
                 directory.mkdir()
