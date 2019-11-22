@@ -3,6 +3,7 @@ package gun0912.tedimagepicker.binding
 import android.net.Uri
 import android.view.View
 import android.widget.ImageView
+import androidx.annotation.DrawableRes
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -55,6 +56,12 @@ internal class DataBindingAdapter {
                 false -> 0f
             }
             view.animate().translationY(animateValue).start()
+        }
+
+        @BindingAdapter("android:background")
+        @JvmStatic
+        fun setBackgroundResource(view: View, @DrawableRes resId: Int?) {
+            resId?.let { view.setBackgroundResource(it) }
         }
 
     }
