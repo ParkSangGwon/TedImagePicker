@@ -163,6 +163,10 @@ TedRxImagePicker.with(this)
 - `backButton(R.drawable.xxx)`
 - `zoomIndicator(Boolean) (default: true)`
 - `imageCountTextFormat(String) (default: %s)`: `%s장`,  `Count: %s`
+- `savedDirectoryName(String): saved directory name from take picture using camera`
+- `startAnimation(Int, Int)`
+- `finishAnimation(Int, Int)`
+
 
 
 #### Multi Select
