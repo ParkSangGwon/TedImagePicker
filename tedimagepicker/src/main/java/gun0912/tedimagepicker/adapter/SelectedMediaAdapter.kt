@@ -1,5 +1,6 @@
 package gun0912.tedimagepicker.adapter
 
+import android.app.Activity
 import android.net.Uri
 import android.util.Log
 import android.view.ViewGroup
@@ -39,6 +40,9 @@ internal class SelectedMediaAdapter :
         }
 
         override fun recycled() {
+            if ((itemView.context as? Activity)?.isDestroyed == true) {
+                return
+            }
             Glide.with(itemView).clear(binding.ivImage)
         }
     }
