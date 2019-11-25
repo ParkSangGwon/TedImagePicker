@@ -3,7 +3,6 @@ package gun0912.tedimagepicker.binding
 import android.net.Uri
 import android.view.View
 import android.widget.ImageView
-import androidx.annotation.DrawableRes
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -19,12 +18,6 @@ internal class DataBindingAdapter {
                 .load(uri)
                 .thumbnail(0.1f)
                 .into(imageView)
-        }
-
-        @BindingAdapter("android:src")
-        @JvmStatic
-        fun setImageViewResource(imageView: ImageView, resourceId: Int) {
-            imageView.setImageResource(resourceId)
         }
 
         @Suppress("UNCHECKED_CAST")
@@ -58,10 +51,25 @@ internal class DataBindingAdapter {
             view.animate().translationY(animateValue).start()
         }
 
-        @BindingAdapter("android:background")
+        @BindingAdapter("src")
         @JvmStatic
-        fun setBackgroundResource(view: View, @DrawableRes resId: Int?) {
-            resId?.let { view.setBackgroundResource(it) }
+        fun setImageViewResource(imageView: ImageView, resId: Int?) {
+            try {
+                resId?.let { imageView.setImageResource(it) }
+            } catch (e: Exception) {
+
+            }
+
+        }
+
+        @BindingAdapter("background")
+        @JvmStatic
+        fun setBackgroundResource(view: View, resId: Int?) {
+            try {
+                resId?.let { view.setBackgroundResource(it) }
+            } catch (e: Exception) {
+
+            }
         }
 
     }
