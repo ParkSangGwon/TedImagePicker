@@ -1,5 +1,6 @@
 package gun0912.tedimagepicker.util
 
+import android.content.ContentUris
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
@@ -9,12 +10,11 @@ import gun0912.tedimagepicker.builder.type.MediaType
 import gun0912.tedimagepicker.model.Album
 import gun0912.tedimagepicker.model.Media
 import io.reactivex.Single
-import java.io.File
 
 internal class GalleryUtil {
     companion object {
 
-        private const val INDEX_MEDIA_URI = MediaStore.MediaColumns.DATA
+        private const val INDEX_MEDIA_ID = MediaStore.MediaColumns._ID
         private const val INDEX_DATE_ADDED = MediaStore.MediaColumns.DATE_ADDED
 
         private lateinit var albumName: String
@@ -37,7 +37,7 @@ internal class GalleryUtil {
                     }
 
                     val sortOrder = "$INDEX_DATE_ADDED DESC"
-                    val projection = arrayOf(INDEX_MEDIA_URI, albumName, INDEX_DATE_ADDED)
+                    val projection = arrayOf(INDEX_MEDIA_ID, albumName, INDEX_DATE_ADDED)
                     val selection = MediaStore.Images.Media.SIZE + " > 0"
                     val cursor =
                         context.contentResolver.query(uri, projection, selection, null, sortOrder)
@@ -92,10 +92,11 @@ internal class GalleryUtil {
             try {
                 cursor.run {
                     val folderName = getString(getColumnIndex(albumName))
-                    val mediaPath = getString(getColumnIndex(INDEX_MEDIA_URI))
-                    val mediaUri: Uri = Uri.fromFile(File(mediaPath))
+                    val id = getLong(getColumnIndex(INDEX_MEDIA_ID))
+                    val contentUri =
+                        ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id)
                     val datedAddedSecond = getLong(getColumnIndex(INDEX_DATE_ADDED))
-                    Media(folderName, mediaUri, datedAddedSecond)
+                    Media(folderName, contentUri, datedAddedSecond)
                 }
             } catch (exception: Exception) {
                 exception.printStackTrace()
