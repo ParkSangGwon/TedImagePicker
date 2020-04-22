@@ -56,7 +56,12 @@ internal class MediaUtil {
             val timeStamp =
                 SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault()).format(Date())
             val fileName = "${mediaType}_$timeStamp"
-            val directoryName = savedDirectoryName ?: mediaType.savedDirectoryName
+            val directoryName =
+                if (savedDirectoryName != null) {
+                    "${mediaType.savedDirectoryName}/$savedDirectoryName"
+                } else {
+                    mediaType.savedDirectoryName
+                }
             val directory = Environment.getExternalStoragePublicDirectory(directoryName)
 
             if (!directory.exists()) {
