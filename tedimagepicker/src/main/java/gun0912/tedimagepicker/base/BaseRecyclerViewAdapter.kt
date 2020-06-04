@@ -90,7 +90,7 @@ internal abstract class BaseRecyclerViewAdapter<D, VH : BaseViewHolder<ViewDataB
 
     fun getItemPosition(data: D) = items.indexOf(data).let { if (it < 0) it else it + headerCount }
 
-    override fun getItemCount(): Int = if (items.size > 0) items.size + headerCount else 0
+    override fun getItemCount(): Int = items.size + headerCount
 
     open fun getItem(position: Int): D =
         items[getItemPosition(position)]
