@@ -49,7 +49,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:overScrollMode="never"
-                tools:listitem="@layout/item_gallery_media" />
+                android:visibility="invisible"
+                tools:listitem="@layout/item_gallery_media"
+                tools:visibility="visible" />
 
             <gun0912.tedimagepicker.base.FastScroller
                 android:id="@+id/fast_scroller"

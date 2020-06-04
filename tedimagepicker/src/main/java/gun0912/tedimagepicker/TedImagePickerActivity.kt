@@ -140,6 +140,7 @@ internal class TedImagePickerActivity : AppCompatActivity() {
                 if (!isRefresh) {
                     setSelectedUriList(builder.selectedUriList)
                 }
+                binding.layoutContent.rvMedia.visibility = View.VISIBLE
 
             }
     }
