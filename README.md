@@ -167,7 +167,12 @@ TedRxImagePicker.with(this)
 - `startAnimation(Int, Int)`
 - `finishAnimation(Int, Int)`
 
-
+- Change picker primary color
+: override color name in your colors.xml
+```xml
+    <color name="ted_image_picker_primary">#your_color_code</color>
+    <color name="ted_image_picker_primary_pressed">#your_color_code</color>
+```
 
 #### Multi Select
 
