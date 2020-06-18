@@ -49,7 +49,7 @@ internal class GalleryUtil {
 
                         val totalImageList =
                             generateSequence { if (cursor.moveToNext()) cursor else null }
-                                .map { getImage(it) }
+                                .map { getImage(it, mediaType) }
                                 .filterNotNull()
                                 .toList()
 
@@ -92,11 +92,11 @@ internal class GalleryUtil {
         private fun getAlbum(entry: Map.Entry<String, List<Media>>) =
             Album(entry.key, entry.value[0].uri, entry.value)
 
-        private fun getImage(cursor: Cursor): Media? =
+        private fun getImage(cursor: Cursor, mediaType: MediaType): Media? =
             try {
                 cursor.run {
                     val folderName = getString(getColumnIndex(albumName))
-                    val mediaUri = getMediaUri()
+                    val mediaUri = getMediaUri(mediaType)
                     val datedAddedSecond = getLong(getColumnIndex(INDEX_DATE_ADDED))
                     Media(folderName, mediaUri, datedAddedSecond)
                 }
@@ -105,13 +105,15 @@ internal class GalleryUtil {
                 null
             }
 
-        private fun Cursor.getMediaUri(): Uri =
+        private fun Cursor.getMediaUri(mediaType: MediaType): Uri =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 val id = getLong(getColumnIndex(INDEX_MEDIA_ID))
-                ContentUris.withAppendedId(
-                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                    id
-                )
+
+                val contentUri = when (mediaType) {
+                    MediaType.IMAGE -> MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                    MediaType.VIDEO -> MediaStore.Video.Media.EXTERNAL_CONTENT_URI
+                }
+                ContentUris.withAppendedId(contentUri, id)
             } else {
                 val mediaPath = getString(getColumnIndex(INDEX_MEDIA_URI))
                 Uri.fromFile(File(mediaPath))
