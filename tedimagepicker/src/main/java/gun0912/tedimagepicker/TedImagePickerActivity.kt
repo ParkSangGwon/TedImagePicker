@@ -275,8 +275,6 @@ internal class TedImagePickerActivity : AppCompatActivity() {
                 .subscribe({ tedPermissionResult: TedPermissionResult ->
                     if (tedPermissionResult.isGranted) {
                         startCameraIntent()
-                    } else {
-                        Toast.makeText(this, "Kamera izni vermediniz.", Toast.LENGTH_SHORT).show()
                     }
                 }, { throwable: Throwable? -> Log.e(javaClass.name, throwable?.message) })
         }
@@ -284,8 +282,8 @@ internal class TedImagePickerActivity : AppCompatActivity() {
 
     private fun requestCameraPermission(context: Context) = TedRx2Permission.with(context)
         .setPermissions(Manifest.permission.CAMERA)
-        .setRationaleMessage("Bişiler için kamera izni lazım.")
-        .setDeniedMessage("Engellersen kameradan fotoğraf ekleyemezsin.")
+        .setDeniedTitle(getString(R.string.permission_denied_title))
+        .setDeniedMessage(getString(R.string.permission_denied_rationale))
         .request()
 
     @SuppressLint("CheckResult")
