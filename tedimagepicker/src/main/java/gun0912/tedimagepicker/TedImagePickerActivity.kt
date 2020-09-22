@@ -1,5 +1,6 @@
 package gun0912.tedimagepicker
 
+import android.Manifest
 import android.animation.AnimatorSet
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
@@ -20,7 +21,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gun0912.tedonactivityresult.model.ActivityResult
+import com.gun0912.tedpermission.TedPermissionResult
 import com.tedpark.tedonactivityresult.rx2.TedRxOnActivityResult
+import com.tedpark.tedpermission.rx2.TedRx2Permission
 import gun0912.tedimagepicker.adapter.AlbumAdapter
 import gun0912.tedimagepicker.adapter.GridSpacingItemDecoration
 import gun0912.tedimagepicker.adapter.MediaAdapter
@@ -265,6 +268,28 @@ internal class TedImagePickerActivity : AppCompatActivity() {
 
     @SuppressLint("CheckResult")
     private fun onCameraTileClick() {
+        if (TedRx2Permission.isGranted(this, Manifest.permission.CAMERA))
+            startCameraIntent()
+        else {
+            requestCameraPermission(this)
+                .subscribe({ tedPermissionResult: TedPermissionResult ->
+                    if (tedPermissionResult.isGranted) {
+                        startCameraIntent()
+                    } else {
+                        Toast.makeText(this, "Kamera izni vermediniz.", Toast.LENGTH_SHORT).show()
+                    }
+                }, { throwable: Throwable? -> Log.e(javaClass.name, throwable?.message) })
+        }
+    }
+
+    private fun requestCameraPermission(context: Context) = TedRx2Permission.with(context)
+        .setPermissions(Manifest.permission.CAMERA)
+        .setRationaleMessage("Bişiler için kamera izni lazım.")
+        .setDeniedMessage("Engellersen kameradan fotoğraf ekleyemezsin.")
+        .request()
+
+    @SuppressLint("CheckResult")
+    private fun startCameraIntent() {
         val (cameraIntent, uri) = MediaUtil.getMediaIntentUri(
             this@TedImagePickerActivity,
             builder.mediaType,
