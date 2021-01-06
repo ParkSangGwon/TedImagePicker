@@ -5,7 +5,7 @@ import android.net.Uri
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityOptionsCompat
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.NO_POSITION
 import com.bumptech.glide.Glide
 import gun0912.tedimagepicker.R
 import gun0912.tedimagepicker.base.BaseSimpleHeaderAdapter
@@ -75,7 +75,7 @@ internal class MediaAdapter(
             binding.run {
                 selectType = builder.selectType
                 viewZoomOut.setOnClickListener {
-                    val item = getItem(adapterPosition.takeIf { it != RecyclerView.NO_POSITION }
+                    val item = getItem(adapterPosition.takeIf { it != NO_POSITION }
                         ?: return@setOnClickListener)
                     startZoomActivity(item)
                 }
