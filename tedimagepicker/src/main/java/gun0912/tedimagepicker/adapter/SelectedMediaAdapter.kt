@@ -5,6 +5,7 @@ import android.net.Uri
 import android.util.Log
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.NO_POSITION
 import com.bumptech.glide.Glide
 import gun0912.tedimagepicker.R
 import gun0912.tedimagepicker.base.BaseRecyclerViewAdapter
@@ -30,7 +31,9 @@ internal class SelectedMediaAdapter :
 
         init {
             binding.ivClear.setOnClickListener {
-                onClearClickListener?.invoke(getItem(adapterPosition))
+                val item = getItem(adapterPosition.takeIf { it != NO_POSITION }
+                    ?: return@setOnClickListener)
+                onClearClickListener?.invoke(item)
             }
         }
 
