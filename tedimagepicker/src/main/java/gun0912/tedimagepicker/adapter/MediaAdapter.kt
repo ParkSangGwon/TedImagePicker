@@ -14,6 +14,7 @@ import gun0912.tedimagepicker.builder.type.MediaType
 import gun0912.tedimagepicker.databinding.ItemGalleryCameraBinding
 import gun0912.tedimagepicker.databinding.ItemGalleryMediaBinding
 import gun0912.tedimagepicker.model.Media
+import gun0912.tedimagepicker.util.ToastUtil
 import gun0912.tedimagepicker.zoom.TedImageZoomActivity
 
 internal class MediaAdapter(
@@ -41,7 +42,7 @@ internal class MediaAdapter(
         if (selectedUriList.size == builder.maxCount) {
             val message =
                 builder.maxCountMessage ?: activity.getString(builder.maxCountMessageResId)
-            Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
+            ToastUtil.showToast(message)
         } else {
             selectedUriList.add(uri)
             onMediaAddListener?.invoke()

@@ -22,6 +22,7 @@ import gun0912.tedimagepicker.builder.type.AlbumType
 import gun0912.tedimagepicker.builder.type.ButtonGravity
 import gun0912.tedimagepicker.builder.type.MediaType
 import gun0912.tedimagepicker.builder.type.SelectType
+import gun0912.tedimagepicker.util.ToastUtil
 import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 
@@ -77,14 +78,16 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
 
     @IgnoredOnParcel
     protected var onSelectedListener: OnSelectedListener? = null
+
     @IgnoredOnParcel
     protected var onMultiSelectedListener: OnMultiSelectedListener? = null
+
     @IgnoredOnParcel
     protected var onErrorListener: OnErrorListener? = null
 
-
     @SuppressLint("CheckResult")
     protected fun startInternal(context: Context) {
+        ToastUtil.context = context
         checkPermission(context)
             .subscribe({ permissionResult ->
                 if (permissionResult.isGranted) {
@@ -274,6 +277,11 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
     fun finishAnimation(@AnimRes enterAnim: Int, @AnimRes exitAnim: Int): B {
         this.finishEnterAnim = enterAnim
         this.finishExitAnim = exitAnim
+        return this as B
+    }
+
+    fun toast(toastAction: ((String) -> Unit)): B {
+        ToastUtil.toastAction = toastAction
         return this as B
     }
 
