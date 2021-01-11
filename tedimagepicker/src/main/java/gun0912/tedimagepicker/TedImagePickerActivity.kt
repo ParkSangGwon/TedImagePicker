@@ -12,7 +12,6 @@ import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -38,6 +37,7 @@ import gun0912.tedimagepicker.model.Album
 import gun0912.tedimagepicker.model.Media
 import gun0912.tedimagepicker.util.GalleryUtil
 import gun0912.tedimagepicker.util.MediaUtil
+import gun0912.tedimagepicker.util.ToastUtil
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -368,7 +368,7 @@ internal class TedImagePickerActivity : AppCompatActivity() {
         val selectedUriList = mediaAdapter.selectedUriList
         if (selectedUriList.size < builder.minCount) {
             val message = builder.minCountMessage ?: getString(builder.minCountMessageResId)
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+            ToastUtil.showToast(message)
         } else {
 
             val data = Intent().apply {
