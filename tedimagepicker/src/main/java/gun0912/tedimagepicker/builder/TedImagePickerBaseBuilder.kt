@@ -87,7 +87,6 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
 
     @SuppressLint("CheckResult")
     protected fun startInternal(context: Context) {
-        ToastUtil.context = context
         checkPermission(context)
             .subscribe({ permissionResult ->
                 if (permissionResult.isGranted) {
