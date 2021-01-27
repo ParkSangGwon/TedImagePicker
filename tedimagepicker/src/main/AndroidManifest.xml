@@ -22,6 +22,11 @@
             android:theme="@style/TedImagePickerTheme.Zoom" />
 
         <provider
+            android:name=".util.TedImagePickerContentProvider"
+            android:authorities="gun0912.tedimagepicker.provider"
+            android:exported="false" />
+
+        <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
             android:exported="false"
