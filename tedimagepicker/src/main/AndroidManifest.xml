@@ -23,7 +23,7 @@
 
         <provider
             android:name=".util.TedImagePickerContentProvider"
-            android:authorities="gun0912.tedimagepicker.provider"
+            android:authorities="${applicationId}.tedimagepicker.provider"
             android:exported="false" />
 
         <provider
