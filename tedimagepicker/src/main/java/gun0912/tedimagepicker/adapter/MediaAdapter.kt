@@ -3,7 +3,6 @@ package gun0912.tedimagepicker.adapter
 import android.app.Activity
 import android.net.Uri
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.app.ActivityOptionsCompat
 import com.bumptech.glide.Glide
 import gun0912.tedimagepicker.R
@@ -96,7 +95,10 @@ internal class MediaAdapter(
         }
 
         override fun recycled() {
-            Glide.with(itemView).clear(binding.ivImage)
+            if (activity.isDestroyed) {
+                return
+            }
+            Glide.with(activity).clear(binding.ivImage)
         }
 
         private fun startZoomActivity(media: Media) {
