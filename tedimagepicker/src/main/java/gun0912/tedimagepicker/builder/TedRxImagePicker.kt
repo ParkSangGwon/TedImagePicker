@@ -43,8 +43,8 @@ class TedRxImagePicker {
 
         private fun start(selectType: SelectType, emitter: SingleEmitter<*>) {
             this.onErrorListener = object : OnErrorListener {
-                override fun onError(message: String) {
-                    emitter.onError(RuntimeException(message))
+                override fun onError(throwable: Throwable) {
+                    emitter.onError(throwable)
                 }
             }
             this.selectType = selectType

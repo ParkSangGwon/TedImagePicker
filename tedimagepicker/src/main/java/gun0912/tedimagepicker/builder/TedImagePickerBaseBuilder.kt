@@ -92,9 +92,9 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
                 if (permissionResult.isGranted) {
                     startActivity(context)
                 } else {
-                    onErrorListener?.onError("Permission denied")
+                    onErrorListener?.onError(IllegalAccessException("Permission denied"))
                 }
-            }, { throwable -> onErrorListener?.onError(throwable.localizedMessage) })
+            }, { throwable -> onErrorListener?.onError(throwable) })
     }
 
     private fun checkPermission(context: Context) = TedRx2Permission.with(context)
@@ -110,7 +110,7 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
                     if (activityResult.resultCode == Activity.RESULT_OK) {
                         onComplete(activityResult.data)
                     }
-                }, { throwable -> onErrorListener?.onError(throwable.localizedMessage) })
+                }, { throwable -> onErrorListener?.onError(throwable) })
             }
     }
 
@@ -122,7 +122,7 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
         when {
             selectedUri != null -> onSelectedListener?.onSelected(selectedUri)
             selectedUriList != null -> onMultiSelectedListener?.onSelected(selectedUriList)
-            else -> IllegalStateException("selectedUri/selectedUriList can not null")
+            else -> onErrorListener?.onError(IllegalStateException("selectedUri/selectedUriList can not null"))
         }
     }
 
