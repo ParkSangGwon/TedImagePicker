@@ -1,5 +1,6 @@
 package gun0912.tedimagepicker.builder
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
 import gun0912.tedimagepicker.builder.listener.OnErrorListener
@@ -17,6 +18,7 @@ class TedRxImagePicker {
         fun with(context: Context) = Builder(WeakReference(context))
     }
 
+    @SuppressLint("ParcelCreator")
     class Builder(private val contextWeakReference: WeakReference<Context>) :
         TedImagePickerBaseBuilder<Builder>() {
 
