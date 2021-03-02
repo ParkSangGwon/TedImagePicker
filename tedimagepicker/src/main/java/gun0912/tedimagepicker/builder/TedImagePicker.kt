@@ -24,10 +24,10 @@ class TedImagePicker {
             return this
         }
 
-        fun errorListener(action: (String) -> Unit): Builder {
+        fun errorListener(action: (Throwable) -> Unit): Builder {
             this.onErrorListener = object : OnErrorListener {
-                override fun onError(message: String) {
-                    action(message)
+                override fun onError(throwable: Throwable) {
+                    action(throwable)
                 }
             }
             return this
