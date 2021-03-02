@@ -29,10 +29,10 @@ install:
   # Install or update Android SDK components (will not do anything if already up to date thanks to the cache mechanism)
   - echo y | $HOME/android-cmdline-tools/tools/bin/sdkmanager --sdk_root=$HOME/android-sdk 'platform-tools' > /dev/null
   # Latest version of build-tools available here: https://developer.android.com/studio/releases/build-tools.html
-  - echo y | $HOME/android-cmdline-tools/tools/bin/sdkmanager --sdk_root=$HOME/android-sdk 'build-tools;29.0.3' > /dev/null
-  - echo y | $HOME/android-cmdline-tools/tools/bin/sdkmanager --sdk_root=$HOME/android-sdk 'platforms;android-29' > /dev/null
+  - echo y | $HOME/android-cmdline-tools/tools/bin/sdkmanager --sdk_root=$HOME/android-sdk 'build-tools;30.0.3' > /dev/null
+  - echo y | $HOME/android-cmdline-tools/tools/bin/sdkmanager --sdk_root=$HOME/android-sdk 'platforms;android-30' > /dev/null
 
 env:
   - ANDROID_HOME=$HOME/android-sdk
 
-script: ./gradlew --no-daemon --parallel lintDebug testDebug
+script: ./gradlew --no-daemon --parallel build
