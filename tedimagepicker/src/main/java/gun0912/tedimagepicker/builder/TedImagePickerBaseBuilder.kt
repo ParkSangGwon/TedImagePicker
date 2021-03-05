@@ -91,8 +91,6 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
             .subscribe({ permissionResult ->
                 if (permissionResult.isGranted) {
                     startActivity(context)
-                } else {
-                    onErrorListener?.onError(IllegalAccessException("Permission denied"))
                 }
             }, { throwable -> onErrorListener?.onError(throwable) })
     }
