@@ -25,13 +25,12 @@ TedImagePicker is **simple/beautiful/smart** image picker
 ## Setup
 
 ### Gradle
-
-[ ![Download](https://api.bintray.com/packages/tkdrnjs0912/maven/tedimagepicker/images/download.svg) ](https://bintray.com/tkdrnjs0912/maven/tedimagepicker/_latestVersion)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.ParkSangGwon/tedimagepicker.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.ParkSangGwon%22%20AND%20a:%tedimagepicker%22)
 
 ```gradle
 dependencies {
-    implementation 'gun0912.ted:tedimagepicker:x.y.z'
-    //implementation 'gun0912.ted:tedimagepicker:1.0.8'
+    implementation 'io.github.ParkSangGwon:tedimagepicker:x.y.z'
+    //implementation 'io.github.ParkSangGwon:tedimagepicker:1.1.10'
 }
 
 ```
