@@ -7,6 +7,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -63,7 +64,9 @@ internal class TedImagePickerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSavedInstanceState(savedInstanceState)
-        requestedOrientation = builder.screenOrientation
+        if (Build.VERSION.SDK_INT != Build.VERSION_CODES.O) {
+            requestedOrientation = builder.screenOrientation
+        }
         startAnimation()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_ted_image_picker)
         binding.imageCountFormat = builder.imageCountFormat
