@@ -63,6 +63,7 @@ internal class TedImagePickerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSavedInstanceState(savedInstanceState)
+        requestedOrientation = builder.screenOrientation
         startAnimation()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_ted_image_picker)
         binding.imageCountFormat = builder.imageCountFormat

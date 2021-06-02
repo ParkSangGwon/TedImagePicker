@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.net.Uri
 import android.os.Parcelable
 import androidx.annotation.AnimRes
@@ -72,7 +73,8 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
     @AnimRes
     internal var finishEnterAnim: Int? = null,
     @AnimRes
-    internal var finishExitAnim: Int? = null
+    internal var finishExitAnim: Int? = null,
+    internal var screenOrientation: Int = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 ) : Parcelable {
 
 
@@ -280,6 +282,10 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
     fun toast(toastAction: ((String) -> Unit)): B {
         ToastUtil.toastAction = toastAction
         return this as B
+    }
+
+    fun screenOrientation(orientation: Int) {
+        this.screenOrientation = orientation
     }
 
 }
