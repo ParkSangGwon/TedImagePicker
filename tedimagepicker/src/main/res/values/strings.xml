@@ -5,4 +5,6 @@
     <string name="ted_image_picker_done">Done</string>
     <string name="ted_image_picker_max_count">You can not add more</string>
     <string name="ted_image_picker_min_count">You have to choice images</string>
+    <string name="permission_denied_title">Permission Denied</string>
+    <string name="permission_denied_rationale">You must give camera permission to use this feature. Visit [Settings]> [Permissions].</string>
 </resources>
