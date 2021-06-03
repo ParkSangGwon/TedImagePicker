@@ -51,4 +51,4 @@ dependencies {
     implementation 'com.alexvasilkov:gesture-views:2.5.2'
 }
 
-apply from: rootProject.file('publish-mavencentral.gradle')
+apply plugin: "com.vanniktech.maven.publish"
