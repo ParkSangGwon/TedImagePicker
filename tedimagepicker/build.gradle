@@ -45,7 +45,7 @@ dependencies {
     implementation deps.glide.glide
     annotationProcessor deps.glide.annotation
 
-    implementation 'gun0912.ted:tedpermission-rx2:2.2.2'
+    implementation 'io.github.ParkSangGwon:tedpermission-rx2:2.3.0'
     implementation 'gun0912.ted:tedonactivityresult-rx2:1.0.6'
 
     implementation 'com.alexvasilkov:gesture-views:2.5.2'
