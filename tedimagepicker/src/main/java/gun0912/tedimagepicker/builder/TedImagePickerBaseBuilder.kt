@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.net.Uri
+import android.os.Build
 import android.os.Parcelable
 import androidx.annotation.AnimRes
 import androidx.annotation.ColorRes
@@ -91,7 +92,7 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
     protected fun startInternal(context: Context) {
         checkPermission(context)
             .subscribe({ permissionResult ->
-                if (permissionResult.isGranted) {
+                if (permissionResult.isGranted || Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                     startActivity(context)
                 }
             }, { throwable -> onErrorListener?.onError(throwable) })
