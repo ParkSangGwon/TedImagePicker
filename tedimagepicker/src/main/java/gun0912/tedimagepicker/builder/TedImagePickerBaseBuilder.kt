@@ -98,7 +98,7 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
     }
 
     private fun checkPermission(context: Context) = TedRx2Permission.with(context)
-        .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE)
         .request()
 
     private fun startActivity(context: Context) {
