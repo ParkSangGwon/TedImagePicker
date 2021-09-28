@@ -1,2 +1,6 @@
 include ':app', ':tedimagepicker'
 rootProject.name='TedImagePicker'
+
+gitRepository("https://github.com/dimitriadamou/TedImagePicker.git") {
+    producesModule("com.github.dimitriadamou:tedimagepicker")
+}
