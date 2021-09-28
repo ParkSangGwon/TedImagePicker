@@ -20,8 +20,8 @@ ext {
             ],
 
             'glide'   : [
-                    'glide'     : 'com.github.bumptech.glide:glide:4.9.0',
-                    'annotation': 'com.github.bumptech.glide:compiler:4.9.0',
+                    'glide'     : 'com.github.bumptech.glide:glide:4.12.0',
+                    'annotation': 'com.github.bumptech.glide:compiler:4.12.0',
             ],
 
     ]
