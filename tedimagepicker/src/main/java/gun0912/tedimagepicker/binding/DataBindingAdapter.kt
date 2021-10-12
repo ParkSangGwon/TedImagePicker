@@ -17,6 +17,7 @@ internal class DataBindingAdapter {
             Glide.with(imageView.context)
                 .load(uri)
                 .thumbnail(0.1f)
+                .dontAnimate()
                 .into(imageView)
         }
 
