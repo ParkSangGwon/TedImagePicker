@@ -49,6 +49,7 @@ class MainActivity : AppCompatActivity() {
                 //.buttonBackground(R.drawable.btn_sample_done_button)
                 //.buttonTextColor(R.color.sample_yellow)
                 .errorListener { message -> Log.d("ted", "message: $message") }
+                .cancelListener { Log.d("ted", "image select cancel") }
                 .selectedUri(selectedUriList)
                 .startMultiImage { list: List<Uri> -> showMultiImage(list) }
         }
