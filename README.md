@@ -171,6 +171,8 @@ TedRxImagePicker.with(this)
 - `savedDirectoryName(String): saved directory name from take picture using camera`
 - `startAnimation(Int, Int)`
 - `finishAnimation(Int, Int)`
+- `errorListener()`
+- `cancelListener()`
 
 - Change picker primary color
 : override color name in your colors.xml
