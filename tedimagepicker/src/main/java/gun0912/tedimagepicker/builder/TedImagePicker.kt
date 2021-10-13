@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
 import gun0912.tedimagepicker.builder.listener.OnErrorListener
+import gun0912.tedimagepicker.builder.listener.ImageSelectCancelListener
 import gun0912.tedimagepicker.builder.listener.OnMultiSelectedListener
 import gun0912.tedimagepicker.builder.listener.OnSelectedListener
 import gun0912.tedimagepicker.builder.type.SelectType
@@ -34,6 +35,18 @@ class TedImagePicker {
             }
             return this
         }
+
+        fun cancelListener(imageSelectCancelListener: ImageSelectCancelListener): Builder {
+            this.imageSelectCancelListener = imageSelectCancelListener
+            return this
+        }
+
+        fun cancelListener(action: () -> Unit): Builder =
+            cancelListener(object : ImageSelectCancelListener {
+                override fun onImageSelectCancel() {
+                    action.invoke()
+                }
+            })
 
 
         fun start(onSelectedListener: OnSelectedListener) {
