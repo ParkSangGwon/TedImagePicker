@@ -317,7 +317,6 @@ internal class TedImagePickerActivity : AppCompatActivity() {
     }
 
     private fun updateSelectedMediaView() {
-        Log.d("ted", "mediaAdapter.selectedUriList.size: ${mediaAdapter.selectedUriList.size}")
         binding.layoutContent.viewSelectedMedia.post {
             binding.layoutContent.viewSelectedMedia.run {
                 if (mediaAdapter.selectedUriList.size > 0) {

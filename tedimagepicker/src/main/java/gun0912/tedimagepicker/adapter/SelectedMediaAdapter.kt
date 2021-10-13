@@ -38,7 +38,6 @@ internal class SelectedMediaAdapter :
         }
 
         override fun bind(data: Uri) {
-            Log.d("ted", "MediaViewHolder: $adapterPosition")
             binding.uri = data
         }
 

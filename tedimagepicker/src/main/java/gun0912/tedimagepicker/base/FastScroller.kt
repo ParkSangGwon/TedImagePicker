@@ -256,7 +256,6 @@ class FastScroller @JvmOverloads constructor(
             }
 
             (rv.layoutManager as? LinearLayoutManager)?.run {
-                Log.d("ted", "onScrolled() dx: $dx, dy: $dy")
                 if (binding.viewScroller.visibility == View.INVISIBLE) {
                     showAnimateHandle()
                 }
