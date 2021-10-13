@@ -74,7 +74,8 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
     internal var finishEnterAnim: Int? = null,
     @AnimRes
     internal var finishExitAnim: Int? = null,
-    internal var screenOrientation: Int = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+    internal var screenOrientation: Int = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT,
+    internal var showVideoDuration: Boolean = true,
 ) : Parcelable {
 
 
@@ -286,6 +287,11 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
 
     fun screenOrientation(orientation: Int) {
         this.screenOrientation = orientation
+    }
+
+    fun showVideoDuration(show: Boolean): B {
+        this.showVideoDuration = show
+        return this as B
     }
 
 }

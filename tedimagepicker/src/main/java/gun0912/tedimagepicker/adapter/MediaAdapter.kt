@@ -1,6 +1,7 @@
 package gun0912.tedimagepicker.adapter
 
 import android.app.Activity
+import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.view.ViewGroup
 import androidx.core.app.ActivityOptionsCompat
@@ -16,15 +17,19 @@ import gun0912.tedimagepicker.databinding.ItemGalleryMediaBinding
 import gun0912.tedimagepicker.model.Media
 import gun0912.tedimagepicker.util.ToastUtil
 import gun0912.tedimagepicker.zoom.TedImageZoomActivity
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
 
 internal class MediaAdapter(
     private val activity: Activity,
     private val builder: TedImagePickerBaseBuilder<*>
-) :
-    BaseSimpleHeaderAdapter<Media>(if (builder.showCameraTile) 1 else 0) {
+) : BaseSimpleHeaderAdapter<Media>(if (builder.showCameraTile) 1 else 0) {
 
     internal val selectedUriList: MutableList<Uri> = mutableListOf()
     var onMediaAddListener: (() -> Unit)? = null
+
+    private val executorService: ExecutorService = Executors.newFixedThreadPool(4)
 
     override fun getHeaderViewHolder(parent: ViewGroup) = CameraViewHolder(parent)
     override fun getItemViewHolder(parent: ViewGroup) = ImageViewHolder(parent)
@@ -94,7 +99,33 @@ internal class MediaAdapter(
 
                 showZoom =
                     !isSelected && (builder.mediaType == MediaType.IMAGE) && builder.showZoomIndicator
+
+                if (builder.mediaType == MediaType.VIDEO && builder.showVideoDuration) {
+                    setVideoDuration(data.uri)
+                }
+
             }
+        }
+
+        private fun setVideoDuration(uri: Uri) = executorService.execute {
+            val durationMills = uri.getVideoDuration() ?: return@execute
+            val hours = TimeUnit.MILLISECONDS.toHours(durationMills)
+            val minutes = TimeUnit.MILLISECONDS.toMinutes(durationMills)
+            val seconds = TimeUnit.MILLISECONDS.toSeconds(durationMills)
+            binding.duration =
+                if (hours > 0) {
+                    String.format("%d:%02d:%02d", hours, minutes, seconds)
+                } else {
+                    String.format("%02d:%02d", minutes, seconds)
+                }
+        }
+
+        private fun Uri.getVideoDuration(): Long? {
+            val retriever = MediaMetadataRetriever()
+            retriever.setDataSource(context, this)
+            val time = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
+            retriever.release()
+            return time?.toLongOrNull()
         }
 
         override fun recycled() {
