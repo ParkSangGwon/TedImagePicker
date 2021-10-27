@@ -12,12 +12,12 @@ import androidx.annotation.AnimRes
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import com.gun0912.tedpermission.rx2.TedPermission
 import com.tedpark.tedonactivityresult.rx2.TedRxOnActivityResult
-import com.tedpark.tedpermission.rx2.TedRx2Permission
 import gun0912.tedimagepicker.R
 import gun0912.tedimagepicker.TedImagePickerActivity
-import gun0912.tedimagepicker.builder.listener.OnErrorListener
 import gun0912.tedimagepicker.builder.listener.ImageSelectCancelListener
+import gun0912.tedimagepicker.builder.listener.OnErrorListener
 import gun0912.tedimagepicker.builder.listener.OnMultiSelectedListener
 import gun0912.tedimagepicker.builder.listener.OnSelectedListener
 import gun0912.tedimagepicker.builder.type.AlbumType
@@ -102,7 +102,7 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
             }, { throwable -> onErrorListener?.onError(throwable) })
     }
 
-    private fun checkPermission(context: Context) = TedRx2Permission.with(context)
+    private fun checkPermission(context: Context) = TedPermission.create()
         .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE)
         .request()
 
