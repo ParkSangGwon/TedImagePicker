@@ -7,11 +7,13 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.net.Uri
+import android.os.Build
 import android.os.Parcelable
 import androidx.annotation.AnimRes
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import com.gun0912.tedpermission.TedPermissionResult
 import com.gun0912.tedpermission.rx2.TedPermission
 import com.tedpark.tedonactivityresult.rx2.TedRxOnActivityResult
 import gun0912.tedimagepicker.R
@@ -25,6 +27,7 @@ import gun0912.tedimagepicker.builder.type.ButtonGravity
 import gun0912.tedimagepicker.builder.type.MediaType
 import gun0912.tedimagepicker.builder.type.SelectType
 import gun0912.tedimagepicker.util.ToastUtil
+import io.reactivex.Single
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
@@ -102,9 +105,19 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
             }, { throwable -> onErrorListener?.onError(throwable) })
     }
 
-    private fun checkPermission(context: Context) = TedPermission.create()
-        .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE)
-        .request()
+    private fun checkPermission(context: Context): Single<TedPermissionResult> {
+        val permissions = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            arrayOf(
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            )
+        } else {
+            arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+        }
+        return TedPermission.create()
+            .setPermissions(*permissions)
+            .request()
+    }
 
     private fun startActivity(context: Context) {
         TedImagePickerActivity.getIntent(context, this)
