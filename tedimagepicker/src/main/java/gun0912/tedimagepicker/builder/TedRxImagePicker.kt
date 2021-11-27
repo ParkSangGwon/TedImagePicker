@@ -19,7 +19,7 @@ class TedRxImagePicker {
     }
 
     @SuppressLint("ParcelCreator")
-    class Builder(private val contextWeakReference: WeakReference<Context>) :
+    open class Builder(private val contextWeakReference: WeakReference<Context>) :
         TedImagePickerBaseBuilder<Builder>() {
 
         fun start(): Single<Uri> =
