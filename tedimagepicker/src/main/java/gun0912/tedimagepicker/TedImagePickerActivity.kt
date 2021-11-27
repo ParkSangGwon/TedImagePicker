@@ -48,7 +48,7 @@ import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 
 
-internal class TedImagePickerActivity : AppCompatActivity() {
+open class TedImagePickerActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityTedImagePickerBinding
     private val albumAdapter by lazy { AlbumAdapter(builder) }
@@ -268,7 +268,7 @@ internal class TedImagePickerActivity : AppCompatActivity() {
     }
 
     @SuppressLint("CheckResult")
-    private fun onCameraTileClick() {
+    open fun onCameraTileClick() {
         val (cameraIntent, uri) = MediaUtil.getMediaIntentUri(
             this@TedImagePickerActivity,
             builder.mediaType,
