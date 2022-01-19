@@ -40,9 +40,18 @@ internal class GalleryUtil {
                     }
 
                     val sortOrder = "$INDEX_DATE_ADDED DESC"
-                    val projection =
-                        arrayOf(INDEX_MEDIA_ID, INDEX_MEDIA_URI, albumName, INDEX_DATE_ADDED)
-                    val selection = MediaStore.Images.Media.SIZE + " > 0"
+
+                    val projection = arrayOf(
+                        INDEX_MEDIA_ID,
+                        INDEX_MEDIA_URI,
+                        albumName,
+                        INDEX_DATE_ADDED
+                    )
+                    val selection = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                        MediaStore.Images.Media.SIZE + " > 0"
+                    } else {
+                        null
+                    }
                     val cursor =
                         context.contentResolver.query(uri, projection, selection, null, sortOrder)
                     val albumList: List<Album> = cursor?.let {
