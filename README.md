@@ -147,32 +147,26 @@ TedRxImagePicker.with(this)
 
 #### Common
 
-* `mediaType(MediaType)` : MediaType.IMAGE / MediaType.VIDEO
-* `cameraTileBackground(R.color.xxx)`
-* `cameraTileImage(R.drawable.xxx)`
-* `showCameraTile(Boolean) (default: true)`
-* `scrollIndicatorDateFormat(String)(default: YYYY.MM)`
-* `showTitle(Boolean)(default: true)`
-* `title(String or R.string.xxx) (default: 'Select Image','사진 선택')`
-* `backButton(R.drawable.xxx)`
-* `zoomIndicator(Boolean) (default: true)`
-* `image()`
-* `video()`
+|      Function        |    Description    | 
+| ----------------------- | ---------------- |
+| `mediaType(MediaType)` | MediaType.IMAGE / MediaType.VIDEO |
+| `cameraTileBackground(R.color.xxx)`| camera Tile Background Color |
+| `cameraTileImage(R.drawable.xxx)` | camera tile image |
+| `showCameraTile(Boolean)` default `true` | show camera tile |
+| `scrollIndicatorDateFormat(String) (default: YYYY.MM)` | Format of date on scroll indicator |
+| `showTitle(Boolean)(default: true)` | Show title |
+| `title(String or R.string.xxx) (default: 'Select Image','사진 선택')` | title |
+| `backButton(R.drawable.xxx)` | back button |
+| `zoomIndicator(Boolean) (default: true)`| zoom indicator |
+| `image()` | image |
+| `video()` | video |
+| `imageCountTextFormat(String) (default: %s)`: `%s장`,  `Count: %s`| image count text format |
+| `savedDirectoryName(String)` | saved directory name from take picture using camera |
+| `startAnimation(Int, Int)` | start animation |
+| `finishAnimation(Int, Int)` | finish animation |
+| `errorListener()` | error listener for error |
+| `cancelListener()` | cancel listener |
 
-- `mediaType(MediaType)` : MediaType.IMAGE / MediaType.VIDEO
-- `cameraTileBackground(R.color.xxx)`
-- `cameraTileImage(R.drawable.xxx)`
-- `showCameraTile(Boolean) (default: true)`
-- `scrollIndicatorDateFormat(String)(default: YYYY.MM)`
-- `title(String or R.string.xxx) (default: 'Select Image','사진 선택')`
-- `backButton(R.drawable.xxx)`
-- `zoomIndicator(Boolean) (default: true)`
-- `imageCountTextFormat(String) (default: %s)`: `%s장`,  `Count: %s`
-- `savedDirectoryName(String): saved directory name from take picture using camera`
-- `startAnimation(Int, Int)`
-- `finishAnimation(Int, Int)`
-- `errorListener()`
-- `cancelListener()`
 
 - Change picker primary color
 : override color name in your colors.xml
@@ -183,15 +177,18 @@ TedRxImagePicker.with(this)
 
 #### Multi Select
 
-- `selectedUri(List<Uri>)`
-- `buttonGravity(ButtonGravity)`: You can change `done` button location top or bottom
-- `buttonText(String or R.string.xxx) (default: 'Done','완료')`
-- `buttonBackground(R.drawable.xxx) (default: Blue Background)`
-- `buttonTextColor(R.color.xxx) (default: white)`
-- `buttonDrawableOnly(R.drawable.xxx) (default: false)`: If you want show drawable button without text, use this method
-- `max(Int, String or R.string.xxx)`
-- `min(Int, String or R.string.xxx)`
-- `drawerAlbum() / dropDownAlbum() (default: Drawer)`: You can choice Drawer or DropDown album style
+|      Method        |    Description    | 
+| ----------------------- | ---------------- |
+| `selectedUri(List<Uri>)` | selected uri |
+| `buttonGravity(ButtonGravity)` | You can change `done` button location top or bottom |
+| `buttonText(String or R.string.xxx) (default: 'Done','완료')` | you can change `done` button text |
+| `buttonBackground(R.drawable.xxx) (default: Blue Background)` | you can change `done` button background color |
+| `buttonTextColor(R.color.xxx) (default: white)` | `done` button text color |
+| `buttonDrawableOnly(R.drawable.xxx) (default: false)` | If you want show drawable button without text, use this method |
+| `max(Int, String or R.string.xxx)` | **max content** should picked from user device |
+| `min(Int, String or R.string.xxx)` | **min content** should picked from user device |
+| `drawerAlbum() / dropDownAlbum() (default: Drawer)`| You can choice Drawer or DropDown album style |
+
   </br></br>
 
 ## FAQ
