@@ -15,6 +15,7 @@ import gun0912.tedimagepicker.builder.TedImagePicker
 import gun0912.tedimagepicker.builder.TedRxImagePicker
 import gun0912.tedimagepicker.sample.databinding.ActivityMainBinding
 import gun0912.tedimagepicker.sample.databinding.ItemImageBinding
+import gun0912.tedimagepicker.util.ToastUtil.context
 import gun0912.tedimagepicker.util.fetchImage
 
 class MainActivity : AppCompatActivity() {
