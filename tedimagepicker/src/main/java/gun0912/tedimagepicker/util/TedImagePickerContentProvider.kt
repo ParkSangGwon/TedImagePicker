@@ -3,12 +3,13 @@ package gun0912.tedimagepicker.util
 import android.app.Application
 import android.content.ContentProvider
 import android.content.ContentValues
+import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 
 class TedImagePickerContentProvider : ContentProvider() {
     override fun onCreate(): Boolean {
-        ToastUtil.context = context as Application
+        ToastUtil.context = context as Context
         return true
     }
 
