@@ -1,4 +1,6 @@
-# TedImagePicker [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-TedImagePicker-green.svg?style=flat)](https://android-arsenal.com/details/1/7697)
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-TedImagePicker-green.svg?style=flat)](https://android-arsenal.com/details/1/7697)
+
+# TedImagePicker
 
 TedImagePicker is **simple/beautiful/smart** image picker
 
