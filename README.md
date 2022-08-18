@@ -1,5 +1,11 @@
 # TedImagePicker [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-TedImagePicker-green.svg?style=flat)](https://android-arsenal.com/details/1/7697)
 
+## Instructions
+- Set version in settings.gradle
+- Run gradle build
+- Set GOOGLE_APPLICATION_CREDENTIALS env variable
+- Rum gradle publish
+
 TedImagePicker is **simple/beautiful/smart** image picker
 
 - Support Image/Video
