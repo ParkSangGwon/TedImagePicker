@@ -1,3 +1,8 @@
+plugins {
+    id "maven-publish"
+    id "com.google.cloud.artifactregistry.gradle-plugin" version "2.1.4"
+}
+
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
@@ -47,4 +52,26 @@ dependencies {
     implementation 'com.alexvasilkov:gesture-views:2.5.2'
 }
 
-apply plugin: "com.vanniktech.maven.publish"
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'io.github.ParkSangGwon'
+            artifactId = 'TedImagePicker'
+            version = VERSION_NAME
+            afterEvaluate {
+                from components.release
+            }
+        }
+    }
+    repositories {
+        maven {
+            url "artifactregistry://europe-west1-maven.pkg.dev/round-runner-126807/mightyfields-maven"
+        }
+    }
+}
+
+repositories {
+    maven {
+        url "artifactregistry://europe-west1-maven.pkg.dev/round-runner-126807/mightyfields-maven"
+    }
+}
