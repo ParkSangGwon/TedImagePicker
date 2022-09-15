@@ -97,7 +97,7 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
 
     @SuppressLint("CheckResult")
     protected fun startInternal(context: Context) {
-        checkPermission(context)
+        checkPermission()
             .subscribe({ permissionResult ->
                 if (permissionResult.isGranted) {
                     startActivity(context)
@@ -105,17 +105,16 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
             }, { throwable -> onErrorListener?.onError(throwable) })
     }
 
-    private fun checkPermission(context: Context): Single<TedPermissionResult> {
-        val permissions = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
-            arrayOf(
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            )
+    private fun checkPermission(): Single<TedPermissionResult> {
+        val permission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            Manifest.permission.READ_MEDIA_IMAGES
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            Manifest.permission.READ_EXTERNAL_STORAGE
         } else {
-            arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
         }
         return TedPermission.create()
-            .setPermissions(*permissions)
+            .setPermissions(permission)
             .request()
     }
 
