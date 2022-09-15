@@ -42,8 +42,7 @@ dependencies {
     implementation deps.androidx.appcompat
     implementation 'com.android.support:multidex:1.0.3'
 
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.3'
-    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.9.1'
 
     implementation deps.glide.glide
     annotationProcessor deps.glide.annotation
