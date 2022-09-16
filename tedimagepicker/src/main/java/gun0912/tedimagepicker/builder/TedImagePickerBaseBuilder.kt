@@ -118,8 +118,12 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
             .request()
     }
 
+    private open fun getIntent(context: Context): Intent {
+        // allow to use a custom activity intent
+        return TedImagePickerActivity.getIntent(context, this)
+    }
     private fun startActivity(context: Context) {
-        TedImagePickerActivity.getIntent(context, this)
+        getIntent(context, this)
             .run {
                 TedRxOnActivityResult.with(context).startActivityForResult(this)
             }.run {
