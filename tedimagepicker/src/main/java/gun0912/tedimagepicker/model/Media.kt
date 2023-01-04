@@ -1,6 +1,11 @@
 package gun0912.tedimagepicker.model
 
 import android.net.Uri
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import java.util.TimeZone
+import java.util.concurrent.TimeUnit
 
 internal sealed class Media(
     open val albumName: String,
@@ -18,5 +23,21 @@ internal sealed class Media(
         override val uri: Uri,
         override val dateAddedSecond: Long,
         val duration: Long,
-    ) : Media(albumName, uri, dateAddedSecond)
+    ) : Media(albumName, uri, dateAddedSecond){
+
+        val durationText: String = duration.let { durationMills ->
+            val hours = TimeUnit.MILLISECONDS.toHours(durationMills)
+            val dateFormatPattern =
+                if (hours > 0) {
+                    "HH:mm:ss"
+                } else {
+                    "mm:ss"
+                }
+            SimpleDateFormat(dateFormatPattern, Locale.getDefault())
+                .apply {
+                    timeZone = TimeZone.getTimeZone("GMT")
+                }
+                .format(Date(durationMills))
+        }
+    }
 }

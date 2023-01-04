@@ -104,28 +104,10 @@ internal class MediaAdapter(
                     !isSelected && builder.showZoomIndicator && media is Media.Image
 
                 if (builder.showVideoDuration && data is Media.Video) {
-                    setVideoDuration(data)
+                    binding.duration = data.durationText
                 }
 
             }
-        }
-
-        private fun setVideoDuration(data: Media.Video) = executorService.execute {
-            val durationMills = data.duration
-            val hours = TimeUnit.MILLISECONDS.toHours(durationMills)
-            val dateFormatPattern =
-                if (hours > 0) {
-                    "HH:mm:ss"
-                } else {
-                    "mm:ss"
-                }
-
-            binding.duration =
-                SimpleDateFormat(dateFormatPattern, Locale.getDefault())
-                    .apply {
-                        timeZone = TimeZone.getTimeZone("GMT")
-                    }
-                    .format(Date(durationMills))
         }
 
         override fun recycled() {
