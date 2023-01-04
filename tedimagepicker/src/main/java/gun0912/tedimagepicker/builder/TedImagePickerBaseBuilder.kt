@@ -106,18 +106,22 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
     }
 
     private fun checkPermission(): Single<TedPermissionResult> {
-        val permission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            when(mediaType){
-                MediaType.IMAGE -> Manifest.permission.READ_MEDIA_IMAGES
-                MediaType.VIDEO -> Manifest.permission.READ_MEDIA_VIDEO
+        val permissions = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            when (mediaType) {
+                MediaType.IMAGE -> arrayOf(Manifest.permission.READ_MEDIA_IMAGES)
+                MediaType.VIDEO -> arrayOf(Manifest.permission.READ_MEDIA_VIDEO)
+                MediaType.IMAGE_AND_VIDEO -> arrayOf(
+                    Manifest.permission.READ_MEDIA_IMAGES,
+                    Manifest.permission.READ_MEDIA_VIDEO
+                )
             }
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            Manifest.permission.READ_EXTERNAL_STORAGE
+            arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
         } else {
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
+            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
         }
         return TedPermission.create()
-            .setPermissions(permission)
+            .setPermissions(*permissions)
             .request()
     }
 
@@ -156,6 +160,8 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
     fun image(): B = mediaType(MediaType.IMAGE)
 
     fun video(): B = mediaType(MediaType.VIDEO)
+
+    fun imageAndVideo(): B = mediaType(MediaType.IMAGE_AND_VIDEO)
 
     fun cameraTileBackground(@ColorRes cameraTileBackgroundResId: Int): B {
         this.cameraTileBackgroundResId = cameraTileBackgroundResId

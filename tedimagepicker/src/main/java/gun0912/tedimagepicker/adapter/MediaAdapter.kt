@@ -1,7 +1,6 @@
 package gun0912.tedimagepicker.adapter
 
 import android.app.Activity
-import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.view.ViewGroup
 import androidx.core.app.ActivityOptionsCompat
@@ -101,40 +100,13 @@ internal class MediaAdapter(
                     selectedNumber = selectedUriList.indexOf(data.uri) + 1
                 }
 
-                showZoom =
-                    !isSelected && (builder.mediaType == MediaType.IMAGE) && builder.showZoomIndicator
+                showZoom = builder.showZoomIndicator && media is Media.Image
 
-                if (builder.mediaType == MediaType.VIDEO && builder.showVideoDuration) {
-                    setVideoDuration(data.uri)
+                if (builder.showVideoDuration && data is Media.Video) {
+                    binding.duration = data.durationText
                 }
 
             }
-        }
-
-        private fun setVideoDuration(uri: Uri) = executorService.execute {
-            val durationMills = uri.getVideoDuration() ?: return@execute
-            val hours = TimeUnit.MILLISECONDS.toHours(durationMills)
-            val dateFormatPattern =
-                if (hours > 0) {
-                    "HH:mm:ss"
-                } else {
-                    "mm:ss"
-                }
-
-            binding.duration =
-                SimpleDateFormat(dateFormatPattern, Locale.getDefault())
-                    .apply {
-                        timeZone = TimeZone.getTimeZone("GMT")
-                    }
-                    .format(Date(durationMills))
-        }
-
-        private fun Uri.getVideoDuration(): Long? {
-            val retriever = MediaMetadataRetriever()
-            retriever.setDataSource(context, this)
-            val time = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
-            retriever.release()
-            return time?.toLongOrNull()
         }
 
         override fun recycled() {
