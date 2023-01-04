@@ -62,15 +62,15 @@ internal class GalleryUtil {
                                 .filterNotNull()
                                 .toList()
 
-                        val albumList: List<Album> = totalImageList.asSequence()
+                        val albumList: List<Album> = totalImageList
                             .groupBy { media: Media -> media.albumName }
-                            .toSortedMap(Comparator { albumName1: String, albumName2: String ->
+                            .toSortedMap { albumName1: String, albumName2: String ->
                                 if (albumName2 == "Camera") {
                                     1
                                 } else {
                                     albumName1.compareTo(albumName2, true)
                                 }
-                            })
+                            }
                             .map { entry -> getAlbum(entry) }
                             .toList()
 
