@@ -9,7 +9,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
@@ -28,6 +27,8 @@ import gun0912.tedimagepicker.adapter.SelectedMediaAdapter
 import gun0912.tedimagepicker.base.BaseRecyclerViewAdapter
 import gun0912.tedimagepicker.builder.TedImagePickerBaseBuilder
 import gun0912.tedimagepicker.builder.type.AlbumType
+import gun0912.tedimagepicker.builder.type.CameraMedia
+import gun0912.tedimagepicker.builder.type.MediaType
 import gun0912.tedimagepicker.builder.type.SelectType
 import gun0912.tedimagepicker.databinding.ActivityTedImagePickerBinding
 import gun0912.tedimagepicker.extenstion.close
@@ -269,9 +270,13 @@ internal class TedImagePickerActivity : AppCompatActivity() {
 
     @SuppressLint("CheckResult")
     private fun onCameraTileClick() {
+        val cameraMedia = when(builder.mediaType){
+            MediaType.IMAGE -> CameraMedia.IMAGE
+            MediaType.VIDEO -> CameraMedia.VIDEO
+        }
         val (cameraIntent, uri) = MediaUtil.getMediaIntentUri(
             this@TedImagePickerActivity,
-            builder.mediaType,
+            cameraMedia,
             builder.savedDirectoryName
         )
         TedRxOnActivityResult.with(this@TedImagePickerActivity)
