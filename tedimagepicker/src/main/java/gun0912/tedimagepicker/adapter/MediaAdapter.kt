@@ -101,7 +101,7 @@ internal class MediaAdapter(
                 }
 
                 showZoom =
-                    !isSelected && (builder.mediaType == MediaType.IMAGE) && builder.showZoomIndicator
+                    !isSelected && builder.showZoomIndicator && media is Media.Image
 
                 if (builder.showVideoDuration && data is Media.Video) {
                     setVideoDuration(data)
