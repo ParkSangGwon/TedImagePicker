@@ -115,9 +115,9 @@ internal class GalleryUtil {
                 Uri.fromFile(File(mediaPath))
             }
 
-        private val MediaType.contentUri:Uri
-            get() = when(this){
-                MediaType.IMAGE ->  MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        private val MediaType.contentUri: Uri
+            get() = when (this) {
+                MediaType.IMAGE -> MediaStore.Images.Media.EXTERNAL_CONTENT_URI
                 MediaType.VIDEO -> MediaStore.Video.Media.EXTERNAL_CONTENT_URI
             }
     }
