@@ -273,6 +273,7 @@ internal class TedImagePickerActivity : AppCompatActivity() {
         val cameraMedia = when(builder.mediaType){
             MediaType.IMAGE -> CameraMedia.IMAGE
             MediaType.VIDEO -> CameraMedia.VIDEO
+            MediaType.IMAGE_AND_VIDEO -> CameraMedia.IMAGE
         }
         val (cameraIntent, uri) = MediaUtil.getMediaIntentUri(
             this@TedImagePickerActivity,

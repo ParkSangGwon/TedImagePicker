@@ -25,11 +25,16 @@ internal class GalleryUtil {
         internal fun getMedia(context: Context, mediaType: MediaType): Single<List<Album>> {
             return Single.create { emitter ->
                 try {
-                    val queryMediaType = when (mediaType) {
-                        MediaType.IMAGE -> QueryMediaType.IMAGE
-                        MediaType.VIDEO -> QueryMediaType.VIDEO
+
+                    val totalMediaList: List<Media> = when (mediaType) {
+                        MediaType.IMAGE -> getAllMediaList(context, QueryMediaType.IMAGE)
+                        MediaType.VIDEO -> getAllMediaList(context, QueryMediaType.VIDEO)
+                        MediaType.IMAGE_AND_VIDEO -> {
+                            val imageMediaList = getAllMediaList(context, QueryMediaType.IMAGE)
+                            val videoMediaList = getAllMediaList(context, QueryMediaType.VIDEO)
+                            (imageMediaList + videoMediaList).sortedByDescending { it.dateAddedSecond }
+                        }
                     }
-                    val totalMediaList = getAllMediaList(context, queryMediaType)
                     val albumList: List<Album> = totalMediaList
                         .groupBy { media: Media -> media.albumName }
                         .toSortedMap { albumName1: String, albumName2: String ->

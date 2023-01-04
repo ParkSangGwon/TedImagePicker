@@ -7,5 +7,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 enum class MediaType : Parcelable {
     IMAGE,
-    VIDEO;
+    VIDEO,
+    IMAGE_AND_VIDEO,
+    ;
 }
