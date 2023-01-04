@@ -44,7 +44,7 @@ internal class GalleryUtil {
                         val albumName = context.getString(R.string.ted_image_picker_album_all)
                         Album(
                             albumName,
-                            getOrElse(0) { Media(albumName, Uri.EMPTY, 0, 0) }.uri,
+                            firstOrNull()?.uri ?: Uri.EMPTY,
                             this
                         )
                     }
@@ -94,7 +94,12 @@ internal class GalleryUtil {
                     val mediaUri = getMediaUri(mediaType)
                     val datedAddedSecond = getLong(getColumnIndexOrThrow(INDEX_DATE_ADDED))
                     val duration = getLong(getColumnIndexOrThrow(INDEX_DURATION))
-                    Media(albumName, mediaUri, datedAddedSecond, duration)
+                    when (mediaType) {
+                        MediaType.IMAGE ->
+                            Media.Image(albumName, mediaUri, datedAddedSecond)
+                        MediaType.VIDEO ->
+                            Media.Video(albumName, mediaUri, datedAddedSecond, duration)
+                    }
                 }
             } catch (exception: Exception) {
                 exception.printStackTrace()

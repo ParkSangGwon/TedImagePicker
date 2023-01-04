@@ -103,14 +103,14 @@ internal class MediaAdapter(
                 showZoom =
                     !isSelected && (builder.mediaType == MediaType.IMAGE) && builder.showZoomIndicator
 
-                if (builder.mediaType == MediaType.VIDEO && builder.showVideoDuration) {
+                if (builder.showVideoDuration && data is Media.Video) {
                     setVideoDuration(data)
                 }
 
             }
         }
 
-        private fun setVideoDuration(data: Media) = executorService.execute {
+        private fun setVideoDuration(data: Media.Video) = executorService.execute {
             val durationMills = data.duration
             val hours = TimeUnit.MILLISECONDS.toHours(durationMills)
             val dateFormatPattern =
