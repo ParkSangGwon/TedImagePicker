@@ -17,13 +17,17 @@ import gun0912.tedimagepicker.databinding.ItemGalleryMediaBinding
 import gun0912.tedimagepicker.model.Media
 import gun0912.tedimagepicker.util.ToastUtil
 import gun0912.tedimagepicker.zoom.TedImageZoomActivity
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import java.util.TimeZone
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
 internal class MediaAdapter(
     private val activity: Activity,
-    private val builder: TedImagePickerBaseBuilder<*>
+    private val builder: TedImagePickerBaseBuilder<*>,
 ) : BaseSimpleHeaderAdapter<Media>(if (builder.showCameraTile) 1 else 0) {
 
     internal val selectedUriList: MutableList<Uri> = mutableListOf()
@@ -110,14 +114,19 @@ internal class MediaAdapter(
         private fun setVideoDuration(uri: Uri) = executorService.execute {
             val durationMills = uri.getVideoDuration() ?: return@execute
             val hours = TimeUnit.MILLISECONDS.toHours(durationMills)
-            val minutes = TimeUnit.MILLISECONDS.toMinutes(durationMills)
-            val seconds = TimeUnit.MILLISECONDS.toSeconds(durationMills)
-            binding.duration =
+            val dateFormatPattern =
                 if (hours > 0) {
-                    String.format("%d:%02d:%02d", hours, minutes, seconds)
+                    "HH:mm:ss"
                 } else {
-                    String.format("%02d:%02d", minutes, seconds)
+                    "mm:ss"
                 }
+
+            binding.duration =
+                SimpleDateFormat(dateFormatPattern, Locale.getDefault())
+                    .apply {
+                        timeZone = TimeZone.getTimeZone("GMT")
+                    }
+                    .format(Date(durationMills))
         }
 
         private fun Uri.getVideoDuration(): Long? {
