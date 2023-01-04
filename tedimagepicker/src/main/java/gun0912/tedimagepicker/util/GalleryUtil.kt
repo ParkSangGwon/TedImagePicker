@@ -6,6 +6,7 @@ import android.database.Cursor
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
+import android.util.Log
 import gun0912.tedimagepicker.R
 import gun0912.tedimagepicker.builder.type.MediaType
 import gun0912.tedimagepicker.model.Album
@@ -20,6 +21,7 @@ internal class GalleryUtil {
         private const val INDEX_MEDIA_URI = MediaStore.MediaColumns.DATA
         private const val INDEX_DATE_ADDED = MediaStore.MediaColumns.DATE_ADDED
         private const val INDEX_ALBUM_NAME = MediaStore.MediaColumns.BUCKET_DISPLAY_NAME
+        private const val INDEX_DURATION = MediaStore.MediaColumns.DURATION
 
         internal fun getMedia(context: Context, mediaType: MediaType): Single<List<Album>> {
             return Single.create { emitter ->
@@ -42,7 +44,7 @@ internal class GalleryUtil {
                         val albumName = context.getString(R.string.ted_image_picker_album_all)
                         Album(
                             albumName,
-                            getOrElse(0) { Media(albumName, Uri.EMPTY, 0) }.uri,
+                            getOrElse(0) { Media(albumName, Uri.EMPTY, 0, 0) }.uri,
                             this
                         )
                     }
@@ -62,7 +64,8 @@ internal class GalleryUtil {
                 INDEX_MEDIA_ID,
                 INDEX_MEDIA_URI,
                 INDEX_ALBUM_NAME,
-                INDEX_DATE_ADDED
+                INDEX_DATE_ADDED,
+                INDEX_DURATION,
             )
             val selection = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 MediaStore.Images.Media.SIZE + " > 0"
@@ -90,7 +93,8 @@ internal class GalleryUtil {
                     val albumName = getString(getColumnIndexOrThrow(INDEX_ALBUM_NAME))
                     val mediaUri = getMediaUri(mediaType)
                     val datedAddedSecond = getLong(getColumnIndexOrThrow(INDEX_DATE_ADDED))
-                    Media(albumName, mediaUri, datedAddedSecond)
+                    val duration = getLong(getColumnIndexOrThrow(INDEX_DURATION))
+                    Media(albumName, mediaUri, datedAddedSecond, duration)
                 }
             } catch (exception: Exception) {
                 exception.printStackTrace()
