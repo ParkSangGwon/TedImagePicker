@@ -100,8 +100,7 @@ internal class MediaAdapter(
                     selectedNumber = selectedUriList.indexOf(data.uri) + 1
                 }
 
-                showZoom =
-                    !isSelected && builder.showZoomIndicator && media is Media.Image
+                showZoom = builder.showZoomIndicator && media is Media.Image
 
                 if (builder.showVideoDuration && data is Media.Video) {
                     binding.duration = data.durationText
