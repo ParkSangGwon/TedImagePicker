@@ -107,7 +107,10 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
 
     private fun checkPermission(): Single<TedPermissionResult> {
         val permission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            Manifest.permission.READ_MEDIA_IMAGES
+            when(mediaType){
+                MediaType.IMAGE -> Manifest.permission.READ_MEDIA_IMAGES
+                MediaType.VIDEO -> Manifest.permission.READ_MEDIA_VIDEO
+            }
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             Manifest.permission.READ_EXTERNAL_STORAGE
         } else {
