@@ -104,9 +104,9 @@ internal class GalleryUtil {
         private fun getImage(cursor: Cursor, mediaType: MediaType): Media? =
             try {
                 cursor.run {
-                    val folderName = getString(getColumnIndex(albumName))
+                    val folderName = getString(getColumnIndexOrThrow(albumName))
                     val mediaUri = getMediaUri(mediaType)
-                    val datedAddedSecond = getLong(getColumnIndex(INDEX_DATE_ADDED))
+                    val datedAddedSecond = getLong(getColumnIndexOrThrow(INDEX_DATE_ADDED))
                     Media(folderName, mediaUri, datedAddedSecond)
                 }
             } catch (exception: Exception) {
@@ -116,7 +116,7 @@ internal class GalleryUtil {
 
         private fun Cursor.getMediaUri(mediaType: MediaType): Uri =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                val id = getLong(getColumnIndex(INDEX_MEDIA_ID))
+                val id = getLong(getColumnIndexOrThrow(INDEX_MEDIA_ID))
 
                 val contentUri = when (mediaType) {
                     MediaType.IMAGE -> MediaStore.Images.Media.EXTERNAL_CONTENT_URI
@@ -124,7 +124,7 @@ internal class GalleryUtil {
                 }
                 ContentUris.withAppendedId(contentUri, id)
             } else {
-                val mediaPath = getString(getColumnIndex(INDEX_MEDIA_URI))
+                val mediaPath = getString(getColumnIndexOrThrow(INDEX_MEDIA_URI))
                 Uri.fromFile(File(mediaPath))
             }
     }
