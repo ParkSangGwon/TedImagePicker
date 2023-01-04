@@ -12,7 +12,6 @@ import gun0912.tedimagepicker.model.Album
 import gun0912.tedimagepicker.model.Media
 import io.reactivex.Single
 import java.io.File
-import java.util.Collections.addAll
 
 internal class GalleryUtil {
     companion object {
@@ -20,8 +19,7 @@ internal class GalleryUtil {
         private const val INDEX_MEDIA_ID = MediaStore.MediaColumns._ID
         private const val INDEX_MEDIA_URI = MediaStore.MediaColumns.DATA
         private const val INDEX_DATE_ADDED = MediaStore.MediaColumns.DATE_ADDED
-
-        private lateinit var albumName: String
+        private const val INDEX_ALBUM_NAME = MediaStore.MediaColumns.BUCKET_DISPLAY_NAME
 
         internal fun getMedia(context: Context, mediaType: MediaType): Single<List<Album>> {
             return Single.create { emitter ->
@@ -58,16 +56,9 @@ internal class GalleryUtil {
         }
 
         private fun getAllMediaList(context: Context, mediaType: MediaType): List<Media> {
-            val uri: Uri
-            when (mediaType) {
-                MediaType.IMAGE -> {
-                    uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-                    albumName = MediaStore.Images.Media.BUCKET_DISPLAY_NAME
-                }
-                MediaType.VIDEO -> {
-                    uri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI
-                    albumName = MediaStore.Video.Media.BUCKET_DISPLAY_NAME
-                }
+            val uri: Uri = when (mediaType) {
+                MediaType.IMAGE -> MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                MediaType.VIDEO -> MediaStore.Video.Media.EXTERNAL_CONTENT_URI
             }
 
             val sortOrder = "$INDEX_DATE_ADDED DESC"
@@ -75,7 +66,7 @@ internal class GalleryUtil {
             val projection = arrayOf(
                 INDEX_MEDIA_ID,
                 INDEX_MEDIA_URI,
-                albumName,
+                INDEX_ALBUM_NAME,
                 INDEX_DATE_ADDED
             )
             val selection = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -101,10 +92,10 @@ internal class GalleryUtil {
         private fun getMedia(cursor: Cursor, mediaType: MediaType): Media? =
             try {
                 cursor.run {
-                    val folderName = getString(getColumnIndexOrThrow(albumName))
+                    val albumName = getString(getColumnIndexOrThrow(INDEX_ALBUM_NAME))
                     val mediaUri = getMediaUri(mediaType)
                     val datedAddedSecond = getLong(getColumnIndexOrThrow(INDEX_DATE_ADDED))
-                    Media(folderName, mediaUri, datedAddedSecond)
+                    Media(albumName, mediaUri, datedAddedSecond)
                 }
             } catch (exception: Exception) {
                 exception.printStackTrace()
