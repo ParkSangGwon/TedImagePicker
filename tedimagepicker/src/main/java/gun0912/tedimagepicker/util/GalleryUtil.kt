@@ -56,11 +56,6 @@ internal class GalleryUtil {
         }
 
         private fun getAllMediaList(context: Context, mediaType: MediaType): List<Media> {
-            val uri: Uri = when (mediaType) {
-                MediaType.IMAGE -> MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-                MediaType.VIDEO -> MediaStore.Video.Media.EXTERNAL_CONTENT_URI
-            }
-
             val sortOrder = "$INDEX_DATE_ADDED DESC"
 
             val projection = arrayOf(
@@ -75,7 +70,7 @@ internal class GalleryUtil {
                 null
             }
             val cursor =
-                context.contentResolver.query(uri, projection, selection, null, sortOrder)
+                context.contentResolver.query(mediaType.contentUri, projection, selection, null, sortOrder)
                     ?: return emptyList()
 
             cursor.use {
@@ -105,15 +100,16 @@ internal class GalleryUtil {
         private fun Cursor.getMediaUri(mediaType: MediaType): Uri =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 val id = getLong(getColumnIndexOrThrow(INDEX_MEDIA_ID))
-
-                val contentUri = when (mediaType) {
-                    MediaType.IMAGE -> MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-                    MediaType.VIDEO -> MediaStore.Video.Media.EXTERNAL_CONTENT_URI
-                }
-                ContentUris.withAppendedId(contentUri, id)
+                ContentUris.withAppendedId(mediaType.contentUri, id)
             } else {
                 val mediaPath = getString(getColumnIndexOrThrow(INDEX_MEDIA_URI))
                 Uri.fromFile(File(mediaPath))
+            }
+
+        private val MediaType.contentUri:Uri
+            get() = when(this){
+                MediaType.IMAGE ->  MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                MediaType.VIDEO -> MediaStore.Video.Media.EXTERNAL_CONTENT_URI
             }
     }
 }
