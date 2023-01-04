@@ -56,13 +56,13 @@ internal class GalleryUtil {
                         context.contentResolver.query(uri, projection, selection, null, sortOrder)
                     val albumList: List<Album> = cursor?.let {
 
-                        val totalImageList =
+                        val totalMediaList =
                             generateSequence { if (cursor.moveToNext()) cursor else null }
-                                .map { getImage(it, mediaType) }
+                                .map { getMedia(it, mediaType) }
                                 .filterNotNull()
                                 .toList()
 
-                        val albumList: List<Album> = totalImageList
+                        val albumList: List<Album> = totalMediaList
                             .groupBy { media: Media -> media.albumName }
                             .toSortedMap { albumName1: String, albumName2: String ->
                                 if (albumName2 == "Camera") {
@@ -75,7 +75,7 @@ internal class GalleryUtil {
                             .toList()
 
 
-                        val totalAlbum = totalImageList.run {
+                        val totalAlbum = totalMediaList.run {
                             val albumName = context.getString(R.string.ted_image_picker_album_all)
                             Album(
                                 albumName,
@@ -101,7 +101,7 @@ internal class GalleryUtil {
         private fun getAlbum(entry: Map.Entry<String, List<Media>>) =
             Album(entry.key, entry.value[0].uri, entry.value)
 
-        private fun getImage(cursor: Cursor, mediaType: MediaType): Media? =
+        private fun getMedia(cursor: Cursor, mediaType: MediaType): Media? =
             try {
                 cursor.run {
                     val folderName = getString(getColumnIndexOrThrow(albumName))
