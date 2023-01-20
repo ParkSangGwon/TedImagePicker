@@ -68,13 +68,16 @@ internal class GalleryUtil {
         private fun getAllMediaList(context: Context, queryMediaType: QueryMediaType): List<Media> {
             val sortOrder = "$INDEX_DATE_ADDED DESC"
 
-            val projection = arrayOf(
+            val projection = mutableListOf(
                 INDEX_MEDIA_ID,
                 INDEX_MEDIA_URI,
                 INDEX_ALBUM_NAME,
                 INDEX_DATE_ADDED,
-                INDEX_DURATION,
-            )
+            ).apply {
+                if (queryMediaType == QueryMediaType.VIDEO) {
+                    add(INDEX_DURATION)
+                }
+            }.toTypedArray()
             val selection = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 MediaStore.Images.Media.SIZE + " > 0"
             } else {
@@ -107,12 +110,13 @@ internal class GalleryUtil {
                     val albumName = getString(getColumnIndexOrThrow(INDEX_ALBUM_NAME))
                     val mediaUri = getMediaUri(queryMediaType)
                     val datedAddedSecond = getLong(getColumnIndexOrThrow(INDEX_DATE_ADDED))
-                    val duration = getLong(getColumnIndexOrThrow(INDEX_DURATION))
                     when (queryMediaType) {
                         QueryMediaType.IMAGE ->
                             Media.Image(albumName, mediaUri, datedAddedSecond)
-                        QueryMediaType.VIDEO ->
+                        QueryMediaType.VIDEO -> {
+                            val duration = getLong(getColumnIndexOrThrow(INDEX_DURATION))
                             Media.Video(albumName, mediaUri, datedAddedSecond, duration)
+                        }
                     }
                 }
             } catch (exception: Exception) {
