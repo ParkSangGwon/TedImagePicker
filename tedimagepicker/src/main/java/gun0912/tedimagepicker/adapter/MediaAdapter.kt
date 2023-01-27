@@ -101,8 +101,8 @@ internal class MediaAdapter(
                 }
 
                 showZoom = builder.showZoomIndicator && media is Media.Image
-
-                if (builder.showVideoDuration && data is Media.Video) {
+                showDuration = builder.showVideoDuration && media is Media.Video
+                if (data is Media.Video) {
                     binding.duration = data.durationText
                 }
 

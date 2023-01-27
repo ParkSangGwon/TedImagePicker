@@ -29,6 +29,10 @@
             type="boolean" />
 
         <variable
+            name="showDuration"
+            type="boolean" />
+
+        <variable
             name="duration"
             type="String" />
 
@@ -85,7 +89,7 @@
                 android:padding="@dimen/default_padding_xsmall"
                 android:text="@{duration}"
                 android:textColor="@color/white"
-                android:visibility="@{duration != null}"
+                android:visibility="@{showDuration}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:text="00:11" />
