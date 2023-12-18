@@ -3,8 +3,8 @@ ext {
             'minSdkVersion'    : 17,
             'compileSdkVersion': 33,
             'targetSdkVersion' : 33,
-            'gradle'           : '7.2.0',
-            'kotlin'           : '1.7.0',
+            'gradle'           : '8.2.0',
+            'kotlin'           : '1.9.10',
     ]
 
     deps = [
