@@ -13,7 +13,7 @@ import androidx.annotation.AnimRes
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import com.gun0912.tedpermission.TedPermissionResult
+import com.gun0912.tedpermission.TedPermissionUtil
 import com.gun0912.tedpermission.rx2.TedPermission
 import com.tedpark.tedonactivityresult.rx2.TedRxOnActivityResult
 import gun0912.tedimagepicker.R
@@ -27,7 +27,6 @@ import gun0912.tedimagepicker.builder.type.ButtonGravity
 import gun0912.tedimagepicker.builder.type.MediaType
 import gun0912.tedimagepicker.builder.type.SelectType
 import gun0912.tedimagepicker.util.ToastUtil
-import io.reactivex.Single
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
@@ -97,16 +96,23 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
 
     @SuppressLint("CheckResult")
     protected fun startInternal(context: Context) {
-        checkPermission()
-            .subscribe({ permissionResult ->
-                if (permissionResult.isGranted) {
-                    startActivity(context)
-                }
-            }, { throwable -> onErrorListener?.onError(throwable) })
+        val requestPermissions = getRequestPermissions()
+        if (TedPermissionUtil.isGranted(*requestPermissions)) {
+            startActivity(context)
+        } else {
+            TedPermission.create()
+                .setPermissions(*requestPermissions)
+                .request()
+                .subscribe({ permissionResult ->
+                    if (permissionResult.isGranted) {
+                        startActivity(context)
+                    }
+                }, { throwable -> onErrorListener?.onError(throwable) })
+        }
     }
 
-    private fun checkPermission(): Single<TedPermissionResult> {
-        val permissions = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+    private fun getRequestPermissions(): Array<String> =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             when (mediaType) {
                 MediaType.IMAGE -> arrayOf(Manifest.permission.READ_MEDIA_IMAGES)
                 MediaType.VIDEO -> arrayOf(Manifest.permission.READ_MEDIA_VIDEO)
@@ -120,10 +126,6 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
         } else {
             arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
         }
-        return TedPermission.create()
-            .setPermissions(*permissions)
-            .request()
-    }
 
     private fun startActivity(context: Context) {
         TedImagePickerActivity.getIntent(context, this)
