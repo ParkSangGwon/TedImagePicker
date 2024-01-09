@@ -97,30 +97,38 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
     @SuppressLint("CheckResult")
     protected fun startInternal(context: Context) {
         val requestPermissions = getRequestPermissions()
-        if (TedPermissionUtil.isGranted(*requestPermissions)) {
+        if (TedPermissionUtil.isGranted(*requestPermissions) || isPartialAccessGranted) {
             startActivity(context)
         } else {
             TedPermission.create()
                 .setPermissions(*requestPermissions)
                 .request()
                 .subscribe({ permissionResult ->
-                    if (permissionResult.isGranted) {
+                    if (permissionResult.isGranted || isPartialAccessGranted) {
                         startActivity(context)
                     }
                 }, { throwable -> onErrorListener?.onError(throwable) })
         }
     }
 
+    private val isPartialAccessGranted: Boolean
+        get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE
+            && TedPermissionUtil.isGranted(Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED)
+
     private fun getRequestPermissions(): Array<String> =
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            when (mediaType) {
-                MediaType.IMAGE -> arrayOf(Manifest.permission.READ_MEDIA_IMAGES)
-                MediaType.VIDEO -> arrayOf(Manifest.permission.READ_MEDIA_VIDEO)
-                MediaType.IMAGE_AND_VIDEO -> arrayOf(
+            val tempPermissions = when (mediaType) {
+                MediaType.IMAGE -> mutableListOf(Manifest.permission.READ_MEDIA_IMAGES)
+                MediaType.VIDEO -> mutableListOf(Manifest.permission.READ_MEDIA_VIDEO)
+                MediaType.IMAGE_AND_VIDEO -> mutableListOf(
                     Manifest.permission.READ_MEDIA_IMAGES,
                     Manifest.permission.READ_MEDIA_VIDEO
                 )
             }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                tempPermissions.add(Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED)
+            }
+            tempPermissions.toTypedArray()
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
         } else {
