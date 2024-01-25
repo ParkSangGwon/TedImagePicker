@@ -24,6 +24,10 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <include
+            android:id="@+id/layout_ted_image_picker_partial_access_manage"
+            layout="@layout/layout_ted_image_picker_partial_access_manage" />
+
         <FrameLayout
             android:id="@+id/view_selected_media"
             android:layout_width="match_parent"
