@@ -1,12 +1,13 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="TedImagePickerTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorPrimary">@color/white</item>
+    <style name="TedImagePickerTheme.Base" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:textColorPrimary">@color/black87_disable</item>
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.TedImagePicker.BottomSheetDialog
         </item>
     </style>
+
+    <style name="TedImagePickerTheme" parent="TedImagePickerTheme.Base" />
 
     <style name="TedImagePickerTheme.Zoom">
 
