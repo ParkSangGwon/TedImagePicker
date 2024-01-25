@@ -5,4 +5,16 @@
     <string name="ted_image_picker_done">Done</string>
     <string name="ted_image_picker_max_count">You can not add more</string>
     <string name="ted_image_picker_min_count">You have to choice images</string>
+
+    <string name="ted_image_picker_image">Image</string>
+    <string name="ted_image_picker_video">Video</string>
+    <string name="ted_image_picker_image_video">Image/Video</string>
+
+    <string name="ted_image_picker_partial_access_notice_fmt">You\'ve given access to a select number of %1$s</string>
+    <string name="ted_image_picker_manage">Manage</string>
+
+
+    <string name="ted_image_picker_select_more_photo_video_fmt">Select more %1$s</string>
+    <string name="ted_image_picker_grant_full_access_photo_video_fmt">Grant full access %1$s</string>
+    <string name="ted_image_picker_cancel">Cancel</string>
 </resources>

@@ -27,6 +27,7 @@ import gun0912.tedimagepicker.builder.type.ButtonGravity
 import gun0912.tedimagepicker.builder.type.MediaType
 import gun0912.tedimagepicker.builder.type.SelectType
 import gun0912.tedimagepicker.util.ToastUtil
+import gun0912.tedimagepicker.util.isPartialAccessGranted
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
@@ -111,29 +112,13 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
         }
     }
 
-    private val isPartialAccessGranted: Boolean
-        get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE
-            && TedPermissionUtil.isGranted(Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED)
-
-    private fun getRequestPermissions(): Array<String> =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            val tempPermissions = when (mediaType) {
-                MediaType.IMAGE -> mutableListOf(Manifest.permission.READ_MEDIA_IMAGES)
-                MediaType.VIDEO -> mutableListOf(Manifest.permission.READ_MEDIA_VIDEO)
-                MediaType.IMAGE_AND_VIDEO -> mutableListOf(
-                    Manifest.permission.READ_MEDIA_IMAGES,
-                    Manifest.permission.READ_MEDIA_VIDEO
-                )
-            }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-                tempPermissions.add(Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED)
-            }
-            tempPermissions.toTypedArray()
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
-        } else {
-            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    private fun getRequestPermissions(): Array<String> {
+        val permissions = mediaType.permissions.toMutableList()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            permissions.add(Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED)
         }
+        return permissions.toTypedArray()
+    }
 
     private fun startActivity(context: Context) {
         TedImagePickerActivity.getIntent(context, this)
