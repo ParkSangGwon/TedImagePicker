@@ -81,7 +81,7 @@
             </FrameLayout>
 
             <TextView
-                style="@style/TextAppearance.AppCompat.Caption"
+                style="@style/TextAppearance.TedImagePicker.Caption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/default_padding_small"
@@ -110,7 +110,7 @@
                     android:visibility="@{isSelected}" />
 
                 <TextView
-                    style="@style/TextAppearance.AppCompat.Body1"
+                    style="@style/TextAppearance.TedImagePicker.Body1"
                     android:layout_width="@dimen/list_item_avatar_size_small"
                     android:layout_height="@dimen/list_item_avatar_size_small"
                     android:layout_gravity="end"

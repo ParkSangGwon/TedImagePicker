@@ -24,7 +24,7 @@
 
             <TextView
                 android:id="@+id/tv_partial_access_notice"
-                style="@style/TextAppearance.AppCompat.Body1"
+                style="@style/TextAppearance.TedImagePicker.Body1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/default_padding"
@@ -37,7 +37,7 @@
 
             <TextView
                 android:id="@+id/tv_partial_access_manage"
-                style="@style/TextAppearance.AppCompat.Body1"
+                style="@style/TextAppearance.TedImagePicker.Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/default_padding"

@@ -33,7 +33,7 @@
 
 
         <TextView
-            style="@style/TextAppearance.AppCompat.Subhead"
+            style="@style/TextAppearance.TedImagePicker.Subhead"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/default_padding_small"
@@ -44,7 +44,7 @@
             tools:text="ALL" />
 
         <TextView
-            style="@style/TextAppearance.AppCompat.Subhead"
+            style="@style/TextAppearance.TedImagePicker.Subhead"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/default_padding_small"
