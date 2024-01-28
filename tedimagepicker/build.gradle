@@ -1,3 +1,6 @@
+plugins {
+    id "com.vanniktech.maven.publish" version "0.27.0"
+}
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
@@ -51,4 +54,39 @@ dependencies {
     implementation 'com.alexvasilkov:gesture-views:2.5.2'
 }
 
-apply plugin: "com.vanniktech.maven.publish"
+
+import com.vanniktech.maven.publish.SonatypeHost
+
+mavenPublishing {
+    publishToMavenCentral(SonatypeHost.S01)
+
+    signAllPublications()
+
+    coordinates("io.github.ParkSangGwon", "tedimagepicker", "1.4.3")
+
+    pom {
+        name = "TedImagePicker"
+        description = "TedImagePicker is simple image picker"
+        inceptionYear = "2019"
+        url = "https://github.com/ParkSangGwon/TedImagePicker/"
+        licenses {
+            license {
+                name = "The Apache Software License, Version 2.0"
+                url = "https://www.apache.org/licenses/LICENSE-2.0.txt"
+                distribution = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+            }
+        }
+        developers {
+            developer {
+                id = "ParkSangGwon"
+                name = "ParkSangGwon"
+                url = "https://github.com/ParkSangGwon"
+            }
+        }
+        scm {
+            url = "https://github.com/ParkSangGwon/TedImagePicker"
+            connection = "scm:git:git://github.com/ParkSangGwon/TedImagePicker.git"
+            developerConnection = "=scm:git:ssh://git@github.com/ParkSangGwon/TedImagePicker.git"
+        }
+    }
+}
