@@ -169,12 +169,7 @@ TedRxImagePicker.with(this)
 | `cancelListener()` | cancel listener |
 
 
-- Change picker primary color
-: override color name in your colors.xml
-```xml
-    <color name="ted_image_picker_primary">#your_color_code</color>
-    <color name="ted_image_picker_primary_pressed">#your_color_code</color>
-```
+
 
 #### Multi Select
 
@@ -191,6 +186,30 @@ TedRxImagePicker.with(this)
 | `drawerAlbum() / dropDownAlbum() (default: Drawer)`| You can choice Drawer or DropDown album style |
 
   </br></br>
+
+#### UI
+- Change picker primary color
+: override color name in your colors.xml
+```xml
+<color name="ted_image_picker_primary">#your_color_code</color>
+<color name="ted_image_picker_primary_pressed">#your_color_code</color>
+```
+
+- Change textAppearance style
+: override text style in your styles.xml
+
+style list
+- TextAppearance.TedImagePicker.Subhead
+- TextAppearance.TedImagePicker.Body1
+- TextAppearance.TedImagePicker.Caption
+
+```xml
+<style name="TextAppearance.MyApp.Body1" parent="@style/TextAppearance.AppCompat.Body1">
+    <item name="android:textSize">...</item>
+    <item name="android:fontFamily">...</item>
+</style>
+<style name="TextAppearance.TedImagePicker.Body1" parent="@style/TextAppearance.MyApp.Body1" />
+```
 
 ## FAQ
 
