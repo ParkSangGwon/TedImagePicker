@@ -1,12 +1,34 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="TedImagePickerTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="TedImagePickerTheme.Base" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:textColorPrimary">@color/black87_disable</item>
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.TedImagePicker.BottomSheetDialog
+        </item>
     </style>
+
+    <style name="TedImagePickerTheme" parent="TedImagePickerTheme.Base" />
 
     <style name="TedImagePickerTheme.Zoom">
 
+    </style>
+
+
+    <style name="ThemeOverlay.TedImagePicker.BottomSheetDialog" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/Widget.TedImagePicker.BottomSheet</item>
+    </style>
+
+
+    <style name="Widget.TedImagePicker.BottomSheet" parent="Widget.MaterialComponents.BottomSheet">
+        <item name="shapeAppearanceOverlay">
+            @style/ShapeAppearanceOverlay.TedImagePicker.BottomSheet
+        </item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.TedImagePicker.BottomSheet" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">16dp</item>
+        <item name="cornerSizeTopRight">16dp</item>
     </style>
 
 </resources>

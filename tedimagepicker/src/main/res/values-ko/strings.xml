@@ -5,4 +5,15 @@
     <string name="ted_image_picker_done">완료</string>
     <string name="ted_image_picker_max_count">더이상 추가할 수 없어요..</string>
     <string name="ted_image_picker_min_count">이미지를 더 선택해주세요..</string>
+
+    <string name="ted_image_picker_image">사진</string>
+    <string name="ted_image_picker_video">영상</string>
+    <string name="ted_image_picker_image_video">사진/영상</string>
+
+    <string name="ted_image_picker_partial_access_notice_fmt">선택한 일부 %1$s에만 엑세스할 수 있는 권한을 부여했습니다.</string>
+    <string name="ted_image_picker_manage">관리</string>
+
+    <string name="ted_image_picker_select_more_photo_video_fmt">더 많은 %1$s 선택</string>
+    <string name="ted_image_picker_grant_full_access_photo_video_fmt">모든 %1$s에 대한 접근 허용</string>
+    <string name="ted_image_picker_cancel">취소</string>
 </resources>

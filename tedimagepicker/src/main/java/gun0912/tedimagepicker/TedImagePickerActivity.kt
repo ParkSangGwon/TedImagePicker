@@ -1,5 +1,6 @@
 package gun0912.tedimagepicker
 
+import android.Manifest
 import android.animation.AnimatorSet
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
@@ -12,13 +13,17 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gun0912.tedonactivityresult.model.ActivityResult
+import com.gun0912.tedpermission.TedPermissionUtil
 import com.tedpark.tedonactivityresult.rx2.TedRxOnActivityResult
 import gun0912.tedimagepicker.adapter.AlbumAdapter
 import gun0912.tedimagepicker.adapter.GridSpacingItemDecoration
@@ -37,6 +42,7 @@ import gun0912.tedimagepicker.extenstion.setLock
 import gun0912.tedimagepicker.extenstion.toggle
 import gun0912.tedimagepicker.model.Album
 import gun0912.tedimagepicker.model.Media
+import gun0912.tedimagepicker.partialaccess.PartialAccessManageBottomSheet
 import gun0912.tedimagepicker.util.GalleryUtil
 import gun0912.tedimagepicker.util.MediaUtil
 import gun0912.tedimagepicker.util.ToastUtil
@@ -46,10 +52,11 @@ import io.reactivex.schedulers.Schedulers
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
-import kotlin.collections.ArrayList
 
 
-internal class TedImagePickerActivity : AppCompatActivity() {
+internal class TedImagePickerActivity
+    : AppCompatActivity(),
+    PartialAccessManageBottomSheet.Listener {
 
     private lateinit var binding: ActivityTedImagePickerBinding
     private val albumAdapter by lazy { AlbumAdapter(builder) }
@@ -78,6 +85,7 @@ internal class TedImagePickerActivity : AppCompatActivity() {
         setupSelectedMediaView()
         setupButton()
         setupAlbumType()
+        setupPartialAccessView()
         loadMedia()
 
     }
@@ -106,6 +114,7 @@ internal class TedImagePickerActivity : AppCompatActivity() {
                 finish()
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -270,7 +279,7 @@ internal class TedImagePickerActivity : AppCompatActivity() {
 
     @SuppressLint("CheckResult")
     private fun onCameraTileClick() {
-        val cameraMedia = when(builder.mediaType){
+        val cameraMedia = when (builder.mediaType) {
             MediaType.IMAGE -> CameraMedia.IMAGE
             MediaType.VIDEO -> CameraMedia.VIDEO
             MediaType.IMAGE_AND_VIDEO -> CameraMedia.IMAGE
@@ -433,6 +442,33 @@ internal class TedImagePickerActivity : AppCompatActivity() {
         }
     }
 
+    private fun setupPartialAccessView() =
+        with(binding.layoutContent.layoutTedImagePickerPartialAccessManage) {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                root.isGone = true
+                return@with
+            }
+
+            val isPartialAccess =
+                !TedPermissionUtil.isGranted(*builder.mediaType.permissions)
+                    && TedPermissionUtil.isGranted(Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED)
+            root.isVisible = isPartialAccess
+
+            tvPartialAccessManage.setOnClickListener { showPartialAccessManageDialog() }
+            val mediaTypeText = getString(builder.mediaType.nameResId)
+            tvPartialAccessNotice.text =
+                getString(R.string.ted_image_picker_partial_access_notice_fmt, mediaTypeText)
+        }
+
+    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+    private fun showPartialAccessManageDialog() {
+        PartialAccessManageBottomSheet.show(this, builder.mediaType)
+    }
+
+    override fun onRefreshMedia() {
+        loadMedia(true)
+        setupPartialAccessView()
+    }
 
     override fun onBackPressed() {
         if (isAlbumOpened()) {
