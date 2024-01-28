@@ -58,7 +58,7 @@
 
             <TextView
                 android:id="@+id/tv_name"
-                style="@style/TextAppearance.AppCompat.Subhead"
+                style="@style/TextAppearance.TedImagePicker.Subhead"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="@dimen/list_item_container_padding_small"
@@ -74,7 +74,7 @@
 
             <TextView
                 android:id="@+id/tv_count"
-                style="@style/TextAppearance.AppCompat.Subhead"
+                style="@style/TextAppearance.TedImagePicker.Subhead"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:gravity="center_vertical"
