@@ -230,6 +230,9 @@ style list
 - You have to enable databinding
 - Read [this](https://github.com/ParkSangGwon/TedImagePicker/blob/master/README.md#1enable-databinding)
 
+#### - `Duplicate class android.support.v4.xxx`: Execution failed for task ':app:checkDebugDuplicateClasses'
+- Add `android.enableJetifier=true` in your gradle.properties file
+
 ### - I'm using targetSdkVersion less than 33 and it doesn't work
 - You have to use `targetSdkVersion 33`
 - If you use targetSdkVersion 32, you can not support SDK 33(Android OS 13) device.
