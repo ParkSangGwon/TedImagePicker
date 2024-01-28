@@ -57,6 +57,12 @@ If you think this library is useful, please press star button at upside. </br>
 dataBinding {
     enabled = true
 }
+
+or
+
+buildFeatures {
+    dataBinding = true
+}
 ```
 
 ### 2.Start TedImagePicker/TedRxImagePicker
