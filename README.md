@@ -218,7 +218,6 @@ style list
 ```
 
 ## FAQ
-
 ### - Do not need to check permissions?
 
 - Yes, `TedImagePicker` automatically check permission.
@@ -238,6 +237,16 @@ style list
 - If you use targetSdkVersion 32, you can not support SDK 33(Android OS 13) device.
 - these day, there are so many android os 13 device.
 - So you have to use targetSdkVersion 33
+
+### - I'm using targetSdkVersion less than 34 and it doesn't work
+- Starting with targetSdkVersion 34, you need to control the permission READ_MEDIA_VISUAL_USER_SELECTED.
+: [Grant partial access to photos and videos](https://developer.android.com/about/versions/14/changes/partial-photo-video-access)
+- If you still keep targetSdkVersion set to 33 to not control the READ_MEDIA_VISUAL_USER_SELECTED permission, you need to add the code below to your Manifest file.
+```xml
+<uses-permission
+    android:name="android.permission.READ_MEDIA_VISUAL_USER_SELECTED"
+    tools:node="remove" />
+```
 
 </br></br>
 
