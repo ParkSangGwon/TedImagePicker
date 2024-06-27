@@ -13,3 +13,7 @@ internal val isPartialAccessGranted: Boolean
 
 internal val MediaType.isFullOrPartialAccessGranted: Boolean
     get() = TedPermissionUtil.isGranted(*permissions) || isPartialAccessGranted
+
+internal val MediaType.isCameraAccessGranted: Boolean
+    get() = TedPermissionUtil.isGranted(*permissions)
+

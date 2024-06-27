@@ -30,4 +30,7 @@ enum class MediaType(@StringRes val nameResId: Int) : Parcelable {
         } else {
             arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
         }
+
+    val cameraPermissions: Array<String>
+        get() = arrayOf(Manifest.permission.CAMERA)
 }

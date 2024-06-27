@@ -7,6 +7,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -15,6 +16,7 @@ import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
@@ -24,6 +26,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gun0912.tedonactivityresult.model.ActivityResult
 import com.gun0912.tedpermission.TedPermissionUtil
+import com.gun0912.tedpermission.rx2.TedPermission
 import com.tedpark.tedonactivityresult.rx2.TedRxOnActivityResult
 import gun0912.tedimagepicker.adapter.AlbumAdapter
 import gun0912.tedimagepicker.adapter.GridSpacingItemDecoration
@@ -46,6 +49,8 @@ import gun0912.tedimagepicker.partialaccess.PartialAccessManageBottomSheet
 import gun0912.tedimagepicker.util.GalleryUtil
 import gun0912.tedimagepicker.util.MediaUtil
 import gun0912.tedimagepicker.util.ToastUtil
+import gun0912.tedimagepicker.util.isCameraAccessGranted
+import gun0912.tedimagepicker.util.isFullOrPartialAccessGranted
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -54,8 +59,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 
-internal class TedImagePickerActivity
-    : AppCompatActivity(),
+internal class TedImagePickerActivity : AppCompatActivity(),
     PartialAccessManageBottomSheet.Listener {
 
     private lateinit var binding: ActivityTedImagePickerBinding
@@ -145,10 +149,8 @@ internal class TedImagePickerActivity
     }
 
     private fun loadMedia(isRefresh: Boolean = false) {
-        disposable = GalleryUtil.getMedia(this, builder.mediaType)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { albumList: List<Album> ->
+        disposable = GalleryUtil.getMedia(this, builder.mediaType).subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread()).subscribe { albumList: List<Album> ->
                 albumAdapter.replaceAll(albumList)
                 setSelectedAlbum(selectedPosition)
                 if (!isRefresh) {
@@ -244,8 +246,7 @@ internal class TedImagePickerActivity
                         }
                         val media = mediaAdapter.getItem(firstVisiblePosition)
                         val dateString = SimpleDateFormat(
-                            builder.scrollIndicatorDateFormat,
-                            Locale.getDefault()
+                            builder.scrollIndicatorDateFormat, Locale.getDefault()
                         ).format(Date(TimeUnit.SECONDS.toMillis(media.dateAddedSecond)))
                         binding.layoutContent.fastScroller.setBubbleText(dateString)
                     }
@@ -267,9 +268,7 @@ internal class TedImagePickerActivity
         }
         binding.layoutContent.rvSelectedMedia.run {
             layoutManager = LinearLayoutManager(
-                this@TedImagePickerActivity,
-                LinearLayoutManager.HORIZONTAL,
-                false
+                this@TedImagePickerActivity, LinearLayoutManager.HORIZONTAL, false
             )
             adapter = selectedMediaAdapter
 
@@ -279,24 +278,53 @@ internal class TedImagePickerActivity
 
     @SuppressLint("CheckResult")
     private fun onCameraTileClick() {
+
+        /*Asking user for camera permission*/
+
+        val canRequestPermission =
+            TedPermissionUtil.canRequestPermission(this@TedImagePickerActivity, *builder.mediaType.cameraPermissions)
+        if (canRequestPermission) {
+            requestPermission()
+        } else {
+            TedRxOnActivityResult.with(this@TedImagePickerActivity)
+                .startActivityForResult(TedPermissionUtil.getSettingIntent())
+                .subscribe { _ ->
+                    if (TedPermissionUtil.isGranted(*builder.mediaType.cameraPermissions)) {
+                        openCamera()
+                    } else {
+                        finish()
+                    }
+                }
+        }
+    }
+
+    @SuppressLint("CheckResult")
+    private fun requestPermission() {
+        TedPermission.create()
+            .setPermissions(*builder.mediaType.cameraPermissions)
+            .request()
+            .subscribe { _ ->
+                if (builder.mediaType.isCameraAccessGranted) {
+                    openCamera()
+                }
+            }
+    }
+
+    @SuppressLint("CheckResult")
+    private fun openCamera() {
         val cameraMedia = when (builder.mediaType) {
             MediaType.IMAGE -> CameraMedia.IMAGE
             MediaType.VIDEO -> CameraMedia.VIDEO
             MediaType.IMAGE_AND_VIDEO -> CameraMedia.IMAGE
         }
         val (cameraIntent, uri) = MediaUtil.getMediaIntentUri(
-            this@TedImagePickerActivity,
-            cameraMedia,
-            builder.savedDirectoryName
+            this@TedImagePickerActivity, cameraMedia, builder.savedDirectoryName
         )
-        TedRxOnActivityResult.with(this@TedImagePickerActivity)
-            .startActivityForResult(cameraIntent)
+        TedRxOnActivityResult.with(this@TedImagePickerActivity).startActivityForResult(cameraIntent)
             .subscribe { activityResult: ActivityResult ->
                 if (activityResult.resultCode == Activity.RESULT_OK) {
-                    MediaUtil.scanMedia(this, uri)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe {
+                    MediaUtil.scanMedia(this, uri).subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread()).subscribe {
                             loadMedia(true)
                             onMediaClick(uri)
                         }
@@ -304,6 +332,10 @@ internal class TedImagePickerActivity
             }
     }
 
+    private fun hasPermissions(context: Context, vararg permissions: String): Boolean =
+        permissions.all {
+            ActivityCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
+        }
 
     private fun onMediaClick(uri: Uri) {
         when (builder.selectType) {
@@ -391,8 +423,7 @@ internal class TedImagePickerActivity
 
             val data = Intent().apply {
                 putParcelableArrayListExtra(
-                    EXTRA_SELECTED_URI_LIST,
-                    ArrayList(selectedUriList)
+                    EXTRA_SELECTED_URI_LIST, ArrayList(selectedUriList)
                 )
             }
             setResult(Activity.RESULT_OK, data)
@@ -450,8 +481,9 @@ internal class TedImagePickerActivity
             }
 
             val isPartialAccess =
-                !TedPermissionUtil.isGranted(*builder.mediaType.permissions)
-                    && TedPermissionUtil.isGranted(Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED)
+                !TedPermissionUtil.isGranted(*builder.mediaType.permissions) && TedPermissionUtil.isGranted(
+                    Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED
+                )
             root.isVisible = isPartialAccess
 
             tvPartialAccessManage.setOnClickListener { showPartialAccessManageDialog() }
@@ -479,12 +511,11 @@ internal class TedImagePickerActivity
 
     }
 
-    private fun isAlbumOpened(): Boolean =
-        if (builder.albumType == AlbumType.DRAWER) {
-            binding.drawerLayout.isOpen()
-        } else {
-            binding.isAlbumOpened
-        }
+    private fun isAlbumOpened(): Boolean = if (builder.albumType == AlbumType.DRAWER) {
+        binding.drawerLayout.isOpen()
+    } else {
+        binding.isAlbumOpened
+    }
 
     private fun closeAlbum() {
 
@@ -510,10 +541,9 @@ internal class TedImagePickerActivity
         private const val EXTRA_SELECTED_URI_LIST = "EXTRA_SELECTED_URI_LIST"
 
         internal fun getIntent(context: Context, builder: TedImagePickerBaseBuilder<*>) =
-            Intent(context, TedImagePickerActivity::class.java)
-                .apply {
-                    putExtra(EXTRA_BUILDER, builder)
-                }
+            Intent(context, TedImagePickerActivity::class.java).apply {
+                putExtra(EXTRA_BUILDER, builder)
+            }
 
         internal fun getSelectedUri(data: Intent): Uri? =
             data.getParcelableExtra(EXTRA_SELECTED_URI)
