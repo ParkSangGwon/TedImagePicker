@@ -1,6 +1,5 @@
 package gun0912.tedimagepicker
 
-import android.Manifest
 import android.animation.AnimatorSet
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
@@ -23,7 +22,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gun0912.tedonactivityresult.model.ActivityResult
-import com.gun0912.tedpermission.TedPermissionUtil
 import com.tedpark.tedonactivityresult.rx2.TedRxOnActivityResult
 import gun0912.tedimagepicker.adapter.AlbumAdapter
 import gun0912.tedimagepicker.adapter.GridSpacingItemDecoration
@@ -46,11 +44,13 @@ import gun0912.tedimagepicker.partialaccess.PartialAccessManageBottomSheet
 import gun0912.tedimagepicker.util.GalleryUtil
 import gun0912.tedimagepicker.util.MediaUtil
 import gun0912.tedimagepicker.util.ToastUtil
+import gun0912.tedimagepicker.util.isPartialAccessGranted
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
 import java.util.concurrent.TimeUnit
 
 
@@ -448,12 +448,7 @@ internal class TedImagePickerActivity
                 root.isGone = true
                 return@with
             }
-
-            val isPartialAccess =
-                !TedPermissionUtil.isGranted(*builder.mediaType.permissions)
-                    && TedPermissionUtil.isGranted(Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED)
-            root.isVisible = isPartialAccess
-
+            root.isVisible = isPartialAccessGranted
             tvPartialAccessManage.setOnClickListener { showPartialAccessManageDialog() }
             val mediaTypeText = getString(builder.mediaType.nameResId)
             tvPartialAccessNotice.text =
