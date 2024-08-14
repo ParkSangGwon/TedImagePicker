@@ -62,7 +62,7 @@ mavenPublishing {
 
     signAllPublications()
 
-    coordinates("io.github.ParkSangGwon", "tedimagepicker", "1.6.0")
+    coordinates("io.github.ParkSangGwon", "tedimagepicker", "1.6.1")
 
     pom {
         name = "TedImagePicker"
