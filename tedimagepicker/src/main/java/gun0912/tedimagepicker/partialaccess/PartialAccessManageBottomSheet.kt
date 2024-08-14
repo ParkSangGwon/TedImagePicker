@@ -33,7 +33,7 @@ class PartialAccessManageBottomSheet : BottomSheetDialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View = BottomsheetPartialAccessManageBinding.inflate(inflater, container, false).also {
         binding = it
     }.root

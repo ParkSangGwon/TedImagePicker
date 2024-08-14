@@ -98,14 +98,14 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
     @SuppressLint("CheckResult")
     protected fun startInternal(context: Context) {
         val requestPermissions = getRequestPermissions()
-        if (TedPermissionUtil.isGranted(*requestPermissions) || isPartialAccessGranted) {
+        if (TedPermissionUtil.isGranted(*requestPermissions) || mediaType.isPartialAccessGranted) {
             startActivity(context)
         } else {
             TedPermission.create()
                 .setPermissions(*requestPermissions)
                 .request()
                 .subscribe({ permissionResult ->
-                    if (permissionResult.isGranted || isPartialAccessGranted) {
+                    if (permissionResult.isGranted || mediaType.isPartialAccessGranted) {
                         startActivity(context)
                     }
                 }, { throwable -> onErrorListener?.onError(throwable) })
