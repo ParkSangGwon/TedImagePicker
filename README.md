@@ -36,7 +36,7 @@ repositories {
 
 dependencies {
     implementation 'io.github.ParkSangGwon:tedimagepicker:x.y.z'
-    //implementation 'io.github.ParkSangGwon:tedimagepicker:1.1.10'
+    //implementation 'io.github.ParkSangGwon:tedimagepicker:1.6.1'
 }
 
 ```
