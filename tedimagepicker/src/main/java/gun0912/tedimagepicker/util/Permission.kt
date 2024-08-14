@@ -6,9 +6,10 @@ import com.gun0912.tedpermission.TedPermissionUtil
 import gun0912.tedimagepicker.builder.type.MediaType
 
 
-internal val isPartialAccessGranted: Boolean
+internal val MediaType.isPartialAccessGranted: Boolean
     get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE
         && TedPermissionUtil.isGranted(Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED)
+        && !TedPermissionUtil.isGranted(*permissions)
 
 
 internal val MediaType.isFullOrPartialAccessGranted: Boolean

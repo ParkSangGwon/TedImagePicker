@@ -448,7 +448,7 @@ internal class TedImagePickerActivity
                 root.isGone = true
                 return@with
             }
-            root.isVisible = isPartialAccessGranted
+            root.isVisible = builder.mediaType.isPartialAccessGranted
             tvPartialAccessManage.setOnClickListener { showPartialAccessManageDialog() }
             val mediaTypeText = getString(builder.mediaType.nameResId)
             tvPartialAccessNotice.text =
