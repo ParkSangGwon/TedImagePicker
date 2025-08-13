@@ -32,6 +32,10 @@ android {
         targetCompatibility JavaVersion.VERSION_17
     }
 
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_17
+    }
+
 }
 
 dependencies {
@@ -46,7 +50,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.1.0-alpha07'
 
     implementation deps.glide.glide
-    annotationProcessor deps.glide.annotation
+    kapt deps.glide.annotation
 
     implementation 'io.github.ParkSangGwon:tedpermission-rx2:3.3.0'
     implementation 'io.github.ParkSangGwon:tedonactivityresult-rx2:1.0.10'
