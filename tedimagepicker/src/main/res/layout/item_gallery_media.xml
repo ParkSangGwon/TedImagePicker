@@ -115,9 +115,9 @@
                     android:layout_height="@dimen/list_item_avatar_size_small"
                     android:layout_gravity="end"
                     android:layout_margin="@dimen/default_padding_small"
-                    android:background="@{isSelected? @drawable/bg_multi_image_selected : @drawable/bg_multi_image_unselected}"
+                    android:background="@{selectedNumber > 0 ? @drawable/bg_multi_image_selected : @drawable/bg_multi_image_unselected}"
                     android:gravity="center"
-                    android:text="@{isSelected? String.valueOf(selectedNumber) : ``}"
+                    android:text="@{selectedNumber > 0 ? String.valueOf(selectedNumber) : ``}"
                     android:textColor="@color/white"
                     tools:background="@drawable/bg_multi_image_selected"
                     tools:text="5" />
