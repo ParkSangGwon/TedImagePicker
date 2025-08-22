@@ -4,7 +4,7 @@ import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.ViewDataBinding
 
-internal abstract class BaseSimpleHeaderAdapter<D>(protected val headerCount: Int = HEADER_COUNT) :
+internal abstract class BaseSimpleHeaderAdapter<D>(val headerCount: Int = HEADER_COUNT) :
     BaseRecyclerViewAdapter<D, BaseViewHolder<ViewDataBinding, D>>(headerCount) {
 
     abstract fun getItemViewHolder(parent: ViewGroup): BaseViewHolder<ViewDataBinding, D>
