@@ -18,6 +18,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.selection.SelectionTracker
+import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -41,6 +43,8 @@ import gun0912.tedimagepicker.extenstion.toggle
 import gun0912.tedimagepicker.model.Album
 import gun0912.tedimagepicker.model.Media
 import gun0912.tedimagepicker.partialaccess.PartialAccessManageBottomSheet
+import gun0912.tedimagepicker.selection.MediaItemDetailsLookup
+import gun0912.tedimagepicker.selection.MediaItemKeyProvider
 import gun0912.tedimagepicker.util.GalleryUtil
 import gun0912.tedimagepicker.util.MediaUtil
 import gun0912.tedimagepicker.util.ToastUtil
@@ -62,12 +66,14 @@ internal class TedImagePickerActivity
     private val albumAdapter by lazy { AlbumAdapter(builder) }
     private lateinit var mediaAdapter: MediaAdapter
     private lateinit var selectedMediaAdapter: SelectedMediaAdapter
+    private lateinit var selectionTracker: SelectionTracker<Uri>
 
     private lateinit var builder: TedImagePickerBaseBuilder<*>
 
     private lateinit var disposable: Disposable
 
     private var selectedPosition = 0
+    private var isUpdatingSelection = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -223,7 +229,9 @@ internal class TedImagePickerActivity
             }
 
             onMediaAddListener = {
-                binding.layoutContent.rvSelectedMedia.smoothScrollToPosition(selectedMediaAdapter.itemCount)
+                with(binding.layoutContent.rvSelectedMedia) {
+                    post { smoothScrollToPosition(selectedMediaAdapter.itemCount) }
+                }
             }
 
         }
@@ -233,6 +241,9 @@ internal class TedImagePickerActivity
             addItemDecoration(GridSpacingItemDecoration(IMAGE_SPAN_COUNT, 8))
             itemAnimator = null
             adapter = mediaAdapter
+
+            setupSelectionTracker()
+
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
@@ -254,7 +265,90 @@ internal class TedImagePickerActivity
         }
 
         binding.layoutContent.fastScroller.recyclerView = binding.layoutContent.rvMedia
+    }
 
+    private fun setupSelectionTracker() {
+        if (builder.selectType != SelectType.MULTI) {
+            return
+        }
+
+        val recyclerView = binding.layoutContent.rvMedia
+        selectionTracker = SelectionTracker.Builder(
+            "media-selection",
+            recyclerView,
+            MediaItemKeyProvider(recyclerView),
+            MediaItemDetailsLookup(recyclerView),
+            StorageStrategy.createParcelableStorage(Uri::class.java)
+        ).withSelectionPredicate(
+            object : SelectionTracker.SelectionPredicate<Uri>() {
+                override fun canSelectMultiple(): Boolean = true
+                override fun canSetStateAtPosition(position: Int, nextState: Boolean): Boolean =
+                    true
+
+                override fun canSetStateForKey(key: Uri, nextState: Boolean): Boolean {
+                    // Always allow deselection
+                    if (!nextState) return true
+
+                    // Allow if already selected (prevent duplicate selection)
+                    if (selectionTracker.isSelected(key)) return true
+
+                    return (selectionTracker.selection.size() < builder.maxCount)
+                        .also { canAddItem ->
+                            if (!canAddItem) {
+                                showMaxCountMessage()
+                            }
+                        }
+                }
+            }
+        ).build().also {
+            mediaAdapter.selectionTracker = it
+        }
+
+
+        selectionTracker.addObserver(object : SelectionTracker.SelectionObserver<Uri>() {
+            override fun onSelectionChanged() {
+                syncSelectedListWithTracker()
+            }
+        })
+    }
+
+    private fun syncSelectedListWithTracker() {
+        if (isUpdatingSelection) return
+        isUpdatingSelection = true
+
+        val newSelectedItems = selectionTracker.selection.toList()
+        val lastSelectedItems = mediaAdapter.selectedUriList.toList()
+
+        val addedItems = newSelectedItems - lastSelectedItems.toSet()
+        val removedItems = lastSelectedItems - newSelectedItems.toSet()
+        val updatedPositions = mutableSetOf<Int>()
+
+        // add items
+        if (addedItems.isNotEmpty()) {
+            mediaAdapter.selectedUriList.addAll(addedItems)
+            val addedViewPositions = addedItems.map { mediaAdapter.getViewPosition(it) }
+            updatedPositions.addAll(addedViewPositions)
+            mediaAdapter.onMediaAddListener?.invoke()
+        }
+
+        // remove items
+        if (removedItems.isNotEmpty()) {
+            mediaAdapter.selectedUriList.removeAll(removedItems)
+            val removedViewPositions = removedItems.map { mediaAdapter.getViewPosition(it) }
+            updatedPositions.addAll(removedViewPositions)
+        }
+
+        updateSelectedUI()
+
+        updatedPositions
+            .filter { it != RecyclerView.NO_POSITION }
+            .forEach { mediaAdapter.notifyItemChanged(it) }
+        isUpdatingSelection = false
+    }
+
+    private fun showMaxCountMessage() {
+        val message = builder.maxCountMessage ?: getString(builder.maxCountMessageResId)
+        ToastUtil.showToast(message)
     }
 
     private fun setupSelectedMediaRecyclerView() {
@@ -313,10 +407,31 @@ internal class TedImagePickerActivity
     }
 
     private fun onMultiMediaClick(uri: Uri) {
+        isUpdatingSelection = true
+
         mediaAdapter.toggleMediaSelect(uri)
+        toggleSelectionTracker(uri)
+        updateSelectedUI()
+
+        isUpdatingSelection = false
+    }
+
+    private fun updateSelectedUI() {
         binding.layoutContent.items = mediaAdapter.selectedUriList
         updateSelectedMediaView()
         setupButtonVisibility()
+    }
+
+    private fun toggleSelectionTracker(uri: Uri) {
+        if (mediaAdapter.selectedUriList.contains(uri)) {
+            if (!selectionTracker.isSelected(uri)) {
+                selectionTracker.select(uri)
+            }
+        } else {
+            if (selectionTracker.isSelected(uri)) {
+                selectionTracker.deselect(uri)
+            }
+        }
     }
 
     private fun setupSelectedMediaView() {
