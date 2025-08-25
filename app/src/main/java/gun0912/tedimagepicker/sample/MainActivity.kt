@@ -7,7 +7,11 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -24,7 +28,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-
+        enableEdgeToEdge()
+        setupWindowInsets()
         setNormalSingleButton()
         setNormalMultiButton()
         setRxSingleButton()
@@ -32,6 +37,25 @@ class MainActivity : AppCompatActivity() {
         setRxMultiDropDown()
     }
 
+
+    private fun setupWindowInsets() {
+        val view = findViewById<View>(android.R.id.content)
+        ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
+            val systemBars =
+                insets.getInsets(
+                    WindowInsetsCompat.Type.systemBars()
+                        or WindowInsetsCompat.Type.displayCutout()
+                        or WindowInsetsCompat.Type.ime()
+                )
+            v.updatePadding(
+                top = systemBars.top,
+                left = systemBars.left,
+                right = systemBars.right,
+                bottom = systemBars.bottom
+            )
+            insets
+        }
+    }
 
     private fun setNormalSingleButton() {
         binding.btnNormalSingle.setOnClickListener {
