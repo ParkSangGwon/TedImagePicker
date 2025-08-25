@@ -3,7 +3,7 @@
 TedImagePicker is **simple/beautiful/smart** image picker
 
 - Support Image/Video/Image&Video
-- Support Single/Multi select
+- Support Single/Multi select with **drag selection**
 - Support more configuration option
 
 |       Image Select        |    Select Album    |          Scroller           |
@@ -178,6 +178,13 @@ TedRxImagePicker.with(this)
 
 
 #### Multi Select
+
+**🎯 Enhanced Selection Methods:**
+- **Tap Selection**: Traditional single-tap to select/deselect images
+- **Drag Selection**: **NEW!** Drag across multiple images to select them at once
+- **Mixed Mode**: Both selection methods work together seamlessly
+
+> **Note**: Drag selection is automatically enabled in multi-select mode and works alongside traditional tap selection.
 
 |      Method        |    Description    | 
 | ----------------------- | ---------------- |
