@@ -16,6 +16,7 @@ ext {
 
             'androidx': [
                     'appcompat': 'androidx.appcompat:appcompat:1.0.2',
+                    'activity' : 'androidx.activity:activity-ktx:1.10.1',
             ],
 
             'glide'   : [
