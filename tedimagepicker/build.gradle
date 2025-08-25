@@ -44,6 +44,7 @@ dependencies {
     kapt "com.android.databinding:compiler:${versions.gradle}"
 
     implementation deps.androidx.appcompat
+    implementation deps.androidx.activity
     implementation deps.rx.rxJava
     implementation deps.rx.rxAndroid
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'

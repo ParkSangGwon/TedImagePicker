@@ -12,11 +12,15 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
+import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
@@ -77,6 +81,8 @@ internal class TedImagePickerActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setupWindowInsets()
         setSavedInstanceState(savedInstanceState)
         if (Build.VERSION.SDK_INT != Build.VERSION_CODES.O) {
             requestedOrientation = builder.screenOrientation
@@ -99,6 +105,25 @@ internal class TedImagePickerActivity
     private fun startAnimation() {
         if (builder.startEnterAnim != null && builder.startExitAnim != null) {
             overridePendingTransition(builder.startEnterAnim!!, builder.startExitAnim!!)
+        }
+    }
+
+    private fun setupWindowInsets(){
+        val view = findViewById<View>(android.R.id.content)
+        ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
+            val systemBars =
+                insets.getInsets(
+                    WindowInsetsCompat.Type.systemBars()
+                        or WindowInsetsCompat.Type.displayCutout()
+                        or WindowInsetsCompat.Type.ime()
+                )
+            v.updatePadding(
+                top = systemBars.top,
+                left = systemBars.left,
+                right = systemBars.right,
+                bottom = systemBars.bottom
+            )
+            insets
         }
     }
 
