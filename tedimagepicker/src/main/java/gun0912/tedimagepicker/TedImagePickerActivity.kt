@@ -108,7 +108,7 @@ internal class TedImagePickerActivity
         }
     }
 
-    private fun setupWindowInsets(){
+    private fun setupWindowInsets() {
         val view = findViewById<View>(android.R.id.content)
         ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
             val systemBars =
@@ -183,15 +183,23 @@ internal class TedImagePickerActivity
                 albumAdapter.replaceAll(albumList)
                 setSelectedAlbum(selectedPosition)
                 if (!isRefresh) {
-                    setSelectedUriList(builder.selectedUriList)
+                    initSelectedUriList(builder.selectedUriList)
                 }
                 binding.layoutContent.rvMedia.visibility = View.VISIBLE
 
             }
     }
 
-    private fun setSelectedUriList(uriList: List<Uri>?) =
-        uriList?.forEach { uri: Uri -> onMultiMediaClick(uri) }
+    private fun initSelectedUriList(uriList: List<Uri>?) {
+        uriList ?: return
+        isUpdatingSelection = true
+
+        mediaAdapter.initSelectedUriList(uriList)
+        uriList.forEach { selectionTracker.select(it) }
+        updateSelectedUI()
+
+        isUpdatingSelection = false
+    }
 
     private fun setSavedInstanceState(savedInstanceState: Bundle?) {
 
