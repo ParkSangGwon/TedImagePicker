@@ -1,5 +1,5 @@
 plugins {
-    id "com.vanniktech.maven.publish" version "0.27.0"
+    id "com.vanniktech.maven.publish" version "0.34.0"
 }
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
@@ -61,14 +61,12 @@ dependencies {
 }
 
 
-import com.vanniktech.maven.publish.SonatypeHost
-
 mavenPublishing {
-    publishToMavenCentral(SonatypeHost.S01)
+    publishToMavenCentral()
 
     signAllPublications()
 
-    coordinates("io.github.ParkSangGwon", "tedimagepicker", "1.6.1")
+    coordinates("io.github.parksanggwon", "tedimagepicker", "1.7.0")
 
     pom {
         name = "TedImagePicker"
