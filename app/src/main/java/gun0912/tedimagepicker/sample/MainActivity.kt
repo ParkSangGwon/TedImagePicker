@@ -19,6 +19,8 @@ import gun0912.tedimagepicker.builder.TedImagePicker
 import gun0912.tedimagepicker.builder.TedRxImagePicker
 import gun0912.tedimagepicker.sample.databinding.ActivityMainBinding
 import gun0912.tedimagepicker.sample.databinding.ItemImageBinding
+import gun0912.tedimagepicker.util.ToastUtil.context
+import gun0912.tedimagepicker.util.fetchImage
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,6 +33,7 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setupWindowInsets()
         setNormalSingleButton()
+        setNormalSingleButtonFile()
         setNormalMultiButton()
         setRxSingleButton()
         setRxMultiButton()
@@ -62,6 +65,11 @@ class MainActivity : AppCompatActivity() {
             TedImagePicker.with(this)
                 .start { uri -> showSingleImage(uri) }
         }
+    }
+
+    private fun setNormalSingleButtonFile() {
+        TedImagePicker.with(this)
+            .start { uri -> showSingleImageToFile(uri) }
     }
 
     private fun setNormalMultiButton() {
@@ -109,6 +117,12 @@ class MainActivity : AppCompatActivity() {
         binding.ivImage.visibility = View.VISIBLE
         binding.containerSelectedPhotos.visibility = View.GONE
         Glide.with(this).load(uri).into(binding.ivImage)
+
+    }
+
+    private fun showSingleImageToFile(uri: Uri) {
+
+        suspend { fetchImage(context).let { uri.toString() } }
 
     }
 
